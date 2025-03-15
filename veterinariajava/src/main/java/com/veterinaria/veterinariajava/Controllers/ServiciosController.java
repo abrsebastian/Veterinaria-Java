@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.veterinaria.veterinariajava.Services.ProveedoresServices;
+
 import com.veterinaria.veterinariajava.Services.ServiciosServices;
-import com.veterinaria.veterinariajava.Tables.Proveedores;
+
 import com.veterinaria.veterinariajava.Tables.Servicios;
 
 @RestController
@@ -22,7 +22,8 @@ public class ServiciosController {
 
     @Autowired
     private ServiciosServices serviciosServices;
-
+   
+    @GetMapping
     public List<Servicios> listaServicios(){
         return serviciosServices.obtenerTodos();
     }
@@ -32,7 +33,7 @@ public class ServiciosController {
         return serviciosServices.obtenerPorId(id);
     }
 
-    @PostMapping("path")
+    @PostMapping
     public Servicios crearServicio(@RequestBody Servicios servicios) {
         return serviciosServices.guardarServicio(servicios);
     }

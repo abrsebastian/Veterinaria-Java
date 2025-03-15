@@ -23,6 +23,7 @@ public class GananciasController {
     @Autowired
     private GananciaService gananciaService;
 
+    @GetMapping
     public List<Ganancias> listaGanancias(){
         return gananciaService.obtenerTodas();
     }
@@ -32,7 +33,7 @@ public class GananciasController {
         return gananciaService.obtenerPorId(id);
     }
 
-    @PostMapping("path")
+    @PostMapping
     public Ganancias crearGanancia(@RequestBody Ganancias ganancias) {
         return gananciaService.guardarGanancia(ganancias);
     }

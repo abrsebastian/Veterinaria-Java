@@ -3,6 +3,7 @@ package com.veterinaria.veterinariajava.Services;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.veterinaria.veterinariajava.Repository.GananciasRepository;
@@ -12,6 +13,7 @@ import com.veterinaria.veterinariajava.Tables.Productos;
 
 @Service
 public class ProductosServices {
+    @Autowired
     private ProductosRepository productosRepository;
 
     public List<Productos>obtenerTodos(){

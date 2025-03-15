@@ -23,6 +23,7 @@ public class CategoriasController {
     @Autowired
     private CategoriaService categoriaService;
 
+    @GetMapping
     public List<Categorias>listarCategorias(){
         return categoriaService.obtenerTodas();
     }
@@ -32,7 +33,7 @@ public class CategoriasController {
         return categoriaService.obtenerPorId(id);
     }
 
-    @PostMapping("path")
+    @PostMapping
     public Categorias crearCategoria(@RequestBody Categorias categorias) {
         return categoriaService.guardarCategoria(categorias);
     }

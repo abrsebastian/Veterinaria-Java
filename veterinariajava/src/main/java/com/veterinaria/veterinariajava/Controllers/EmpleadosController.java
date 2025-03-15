@@ -23,6 +23,7 @@ public class EmpleadosController {
     @Autowired
     private EmpleadoService empleadoService;
 
+    @GetMapping
     public List<Empleados> listarEmpleados(){
         return empleadoService.obtenerTodos();
     }
@@ -32,7 +33,7 @@ public class EmpleadosController {
         return empleadoService.obtenerPorId(id);
     }
 
-    @PostMapping("path")
+    @PostMapping
     public Empleados crearEmpleados(@RequestBody Empleados empleados) {
         return empleadoService.guardarEmpleados(empleados);
     }

@@ -13,6 +13,7 @@ import jakarta.persistence.Table;
 public class Proveedores {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "proveedor_id")
     private Integer proveedorId;
 
     @Column(name = "nombre_proveedor")

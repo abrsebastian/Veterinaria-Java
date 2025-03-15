@@ -14,6 +14,7 @@ public class Servicios {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "servicio_id")
     private Integer servicioId;
 
     @Column(name ="nombre_servicio")

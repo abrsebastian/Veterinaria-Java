@@ -13,12 +13,13 @@ import jakarta.persistence.Table;
 public class Ganancias {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ganancia_id")
     private Integer gananciaId;
 
-    @Column(name = "producto_id")
+    @Column(name = "producto_id", nullable = true)
     private int productoId;
 
-    @Column(name = "servicio_id")
+    @Column(name = "servicio_id", nullable = true)
     private int servicioId;
 
     @Column(name = "total_ingresos")

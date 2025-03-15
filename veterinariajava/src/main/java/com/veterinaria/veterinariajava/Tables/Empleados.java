@@ -12,6 +12,7 @@ import jakarta.persistence.Table;
 public class Empleados {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "empleado_id")
     private Integer empleadoId;
 
     @Column(name = "nombre_empleado")

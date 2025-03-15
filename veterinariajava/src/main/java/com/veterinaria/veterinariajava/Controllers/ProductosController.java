@@ -22,6 +22,7 @@ public class ProductosController {
     @Autowired
     private ProductosServices productosServices;
 
+    @GetMapping
     public List<Productos> listaProductos(){
         return productosServices.obtenerTodos();
     }
@@ -31,8 +32,8 @@ public class ProductosController {
         return productosServices.obtenerPorId(id);
     }
 
-    @PostMapping("path")
-    public Productos crearGanancia(@RequestBody Productos productos) {
+    @PostMapping
+    public Productos crearProductos(@RequestBody Productos productos) {
         return productosServices.guardarProductos(productos);
     }
 

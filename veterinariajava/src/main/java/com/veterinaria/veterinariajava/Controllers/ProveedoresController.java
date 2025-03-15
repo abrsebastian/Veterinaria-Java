@@ -21,6 +21,7 @@ public class ProveedoresController {
     @Autowired
     private ProveedoresServices proveedoresServices;
 
+    @GetMapping
     public List<Proveedores> listaProductos(){
         return proveedoresServices.obtenerTodos();
     }
@@ -30,7 +31,7 @@ public class ProveedoresController {
         return proveedoresServices.obtenerPorId(id);
     }
 
-    @PostMapping("path")
+    @PostMapping
     public Proveedores crearProveedor(@RequestBody Proveedores proveedores) {
         return proveedoresServices.guardaProveedores(proveedores);
     }

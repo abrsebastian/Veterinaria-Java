@@ -13,6 +13,7 @@ public class Categorias {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "categoria_id")
     private Integer categoria_id;
 
     @Column(name = "nombre_categoria")
