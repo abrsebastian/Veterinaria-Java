@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.veterinaria.veterinariajava.Repository.GananciasRepository;
-import com.veterinaria.veterinariajava.Tables.Categorias;
+
 import com.veterinaria.veterinariajava.Tables.Ganancias;
 
 @Service

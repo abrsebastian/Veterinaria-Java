@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -25,11 +27,13 @@ public class Productos {
     @Column(name = "stock")
     private int stock;
 
-    @Column(name = "categoria_id")
-    private Integer categoriaId;
+    @ManyToOne
+    @JoinColumn(name = "categoria_id")
+    private Categorias categorias;
 
-    @Column(name = "proveedor_id")
-    private Integer proveedorId;
+    @ManyToOne
+    @JoinColumn(name = "proveedor_id")
+    private Proveedores proveedores;
 
     public Integer getProductoId() {
         return productoId;
@@ -63,20 +67,20 @@ public class Productos {
         this.stock = stock;
     }
 
-    public Integer getCategoriaId() {
-        return categoriaId;
+    public Categorias getCategoria() {
+        return categorias;
     }
 
-    public void setCategoriaId(Integer categoriaId) {
-        this.categoriaId = categoriaId;
+    public void setCategoria(Categorias categorias) {
+        this.categorias = categorias;
     }
 
-    public Integer getProveedorId() {
-        return proveedorId;
+    public Proveedores getProveedor() {
+        return proveedores;
     }
 
-    public void setProveedorId(Integer proveedorId) {
-        this.proveedorId = proveedorId;
+    public void setProveedor(Proveedores proveedores) {
+        this.proveedores = proveedores;
     }
   
 }

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.veterinaria.veterinariajava.Services.GananciaService;
-import com.veterinaria.veterinariajava.Tables.Empleados;
+
 import com.veterinaria.veterinariajava.Tables.Ganancias;
 
 @RestController

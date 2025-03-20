@@ -6,9 +6,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.veterinaria.veterinariajava.Repository.GananciasRepository;
+
 import com.veterinaria.veterinariajava.Repository.ProductosRepository;
-import com.veterinaria.veterinariajava.Tables.Ganancias;
+
 import com.veterinaria.veterinariajava.Tables.Productos;
 
 @Service

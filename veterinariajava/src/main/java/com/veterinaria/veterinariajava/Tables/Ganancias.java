@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -16,11 +18,13 @@ public class Ganancias {
     @Column(name = "ganancia_id")
     private Integer gananciaId;
 
-    @Column(name = "producto_id", nullable = true)
-    private int productoId;
+    @ManyToOne
+    @JoinColumn(name = "producto_id", nullable = true)
+    private Productos productos;
 
-    @Column(name = "servicio_id", nullable = true)
-    private int servicioId;
+    @ManyToOne
+    @JoinColumn(name = "servicio_id", nullable = true)
+    private Servicios servicios;
 
     @Column(name = "total_ingresos")
     private double totalGanancias;
@@ -36,20 +40,20 @@ public class Ganancias {
         this.gananciaId = gananciaId;
     }
 
-    public int getProductoId() {
-        return productoId;
+    public Productos getProducto() {
+        return productos;
     }
 
-    public void setProductoId(int productoId) {
-        this.productoId = productoId;
+    public void setProducto(Productos productos) {
+        this.productos = productos;
     }
 
-    public int getServicioId() {
-        return servicioId;
+    public Servicios getServicio() {
+        return servicios;
     }
 
-    public void setServicioId(int servicioId) {
-        this.servicioId = servicioId;
+    public void setServicioId(Servicios servicios) {
+        this.servicios = servicios;
     }
 
     public double getTotalGanancias() {
