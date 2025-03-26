@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 
 @Entity
@@ -26,6 +28,50 @@ public class Empleados {
 
     @Column(name = "sueldo_por_hora")
     private double sueldoPorHora;
+
+    @Column(name = "sueldo_toal")
+    private double sueldoTotal;
+    
+    @Column(name = "comisiones", nullable = true)
+    private double comisionesTotal;
+    
+    @Column(name = "sueldo_final", nullable = true)
+    private double sueldoFinal;
+
+    public Empleados(){}
+
+    @PrePersist
+    @PreUpdate
+    private void calcularSueldoTotal(){
+        this.sueldoTotal = this.sueldoPorHora * this.horasTrabajadas;
+    }
+    void calcularSueldoFinal(){
+        this.sueldoFinal = this.sueldoTotal + this.comisionesTotal;
+    }
+
+    public double getComisiones() {
+        return comisionesTotal;
+    }
+
+    public void setComisiones(double comisionesTotal) {
+        this.comisionesTotal = comisionesTotal;
+    }
+
+    public double getSueldoFinal() {
+        return sueldoFinal;
+    }
+
+    public void setSueldoFinal(double sueldoFinal) {
+        this.sueldoFinal = sueldoFinal;
+    }
+
+    public double getSueldoTotal() {
+        return sueldoTotal;
+    }
+
+    public void setSueldoTotal(double sueldoTotal) {
+        this.sueldoTotal = sueldoTotal;
+    }
 
     public Integer getEmpleadoId() {
         return empleadoId;
@@ -65,6 +111,14 @@ public class Empleados {
 
     public void setSueldoPorHora(double sueldoPorHora) {
         this.sueldoPorHora = sueldoPorHora;
+    }
+
+    public double getComisionesTotal() {
+        return comisionesTotal;
+    }
+
+    public void setComisionesTotal(double comisionesTotal) {
+        this.comisionesTotal = comisionesTotal;
     }
 
 }

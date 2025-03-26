@@ -3,30 +3,56 @@ package com.veterinaria.veterinariajava.Services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.management.RuntimeErrorException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import com.veterinaria.veterinariajava.Repository.GananciasRepository;
-import com.veterinaria.veterinariajava.Tables.Ganancias;
+import com.veterinaria.veterinariajava.Repository.EmpleadosRepository;
 
+import com.veterinaria.veterinariajava.Repository.ProductosRepository;
+import com.veterinaria.veterinariajava.Repository.VentasRepository;
+import com.veterinaria.veterinariajava.Tables.Empleados;
+
+import com.veterinaria.veterinariajava.Tables.Productos;
+import com.veterinaria.veterinariajava.Tables.Ventas;
+
+@Service
 public class VentasServices {
-      @Autowired
-    private GananciasRepository gananciasRepository;
+    
+    @Autowired
+    private VentasRepository ventasRepository;
 
-    public List<Ganancias>obtenerTodas(){
-        return gananciasRepository.findAll();
-    }
+    @Autowired
+    private EmpleadosRepository empleadosRepository;
+    
+    @Autowired
+    private ProductosRepository productosRepository;
 
-     public Optional<Ganancias>obtenerPorId(Integer id){
-        return gananciasRepository.findById(id);
-    }
+    public List<Ventas>obtenerTodasLasVentas(){
+      return ventasRepository.findAll();
+    } 
 
-    public Ganancias guardarGanancia(Ganancias ganancias){
-        return gananciasRepository.save(ganancias);
-    }
+    public Ventas ventasRegistradas(Integer productoId,Integer empleadoId, int cantidad){
+      Optional <Empleados> empleadosOptional = empleadosRepository.findById(empleadoId);
+      Optional <Productos> productosOptional = productosRepository.findById(productoId);
 
-    public void eliminarGanancia(Integer id){
-        gananciasRepository.deleteById(id);
+      if(productosOptional.isPresent() && empleadosOptional.isPresent()){
+
+        Productos productos = productosOptional.get();
+        Empleados empleados = empleadosOptional.get();
+
+        Ventas nuevaVenta = new Ventas(productos, empleados, null, cantidad);
+        ventasRepository.save(nuevaVenta);
+
+        double calcularComision = empleados.getSueldoFinal() + nuevaVenta.getComisionPorVenta();
+        empleados.setSueldoFinal(calcularComision);
+        empleadosRepository.save(empleados);
+
+        return nuevaVenta;
+
+      }
+      throw new RuntimeErrorException(null, "Producto o Empleado no encontrado");
+      
     }
 }
-
-//falta implementar service y controllers para poder continuar con el resto de la logica y ver si funciona la parte de calculos, posteriormente se seguira con el resto de las tablas 
