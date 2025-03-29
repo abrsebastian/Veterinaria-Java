@@ -63,8 +63,8 @@ public class Productos {
         return stock;
     }
 
-    public void setStock(int stock) {
-        this.stock = stock;
+    public void setStock(long stock) {
+        this.stock = (int) stock;
     }
 
     public Categorias getCategoria() {

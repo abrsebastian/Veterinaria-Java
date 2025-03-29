@@ -19,40 +19,61 @@ import com.veterinaria.veterinariajava.Tables.Ventas;
 
 @Service
 public class VentasServices {
-    
-    @Autowired
-    private VentasRepository ventasRepository;
 
-    @Autowired
-    private EmpleadosRepository empleadosRepository;
-    
-    @Autowired
-    private ProductosRepository productosRepository;
+  @Autowired
+  private VentasRepository ventasRepository;
 
-    public List<Ventas>obtenerTodasLasVentas(){
-      return ventasRepository.findAll();
-    } 
+  @Autowired
+  private EmpleadosRepository empleadosRepository;
 
-    public Ventas ventasRegistradas(Integer productoId,Integer empleadoId, int cantidad){
-      Optional <Empleados> empleadosOptional = empleadosRepository.findById(empleadoId);
-      Optional <Productos> productosOptional = productosRepository.findById(productoId);
+  @Autowired
+  private ProductosRepository productosRepository;
 
-      if(productosOptional.isPresent() && empleadosOptional.isPresent()){
+  public List<Ventas> obtenerTodasLasVentas() {
+    return ventasRepository.findAll();
+  }
 
-        Productos productos = productosOptional.get();
-        Empleados empleados = empleadosOptional.get();
+  public Ventas registrarVentas(Integer productoId, Integer empleadoId, Long cantidadProductoVendido) {
+    Empleados empleados = obtenerEmpleado(empleadoId);
+    Productos productos = obtenerProducto(productoId);
 
-        Ventas nuevaVenta = new Ventas(productos, empleados, null, cantidad);
-        ventasRepository.save(nuevaVenta);
+    validadStockDisponible(productos, cantidadProductoVendido);
 
-        double calcularComision = empleados.getSueldoFinal() + nuevaVenta.getComisionPorVenta();
-        empleados.setSueldoFinal(calcularComision);
-        empleadosRepository.save(empleados);
+    Ventas nuevaVenta = crearVenta(productos, empleados, cantidadProductoVendido);
+    ventasRepository.save(nuevaVenta);
 
-        return nuevaVenta;
+    actualizarStock(productos, cantidadProductoVendido);
+    actualizarComision(empleados, nuevaVenta.getComisionPorVenta());
+    return nuevaVenta;
 
-      }
-      throw new RuntimeErrorException(null, "Producto o Empleado no encontrado");
-      
+  }
+
+  private void actualizarComision(Empleados empleados, double comisionPorVenta) {
+    empleados.setComisiones(empleados.getComisionesTotal() + comisionPorVenta);
+    empleados.calcularSueldoFinal();
+    empleadosRepository.save(empleados);
+  }
+
+  private void actualizarStock(Productos productos, Long cantidadProductoVendido) {
+    productos.setStock(productos.getStock() - cantidadProductoVendido);
+  }
+
+  private Empleados obtenerEmpleado(Integer empleadoId) {
+    return empleadosRepository.findById(empleadoId).orElseThrow(()-> new RuntimeException("Empleado no encontrado"));
+  }
+
+  private Productos obtenerProducto(Integer productoId) {
+    return productosRepository.findById(productoId).orElseThrow(()-> new RuntimeException("Producto no encontrado"));
+  }
+
+  private Ventas crearVenta(Productos productos, Empleados empleados, Long cantidadProductoVendido) {
+    return new Ventas(productos,empleados,cantidadProductoVendido, cantidadProductoVendido);
+  }
+
+  private void validadStockDisponible(Productos productos, Long cantidadProductoVendido) {
+    if(productos.getStock() < cantidadProductoVendido){
+      throw new IllegalStateException("NO hay suficiente Stock disponible");
     }
+  }
+
 }

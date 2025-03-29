@@ -33,10 +33,10 @@ public class Empleados {
     private double sueldoTotal;
     
     @Column(name = "comisiones", nullable = true)
-    private double comisionesTotal;
+    private double comisionesTotal = 0.0;
     
     @Column(name = "sueldo_final", nullable = true)
-    private double sueldoFinal;
+    private double sueldoFinal = 0.0;
 
     public Empleados(){}
 
@@ -45,7 +45,7 @@ public class Empleados {
     private void calcularSueldoTotal(){
         this.sueldoTotal = this.sueldoPorHora * this.horasTrabajadas;
     }
-    void calcularSueldoFinal(){
+    public void calcularSueldoFinal(){
         this.sueldoFinal = this.sueldoTotal + this.comisionesTotal;
     }
 
