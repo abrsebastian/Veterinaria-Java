@@ -27,7 +27,7 @@ public class VentasController {
         return ventasServices.obtenerTodasLasVentas();
     }
 
-    @PostMapping("/registrar")
+    @PostMapping
     public ResponseEntity<Ventas>registrarVentas(@RequestBody Ventas ventas){
         Ventas nuevaVentas = ventasServices.registrarVentas(
             ventas.getProductos().getProductoId(),

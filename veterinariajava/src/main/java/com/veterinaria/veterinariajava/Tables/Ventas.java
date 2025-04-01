@@ -15,8 +15,6 @@ import jakarta.persistence.Table;
 @Table(name = "ventas")
 
 public class Ventas {
-    double comisionCorrespondiente = 0.0;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "venta_id")
@@ -51,15 +49,15 @@ public class Ventas {
         this.cantidadProductoVendido = cantidad;
         this.precioUnitarioPorVenta = precioUnitarioPorVenta;
         this.precioTotal = productos.getPrecioUnitario() * cantidad;
-        this.comisionPorVenta = precioTotal * comisionCorrespondiente;
+        //this.comisionPorVenta = precioTotal * comisionPorVenta;
 
         if ("Veterinario".equalsIgnoreCase(empleados.getTipoEmpleado())) {
-            comisionCorrespondiente = precioTotal * 0.15;
+            this.comisionPorVenta = precioTotal * 0.15;
         } else if ("Recepcionista".equalsIgnoreCase(empleados.getTipoEmpleado())) {
-            comisionCorrespondiente = precioTotal * 0.15;
+            this.comisionPorVenta = precioTotal * 0.10;
         }
 
-        empleados.setComisiones(empleados.getComisiones() + comisionCorrespondiente);
+        empleados.setComisiones(empleados.getComisiones() + comisionPorVenta);
         empleados.calcularSueldoFinal();
     }
 
