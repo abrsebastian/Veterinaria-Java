@@ -10,13 +10,13 @@ import com.veterinaria.veterinariajava.Tables.Servicios;
 @Service
 public class ServiciosServices {
     @Autowired
-     private ServiciosRepository serviciosRepository;
+    private ServiciosRepository serviciosRepository;
 
     public List<Servicios>obtenerTodos(){
         return serviciosRepository.findAll();
     }
 
-     public Optional<Servicios>obtenerPorId(Integer id){
+    public Optional<Servicios>obtenerPorId(Integer id){
         return serviciosRepository.findById(id);
     }
 

@@ -36,11 +36,6 @@ public class VentasController {
         return ResponseEntity.ok(nuevaVentas);
     }
 
-    // public Ventas registrarVenta(@RequestParam Integer productoId, @RequestParam Integer empleadoId,
-    //         @RequestParam int cantidad) {
-    //     return ventasServices.ventasRegistradas(productoId, empleadoId, cantidad);
-    // }
-
 
 
 }

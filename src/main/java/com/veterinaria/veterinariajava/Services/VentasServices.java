@@ -29,6 +29,9 @@ public class VentasServices {
   @Autowired
   private ProductosRepository productosRepository;
 
+  @Autowired
+  private  EmpleadoService empleadoService;
+
   public List<Ventas> obtenerTodasLasVentas() {
     return ventasRepository.findAll();
   }
@@ -44,14 +47,14 @@ public class VentasServices {
 
     actualizarStock(productos, cantidadProductoVendido);
     actualizarComision(empleados, nuevaVenta.getComisionPorVenta());
+    empleadoService.calcularSueldoFinal(empleados.getEmpleadoId());
     return nuevaVenta;
 
   }
 
   private void actualizarComision(Empleados empleados, double comisionPorVenta) {
-    empleados.setComisiones(empleados.getComisionesTotal() + comisionPorVenta);
+    empleados.setComisionesTotal(empleados.getComisionesTotal() + comisionPorVenta);
     empleados.setSueldoTotal(empleados.getSueldoPorHora() * empleados.getHorasTrabajadas());
-    empleados.setSueldoFinal(empleados.getSueldoTotal() + empleados.getComisionesTotal());
     empleadosRepository.save(empleados);
   }
 

@@ -57,7 +57,7 @@ public class Ventas {
             this.comisionPorVenta = precioTotal * 0.10;
         }
 
-        empleados.setComisiones(empleados.getComisiones() + comisionPorVenta);
+        empleados.setComisionesTotal(empleados.getComisionesTotal() + comisionPorVenta);
     }
 
     public Integer getVentaId() {

@@ -19,7 +19,7 @@ public class GananciaService {
         return gananciasRepository.findAll();
     }
 
-     public Optional<Ganancias>obtenerPorId(Integer id){
+    public Optional<Ganancias>obtenerPorId(Integer id){
         return gananciasRepository.findById(id);
     }
 
