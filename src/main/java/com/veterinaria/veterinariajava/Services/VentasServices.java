@@ -30,7 +30,7 @@ public class VentasServices {
   private ProductosRepository productosRepository;
 
   @Autowired
-  private  EmpleadoService empleadoService;
+  private  EmpleadosService empleadosService;
 
   public List<Ventas> obtenerTodasLasVentas() {
     return ventasRepository.findAll();
@@ -40,14 +40,20 @@ public class VentasServices {
     Empleados empleados = obtenerEmpleado(empleadoId);
     Productos productos = obtenerProducto(productoId);
 
-    validadStockDisponible(productos, cantidadProductoVendido);
+    validarStockDisponible(productos, cantidadProductoVendido);
 
-    Ventas nuevaVenta = crearVenta(productos, empleados, cantidadProductoVendido);
+    actualizarStock(productos, cantidadProductoVendido);
+
+    double comision = calcularComision(empleados, productos, cantidadProductoVendido);
+    actualizarComision(empleados, comision);
+    empleadosService.calcularSueldoFinal(empleadoId);
+
+    Ventas nuevaVenta = new Ventas(productos, empleados, cantidadProductoVendido, productos.getPrecioUnitario(), comision);
     ventasRepository.save(nuevaVenta);
 
     actualizarStock(productos, cantidadProductoVendido);
-    actualizarComision(empleados, nuevaVenta.getComisionPorVenta());
-    empleadoService.calcularSueldoFinal(empleados.getEmpleadoId());
+    empleadosRepository.save(empleados);
+
     return nuevaVenta;
 
   }
@@ -55,7 +61,7 @@ public class VentasServices {
   private void actualizarComision(Empleados empleados, double comisionPorVenta) {
     empleados.setComisionesTotal(empleados.getComisionesTotal() + comisionPorVenta);
     empleados.setSueldoTotal(empleados.getSueldoPorHora() * empleados.getHorasTrabajadas());
-    empleadosRepository.save(empleados);
+
   }
 
   private void actualizarStock(Productos productos, Long cantidadProductoVendido) {
@@ -70,14 +76,25 @@ public class VentasServices {
     return productosRepository.findById(productoId).orElseThrow(()-> new RuntimeException("Producto no encontrado"));
   }
 
-  private Ventas crearVenta(Productos productos, Empleados empleados, Long cantidadProductoVendido) {
-    return new Ventas(productos,empleados,cantidadProductoVendido, cantidadProductoVendido);
-  }
+//  private Ventas crearVenta(Productos productos, Empleados empleados, Long cantidadProductoVendido) {
+//    return new Ventas(productos,empleados,cantidadProductoVendido, cantidadProductoVendido);
+//  }
 
-  private void validadStockDisponible(Productos productos, Long cantidadProductoVendido) {
+  private void validarStockDisponible(Productos productos, Long cantidadProductoVendido) {
     if(productos.getStock() < cantidadProductoVendido){
       throw new IllegalStateException("NO hay suficiente Stock disponible");
     }
+  }
+
+  private double calcularComision(Empleados empleados, Productos productos, Long cantidad){
+    double total = productos.getPrecioUnitario() * cantidad;
+    if("Veterinario".equalsIgnoreCase(empleados.getTipoEmpleado())){
+      return total * 0.15;
+    }
+    else if("Recepcionista".equalsIgnoreCase(empleados.getTipoEmpleado())){
+      return total * 0.10;
+    }
+    return 0.0;
   }
 
 }

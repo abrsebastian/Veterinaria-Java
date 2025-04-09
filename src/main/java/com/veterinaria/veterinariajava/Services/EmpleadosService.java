@@ -3,7 +3,6 @@ package com.veterinaria.veterinariajava.Services;
 import java.util.List;
 import java.util.Optional;
 
-import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,9 +10,13 @@ import com.veterinaria.veterinariajava.Repository.EmpleadosRepository;
 import com.veterinaria.veterinariajava.Tables.Empleados;
 
 @Service
-public class EmpleadoService {
+public class EmpleadosService {
     @Autowired
-    private EmpleadosRepository empleadosRepository;
+    final private EmpleadosRepository empleadosRepository;
+
+    public EmpleadosService(EmpleadosRepository empleadosRepository) {
+        this.empleadosRepository = empleadosRepository;
+    }
 
     public List<Empleados>obtenerTodos(){
         return empleadosRepository.findAll();
@@ -34,10 +37,11 @@ public class EmpleadoService {
     public void calcularSueldoFinal(Integer empleadoId){
         Empleados empleados = empleadosRepository.findById(empleadoId).orElseThrow(() -> new RuntimeException("Empleado no encontrado"));
 
-        double sueldoFInal = empleados.getSueldoTotal() + empleados.getComisionesTotal();
-        empleados.setSueldoFinal(sueldoFInal);
+        double sueldoFinal = empleados.getSueldoTotal() + empleados.getComisionesTotal();
+        empleados.setSueldoFinal(sueldoFinal);
 
         empleadosRepository.save(empleados);
+
     }
 
     public Empleados actualizarEmpleado(Integer id, Empleados empleadoActualizado){

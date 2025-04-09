@@ -43,21 +43,13 @@ public class Ventas {
     public Ventas() {
     };
 
-    public Ventas(Productos productos, Empleados empleados, Long cantidad, double precioUnitarioPorVenta) {
+    public Ventas(Productos productos, Empleados empleados, Long cantidad, double precioUnitarioPorVenta, double comisionPorVenta) {
         this.productos = productos;
         this.empleados = empleados;
         this.cantidadProductoVendido = cantidad;
         this.precioUnitarioPorVenta = precioUnitarioPorVenta;
         this.precioTotal = productos.getPrecioUnitario() * cantidad;
-        //this.comisionPorVenta = precioTotal * comisionPorVenta;
-
-        if ("Veterinario".equalsIgnoreCase(empleados.getTipoEmpleado())) {
-            this.comisionPorVenta = precioTotal * 0.15;
-        } else if ("Recepcionista".equalsIgnoreCase(empleados.getTipoEmpleado())) {
-            this.comisionPorVenta = precioTotal * 0.10;
-        }
-
-        empleados.setComisionesTotal(empleados.getComisionesTotal() + comisionPorVenta);
+        this.comisionPorVenta = comisionPorVenta;
     }
 
     public Integer getVentaId() {

@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.veterinaria.veterinariajava.Tables.Empleados;
-import com.veterinaria.veterinariajava.Services.EmpleadoService;
+import com.veterinaria.veterinariajava.Services.EmpleadosService;
 
 
 @RestController
@@ -16,7 +16,7 @@ import com.veterinaria.veterinariajava.Services.EmpleadoService;
 public class EmpleadosController {
 
     @Autowired
-    private EmpleadoService empleadoService;
+    private EmpleadosService empleadoService;
 
     @GetMapping
     public List<Empleados> listarEmpleados(){
