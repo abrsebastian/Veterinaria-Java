@@ -16,7 +16,7 @@ public class ProveedoresServices {
         return proveedoresRepository.findAll();
     }
 
-     public Optional<Proveedores>obtenerPorId(Integer id){
+    public Optional<Proveedores>obtenerPorId(Integer id){
         return proveedoresRepository.findById(id);
     }
 
@@ -26,6 +26,16 @@ public class ProveedoresServices {
 
     public void eliminarProveedor(Integer id){
         proveedoresRepository.deleteById(id);
+    }
+
+    public Proveedores actualizarProveedor(Integer id, Proveedores proveedorActualizado){
+        proveedoresRepository.findById(id).map(proveedores -> {
+            proveedores.setNombreProveedor(proveedorActualizado.getNombreProveedor());
+            proveedores.setEmail(proveedorActualizado.getEmail());
+            proveedores.setTelefono(proveedorActualizado.getTelefono());
+            return proveedoresRepository.save(proveedores);
+        });
+        return proveedorActualizado;
     }
 
 }

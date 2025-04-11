@@ -43,9 +43,8 @@ public class Empleados {
    }
 
     @PrePersist
-    @PreUpdate
     private void calcularSueldoTotal(){
-       this.sueldoTotal = this.sueldoPorHora * this.horasTrabajadas;
+        this.sueldoTotal = this.sueldoPorHora * this.horasTrabajadas;
     }
 
     public void set(Double comisionesTotal) {

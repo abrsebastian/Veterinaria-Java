@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import javax.management.RuntimeErrorException;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +37,7 @@ public class VentasServices {
     return ventasRepository.findAll();
   }
 
+  @Transactional
   public Ventas registrarVentas(Integer productoId, Integer empleadoId, Long cantidadProductoVendido) {
     Empleados empleados = obtenerEmpleado(empleadoId);
     Productos productos = obtenerProducto(productoId);
@@ -52,7 +54,6 @@ public class VentasServices {
     ventasRepository.save(nuevaVenta);
 
     actualizarStock(productos, cantidadProductoVendido);
-    empleadosRepository.save(empleados);
 
     return nuevaVenta;
 
