@@ -2,6 +2,8 @@ package com.veterinaria.veterinariajava.Services;
 import java.util.List;
 import java.util.Optional;
 
+import com.veterinaria.veterinariajava.Tables.Categorias;
+import com.veterinaria.veterinariajava.Tables.Productos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.veterinaria.veterinariajava.Repository.ProveedoresRepository;
@@ -29,13 +31,13 @@ public class ProveedoresServices {
     }
 
     public Proveedores actualizarProveedor(Integer id, Proveedores proveedorActualizado){
-        proveedoresRepository.findById(id).map(proveedores -> {
-            proveedores.setNombreProveedor(proveedorActualizado.getNombreProveedor());
-            proveedores.setEmail(proveedorActualizado.getEmail());
-            proveedores.setTelefono(proveedorActualizado.getTelefono());
-            return proveedoresRepository.save(proveedores);
-        });
-        return proveedorActualizado;
+        Proveedores proveedores = proveedoresRepository.findById(id).orElseThrow(()-> new RuntimeException("Proveedor no encontrado"));
+
+        proveedores.setNombreProveedor(proveedorActualizado.getNombreProveedor());
+        proveedores.setTelefono(proveedorActualizado.getTelefono());
+        proveedores.setEmail(proveedorActualizado.getEmail());
+
+        return proveedoresRepository.save(proveedores);
     }
 
 }

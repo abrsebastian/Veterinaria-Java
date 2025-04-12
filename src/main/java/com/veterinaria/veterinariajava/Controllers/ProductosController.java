@@ -3,14 +3,10 @@ package com.veterinaria.veterinariajava.Controllers;
 import java.util.List;
 import java.util.Optional;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import com.veterinaria.veterinariajava.Services.ProductosServices;
 import com.veterinaria.veterinariajava.Tables.Productos;
 
@@ -40,6 +36,16 @@ public class ProductosController {
     @DeleteMapping("/{id}")
     public void eliminarProducto(@PathVariable Integer id){
         productosServices.eliminarProducto(id);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Productos> actualizarProducto(@PathVariable Integer id, @RequestBody Productos productoActualizado){
+        try {
+            Productos actualizado = productosServices.actualizarProducto(id, productoActualizado);
+            return ResponseEntity.ok(actualizado);
+        }catch (EntityNotFoundException e){
+            return ResponseEntity.notFound().build();
+        }
     }
 
 }

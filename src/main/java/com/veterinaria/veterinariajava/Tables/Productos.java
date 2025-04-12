@@ -82,5 +82,5 @@ public class Productos {
     public void setProveedor(Proveedores proveedores) {
         this.proveedores = proveedores;
     }
-  
+
 }

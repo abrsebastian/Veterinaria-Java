@@ -59,6 +59,8 @@ public class VentasServices {
 
   }
 
+  
+
   private void actualizarComision(Empleados empleados, double comisionPorVenta) {
     empleados.setComisionesTotal(empleados.getComisionesTotal() + comisionPorVenta);
     empleados.setSueldoTotal(empleados.getSueldoPorHora() * empleados.getHorasTrabajadas());

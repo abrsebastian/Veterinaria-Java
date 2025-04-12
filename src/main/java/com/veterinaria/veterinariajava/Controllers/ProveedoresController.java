@@ -41,11 +41,10 @@ public class ProveedoresController {
     public ResponseEntity<Proveedores> actualizarProveedor(@PathVariable Integer id, @RequestBody Proveedores proveedorActualizado) {
         try {
             Proveedores actualizado = proveedoresServices.actualizarProveedor(id, proveedorActualizado);
-            ResponseEntity.ok(actualizado);
+            return ResponseEntity.ok(actualizado);
         } catch (EntityNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
-        return null;
     }
 
 }
