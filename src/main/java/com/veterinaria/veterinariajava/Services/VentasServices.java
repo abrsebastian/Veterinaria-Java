@@ -1,10 +1,8 @@
 package com.veterinaria.veterinariajava.Services;
 
 import java.util.List;
-import java.util.Optional;
 
-import javax.management.RuntimeErrorException;
-
+import com.veterinaria.veterinariajava.DTO.VentasResponseDTO;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,66 +36,114 @@ public class VentasServices {
   }
 
   @Transactional
-  public Ventas registrarVentas(Integer productoId, Integer empleadoId, Long cantidadProductoVendido) {
-    Empleados empleados = obtenerEmpleado(empleadoId);
-    Productos productos = obtenerProducto(productoId);
+  public VentasResponseDTO registrarVentas(Ventas ventas) {
 
-    validarStockDisponible(productos, cantidadProductoVendido);
+    Empleados empleados = empleadosRepository.findById(ventas.getEmpleados().getEmpleadoId()).
+            orElseThrow(()-> new RuntimeException("Empleado no encontrado"));
 
-    actualizarStock(productos, cantidadProductoVendido);
+    Productos productos = productosRepository.findById(ventas.getProductos().getProductoId()).
+            orElseThrow(()-> new RuntimeException("Producto no encontrado"));
 
-    double comision = calcularComision(empleados, productos, cantidadProductoVendido);
-    actualizarComision(empleados, comision);
-    empleadosService.calcularSueldoFinal(empleadoId);
+    if(productos.getStock() < ventas.getCantidadProductoVendido()){
+      throw new IllegalStateException("No hay suficiente stock disponible");
+    }
 
-    Ventas nuevaVenta = new Ventas(productos, empleados, cantidadProductoVendido, productos.getPrecioUnitario(), comision);
+    //Calcular datos
+    double precioUnitario = productos.getPrecioUnitario();
+    long cantidad = ventas.getCantidadProductoVendido();
+    double total = precioUnitario * cantidad;
+    double comision = calcularComision(empleados, total);
+
+    //Actualizar stock y sueldo
+    productos.setStock(productos.getStock()-cantidad);
+    empleados.setComisionesTotal(empleados.getComisionesTotal() + comision);
+    empleadosService.calcularSueldoFinal(empleados.getEmpleadoId());
+
+    //Guardar venta
+    Ventas nuevaVenta = new Ventas(productos, empleados, cantidad, precioUnitario, comision);
     ventasRepository.save(nuevaVenta);
 
-    actualizarStock(productos, cantidadProductoVendido);
+    Ventas ventaCompleta = ventasRepository.findById(nuevaVenta.getVentaId())
+            .orElseThrow(() -> new RuntimeException("Venta no encontrada"));
 
-    return nuevaVenta;
+    //Devolver DTO
+    return new VentasResponseDTO(
+            nuevaVenta.getProductos().getProductoId(),
+            nuevaVenta.getProductos().getNombreProducto(),
+            nuevaVenta.getEmpleados().getEmpleadoId(),
+            nuevaVenta.getEmpleados().getTipoEmpleado(),
+            nuevaVenta.getEmpleados().getNombreEmpleado(),
+            nuevaVenta.getPrecioUnitarioPorVenta(),
+            nuevaVenta.getCantidadProductoVendido(),
+            nuevaVenta.getPrecioTotal(),
+            nuevaVenta.getPrecioTotal()
+    );
 
   }
 
-  
+  @Transactional
+  public VentasResponseDTO actualizarVentas(Integer ventaId, Ventas nuevaData){
 
-  private void actualizarComision(Empleados empleados, double comisionPorVenta) {
-    empleados.setComisionesTotal(empleados.getComisionesTotal() + comisionPorVenta);
-    empleados.setSueldoTotal(empleados.getSueldoPorHora() * empleados.getHorasTrabajadas());
+    Ventas ventaExistente = ventasRepository.findById(ventaId)
+            .orElseThrow(()-> new RuntimeException("Venta no encontrada"));
 
-  }
+    Empleados empleados = empleadosRepository.findById(nuevaData.getEmpleados().getEmpleadoId())
+            .orElseThrow(()->new RuntimeException("Empleado no encontrado"));
 
-  private void actualizarStock(Productos productos, Long cantidadProductoVendido) {
-    productos.setStock(productos.getStock() - cantidadProductoVendido);
-  }
+    Productos productos = productosRepository.findById(nuevaData.getProductos().getProductoId())
+            .orElseThrow(()-> new RuntimeException("Producto no encontrado"));
 
-  private Empleados obtenerEmpleado(Integer empleadoId) {
-    return empleadosRepository.findById(empleadoId).orElseThrow(()-> new RuntimeException("Empleado no encontrado"));
-  }
+    long nuevaCantidad = nuevaData.getCantidadProductoVendido();
 
-  private Productos obtenerProducto(Integer productoId) {
-    return productosRepository.findById(productoId).orElseThrow(()-> new RuntimeException("Producto no encontrado"));
-  }
+    //Devolver stock anterior antes de calcular stock nuevo
 
-//  private Ventas crearVenta(Productos productos, Empleados empleados, Long cantidadProductoVendido) {
-//    return new Ventas(productos,empleados,cantidadProductoVendido, cantidadProductoVendido);
-//  }
+    Productos productoAnterior = ventaExistente.getProductos();
+    long cantidadAnterior = ventaExistente.getCantidadProductoVendido();
+    productoAnterior.setStock(productoAnterior.getStock() + cantidadAnterior);
 
-  private void validarStockDisponible(Productos productos, Long cantidadProductoVendido) {
-    if(productos.getStock() < cantidadProductoVendido){
-      throw new IllegalStateException("NO hay suficiente Stock disponible");
+    if(productoAnterior.getStock() < nuevaCantidad){
+      throw new IllegalStateException("No hay suficiente stock para la venta");
     }
+
+    double nuevoPrecioUnitario = productos.getPrecioUnitario();
+    double nuevoTotal = nuevoPrecioUnitario * nuevaCantidad;
+    double nuevaComision = calcularComision(empleados, nuevoTotal);
+
+    productos.setStock(productos.getStock() - nuevaCantidad);
+    empleados.setComisionesTotal(empleados.getComisionesTotal() + nuevaComision);
+    empleadosService.calcularSueldoFinal(empleados.getEmpleadoId());
+
+    //actualizar datos
+
+    ventaExistente.setEmpleados(empleados);
+    ventaExistente.setProductos(productos);
+    ventaExistente.setCantidadProductoVendido(nuevaCantidad);
+    ventaExistente.setPrecioUnitarioPorVenta(nuevoPrecioUnitario);
+    ventaExistente.setComisionPorVenta(nuevaComision);
+
+    ventasRepository.save(ventaExistente);
+
+    return new VentasResponseDTO(
+            ventaExistente.getProductos().getProductoId(),
+            ventaExistente.getProductos().getNombreProducto(),
+            ventaExistente.getEmpleados().getEmpleadoId(),
+            ventaExistente.getEmpleados().getTipoEmpleado(),
+            ventaExistente.getEmpleados().getNombreEmpleado(),
+            ventaExistente.getPrecioUnitarioPorVenta(),
+            ventaExistente.getCantidadProductoVendido(),
+            ventaExistente.getPrecioTotal(),
+            ventaExistente.getPrecioTotal()
+    );
+
+
   }
 
-  private double calcularComision(Empleados empleados, Productos productos, Long cantidad){
-    double total = productos.getPrecioUnitario() * cantidad;
-    if("Veterinario".equalsIgnoreCase(empleados.getTipoEmpleado())){
-      return total * 0.15;
-    }
-    else if("Recepcionista".equalsIgnoreCase(empleados.getTipoEmpleado())){
-      return total * 0.10;
-    }
-    return 0.0;
+  private double calcularComision(Empleados empleados, double total) {
+    return switch (empleados.getTipoEmpleado().toLowerCase()){
+      case "veterinario" -> total * 0.15;
+      case "recepcionista" -> total * 0.10;
+      default -> 0.0;
+    };
   }
 
 }

@@ -52,6 +52,14 @@ public class Ventas {
         this.comisionPorVenta = comisionPorVenta;
     }
 
+    public double getPrecioTotal() {
+        return precioTotal;
+    }
+
+    public void setPrecioTotal(double precioTotal) {
+        this.precioTotal = precioTotal;
+    }
+
     public Integer getVentaId() {
         return ventaId;
     }

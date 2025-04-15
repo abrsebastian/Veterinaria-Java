@@ -2,17 +2,12 @@ package com.veterinaria.veterinariajava.Controllers;
 
 import java.util.List;
 
+import com.veterinaria.veterinariajava.DTO.VentasResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.veterinaria.veterinariajava.Services.VentasServices;
 import com.veterinaria.veterinariajava.Tables.Ventas;
-
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/ventas")
@@ -27,14 +22,13 @@ public class VentasController {
     }
 
     @PostMapping
-    public ResponseEntity<Ventas>registrarVentas(@RequestBody Ventas ventas){
-        Ventas nuevaVentas = ventasServices.registrarVentas(
-            ventas.getProductos().getProductoId(),
-            ventas.getEmpleados().getEmpleadoId(),
-            ventas.getCantidadProductoVendido());
-        return ResponseEntity.ok(nuevaVentas);
+    public VentasResponseDTO registrarVentas(@RequestBody Ventas ventas){
+          return ventasServices.registrarVentas(ventas);
     }
 
-
+    @PutMapping("/{ventaId}")
+    public VentasResponseDTO actualizarVenta(@PathVariable Integer ventaId, @RequestBody Ventas nuevaVenta){
+        return ventasServices.actualizarVentas(ventaId, nuevaVenta);
+    }
 
 }
