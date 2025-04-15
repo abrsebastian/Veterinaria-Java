@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.veterinaria.veterinariajava.DTO.VentasResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.veterinaria.veterinariajava.Services.VentasServices;
@@ -22,8 +23,9 @@ public class VentasController {
     }
 
     @PostMapping
-    public VentasResponseDTO registrarVentas(@RequestBody Ventas ventas){
-          return ventasServices.registrarVentas(ventas);
+    public ResponseEntity<VentasResponseDTO> crearVenta(@RequestBody VentasResponseDTO dto){
+        VentasResponseDTO responseDTO = ventasServices.registrarVentas(dto);
+        return  ResponseEntity.ok(responseDTO);
     }
 
     @PutMapping("/{ventaId}")

@@ -11,16 +11,24 @@ public class VentasResponseDTO {
     private String tipoEmpleado;
     private Double comision;
 
-    public VentasResponseDTO(Integer productoId, String nombreProducto, Integer empleadoId, String tipoEmpleado, String nombreEmpleado, double precioUnitario, long cantidad, double total, double comision){
+    public VentasResponseDTO(Integer productoId,
+                             String nombreProducto,
+                             Integer empleadoId,
+                             String tipoEmpleado,
+                             String nombreEmpleado,
+                             double precioUnitario,
+                             long cantidad,
+                             double total,
+                             double comision){
         this.productoId = productoId;
-        this.nombreProducto = this.nombreProducto;
-        this.precioUnitario = this.precioUnitario;
-        this.cantidad = this.cantidad;
-        this.precioTotal =precioTotal;
-        this.empleadoId = this.empleadoId;
-        this.nombreEmpleado = this.nombreEmpleado;
-        this.tipoEmpleado = this.tipoEmpleado;
-        this.comision = this.comision;
+        this.nombreProducto = nombreProducto;
+        this.precioUnitario = precioUnitario;
+        this.cantidad = cantidad;
+        this.precioTotal =total;
+        this.empleadoId = empleadoId;
+        this.nombreEmpleado = nombreEmpleado;
+        this.tipoEmpleado = tipoEmpleado;
+        this.comision = comision;
     }
 
     public Integer getProductoId() {

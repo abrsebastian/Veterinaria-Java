@@ -48,7 +48,7 @@ public class Ventas {
         this.empleados = empleados;
         this.cantidadProductoVendido = cantidad;
         this.precioUnitarioPorVenta = precioUnitarioPorVenta;
-        this.precioTotal = productos.getPrecioUnitario() * cantidad;
+        this.precioTotal = precioUnitarioPorVenta * cantidad;
         this.comisionPorVenta = comisionPorVenta;
     }
 

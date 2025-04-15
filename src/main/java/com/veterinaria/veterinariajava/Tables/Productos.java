@@ -35,6 +35,8 @@ public class Productos {
     @JoinColumn(name = "proveedor_id")
     private Proveedores proveedores;
 
+    public Productos(){}
+
     public Integer getProductoId() {
         return productoId;
     }

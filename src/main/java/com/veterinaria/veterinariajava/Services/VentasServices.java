@@ -36,21 +36,24 @@ public class VentasServices {
   }
 
   @Transactional
-  public VentasResponseDTO registrarVentas(Ventas ventas) {
+  public VentasResponseDTO registrarVentas(VentasResponseDTO dto) {
 
-    Empleados empleados = empleadosRepository.findById(ventas.getEmpleados().getEmpleadoId()).
+    System.out.printf("Empleado ID recibido: " + dto.getEmpleadoId());
+    System.out.printf("Producto ID recibido: " + dto.getProductoId());
+
+    Empleados empleados = empleadosRepository.findById(dto.getEmpleadoId()).
             orElseThrow(()-> new RuntimeException("Empleado no encontrado"));
 
-    Productos productos = productosRepository.findById(ventas.getProductos().getProductoId()).
+    Productos productos = productosRepository.findById(dto.getProductoId()).
             orElseThrow(()-> new RuntimeException("Producto no encontrado"));
 
-    if(productos.getStock() < ventas.getCantidadProductoVendido()){
+    if(productos.getStock() < dto.getCantidad()){
       throw new IllegalStateException("No hay suficiente stock disponible");
     }
 
     //Calcular datos
     double precioUnitario = productos.getPrecioUnitario();
-    long cantidad = ventas.getCantidadProductoVendido();
+    long cantidad = dto.getCantidad();
     double total = precioUnitario * cantidad;
     double comision = calcularComision(empleados, total);
 
@@ -61,10 +64,15 @@ public class VentasServices {
 
     //Guardar venta
     Ventas nuevaVenta = new Ventas(productos, empleados, cantidad, precioUnitario, comision);
-    ventasRepository.save(nuevaVenta);
+//    ventasRepository.save(nuevaVenta);
+//
+//    Ventas ventaCompleta = ventasRepository.findById(nuevaVenta.getVentaId())
+//            .orElseThrow(() -> new RuntimeException("Venta no encontrada"));
+//
+//    nuevaVenta.setProductos(productos);
+//    nuevaVenta.setEmpleados(empleados);
 
-    Ventas ventaCompleta = ventasRepository.findById(nuevaVenta.getVentaId())
-            .orElseThrow(() -> new RuntimeException("Venta no encontrada"));
+    Ventas ventaGuardada = ventasRepository.save(nuevaVenta);
 
     //Devolver DTO
     return new VentasResponseDTO(
@@ -132,7 +140,7 @@ public class VentasServices {
             ventaExistente.getPrecioUnitarioPorVenta(),
             ventaExistente.getCantidadProductoVendido(),
             ventaExistente.getPrecioTotal(),
-            ventaExistente.getPrecioTotal()
+            ventaExistente.getComisionPorVenta()
     );
 
 
