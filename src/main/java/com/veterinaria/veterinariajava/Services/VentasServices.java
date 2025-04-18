@@ -3,6 +3,7 @@ package com.veterinaria.veterinariajava.Services;
 import java.util.List;
 
 import com.veterinaria.veterinariajava.DTO.VentasResponseDTO;
+import com.veterinaria.veterinariajava.DTO.VentasRequestDTO;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,7 +37,7 @@ public class VentasServices {
   }
 
   @Transactional
-  public VentasResponseDTO registrarVentas(VentasResponseDTO dto) {
+  public VentasResponseDTO registrarVentas(VentasRequestDTO dto) {
 
     System.out.printf("Empleado ID recibido: " + dto.getEmpleadoId());
     System.out.printf("Producto ID recibido: " + dto.getProductoId());
@@ -64,13 +65,6 @@ public class VentasServices {
 
     //Guardar venta
     Ventas nuevaVenta = new Ventas(productos, empleados, cantidad, precioUnitario, comision);
-//    ventasRepository.save(nuevaVenta);
-//
-//    Ventas ventaCompleta = ventasRepository.findById(nuevaVenta.getVentaId())
-//            .orElseThrow(() -> new RuntimeException("Venta no encontrada"));
-//
-//    nuevaVenta.setProductos(productos);
-//    nuevaVenta.setEmpleados(empleados);
 
     Ventas ventaGuardada = ventasRepository.save(nuevaVenta);
 
@@ -84,7 +78,8 @@ public class VentasServices {
             nuevaVenta.getPrecioUnitarioPorVenta(),
             nuevaVenta.getCantidadProductoVendido(),
             nuevaVenta.getPrecioTotal(),
-            nuevaVenta.getPrecioTotal()
+            nuevaVenta.getComisionPorVenta(),
+            nuevaVenta.getFecha()
     );
 
   }
@@ -140,7 +135,8 @@ public class VentasServices {
             ventaExistente.getPrecioUnitarioPorVenta(),
             ventaExistente.getCantidadProductoVendido(),
             ventaExistente.getPrecioTotal(),
-            ventaExistente.getComisionPorVenta()
+            ventaExistente.getComisionPorVenta(),
+            ventaExistente.getFecha()
     );
 
 

@@ -1,5 +1,6 @@
 package com.veterinaria.veterinariajava.Tables;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.ManyToAny;
 
 import jakarta.persistence.Column;
@@ -10,6 +11,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "ventas")
@@ -39,6 +42,10 @@ public class Ventas {
 
     @Column(name = "comision")
     private double comisionPorVenta;
+
+    @Column(name = "fecha")
+    @CreationTimestamp
+    private LocalDateTime fecha;
 
     public Ventas() {
     };
@@ -107,6 +114,12 @@ public class Ventas {
     public void setComisionPorVenta(double comisionPorVenta) {
         this.comisionPorVenta = comisionPorVenta;
     }
-    
 
+    public LocalDateTime getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(LocalDateTime fecha) {
+        this.fecha = fecha;
+    }
 }
