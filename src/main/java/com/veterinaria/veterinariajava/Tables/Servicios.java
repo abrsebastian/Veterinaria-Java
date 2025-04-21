@@ -20,8 +20,34 @@ public class Servicios {
     @Column(name ="nombre_servicio")
     private String nombreServicio;
 
+    @Column(name = "tipo_servicio")
+    private String tipoServicio;
+
+    @Column(name = "profesional")
+    private String nombreDelProfesional;
+
     @Column(name = "precio_servicio")
     private double precioServicio;
+
+    public Servicios(){
+
+    }
+
+    public String getTipoServicio() {
+        return tipoServicio;
+    }
+
+    public void setTipoServicio(String tipoServicio) {
+        this.tipoServicio = tipoServicio;
+    }
+
+    public String getNombreDelProfesional() {
+        return nombreDelProfesional;
+    }
+
+    public void setNombreDelProfesional(String nombreDelProfesional) {
+        this.nombreDelProfesional = nombreDelProfesional;
+    }
 
     public Integer getServicioId() {
         return servicioId;

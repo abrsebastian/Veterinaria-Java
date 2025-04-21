@@ -1,8 +1,10 @@
 package com.veterinaria.veterinariajava.Services;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
+import com.veterinaria.veterinariajava.Tables.Servicios;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,4 +32,12 @@ public class GananciaService {
     public void eliminarGanancia(Integer id){
         gananciasRepository.deleteById(id);
     }
+
+    public void registrarGananciasDesdeServicios(Servicios servicios){
+        Ganancias ganancias = new Ganancias();
+        ganancias.setServicioId(servicios);
+        ganancias.setTotalIngresos(servicios.getPrecioServicio());
+        ganancias.setTotalGanancia(servicios.getPrecioServicio() * 0.3);
+        gananciasRepository.save(ganancias);
+     }
 }

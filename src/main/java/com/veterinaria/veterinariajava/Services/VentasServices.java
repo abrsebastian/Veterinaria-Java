@@ -13,7 +13,7 @@ import com.veterinaria.veterinariajava.Repository.EmpleadosRepository;
 import com.veterinaria.veterinariajava.Repository.ProductosRepository;
 import com.veterinaria.veterinariajava.Repository.VentasRepository;
 import com.veterinaria.veterinariajava.Tables.Empleados;
-
+import com.veterinaria.veterinariajava.Tables.Ganancias;
 import com.veterinaria.veterinariajava.Tables.Productos;
 import com.veterinaria.veterinariajava.Tables.Ventas;
 
@@ -31,6 +31,9 @@ public class VentasServices {
 
   @Autowired
   private  EmpleadosService empleadosService;
+
+  @Autowired
+  private GananciaService gananciaService;
 
   public List<Ventas> obtenerTodasLasVentas() {
     return ventasRepository.findAll();
@@ -62,6 +65,9 @@ public class VentasServices {
     productos.setStock(productos.getStock()-cantidad);
     empleados.setComisionesTotal(empleados.getComisionesTotal() + comision);
     empleadosService.calcularSueldoFinal(empleados.getEmpleadoId());
+
+    //actualizar tabla ganancias
+
 
     //Guardar venta
     Ventas nuevaVenta = new Ventas(productos, empleados, cantidad, precioUnitario, comision);

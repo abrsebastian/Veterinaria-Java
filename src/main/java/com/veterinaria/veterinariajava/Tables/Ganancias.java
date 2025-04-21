@@ -34,11 +34,15 @@ public class Ganancias {
     @Column(name = "fecha")
     private Date fecha; 
 
-    @Column(name = "total_ingresos")
-    private double totalGanancias;
+    @Column(name = "total_ingresos", nullable = true)
+    private double totalIngresos;
 
-    @Column(name = "total_ganancia")
+    @Column(name = "total_ganancia", nullable = true)
     private double totalGanancia;
+
+    public Ganancias(){
+
+    }
 
 
     public Date getFecha() {
@@ -73,12 +77,12 @@ public class Ganancias {
         this.servicios = servicios;
     }
 
-    public double getTotalGanancias() {
-        return totalGanancias;
+    public double getTotalIngresos() {
+        return totalIngresos;
     }
 
-    public void setTotalGanancias(double totalGanancias) {
-        this.totalGanancias = totalGanancias;
+    public void setTotalIngresos(double totalGanancias) {
+        this.totalIngresos = totalGanancias;
     }
 
     public double getTotalGanancia() {
@@ -89,5 +93,5 @@ public class Ganancias {
         this.totalGanancia = totalGanancia;
     }
 
-    
+
 }
