@@ -74,6 +74,8 @@ public class VentasServices {
 
     Ventas ventaGuardada = ventasRepository.save(nuevaVenta);
 
+    gananciaService.registrarGananciasDeVentas(ventaGuardada); //esta linea
+
     //Devolver DTO
     return new VentasResponseDTO(
             nuevaVenta.getProductos().getProductoId(),
