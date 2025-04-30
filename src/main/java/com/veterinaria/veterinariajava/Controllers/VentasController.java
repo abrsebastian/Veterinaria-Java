@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.veterinaria.veterinariajava.DTO.VentasRequestDTO;
 import com.veterinaria.veterinariajava.DTO.VentasResponseDTO;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -26,7 +27,7 @@ public class VentasController {
     }
 
     @PostMapping
-    public ResponseEntity<VentasResponseDTO> crearVenta(@RequestBody VentasRequestDTO dto){
+    public ResponseEntity<VentasResponseDTO> crearVenta(@Valid @RequestBody VentasRequestDTO dto){
         VentasResponseDTO responseDTO = ventasServices.registrarVentas(dto);
         return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
     }
