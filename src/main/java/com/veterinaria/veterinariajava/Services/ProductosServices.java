@@ -38,12 +38,12 @@ public class ProductosServices {
     //Bloque de codigo responsable de que productos anide las tablas proveedores y categorias
 
     public Productos guardarProductos(Productos productos){
-        Categorias categorias = categoriasRepository.findById(productos.getCategoria().getCategoria_id()).
-                orElseThrow(()-> new EntityNotFoundException("Categoría no encontrada"));
+//        Categorias categorias = categoriasRepository.findById(productos.getCategoria().getCategoria_id()).
+//                orElseThrow(()-> new EntityNotFoundException("Categoría no encontrada"));
         Proveedores proveedores = proveedoresRepository.findById(productos.getProveedor().getProveedorId()).
                 orElseThrow(()-> new EntityNotFoundException("Proveedor no encontrado"));
 
-        productos.setCategoria(categorias);
+        //productos.setCategoria(categorias);
         productos.setProveedor(proveedores);
 
         return productosRepository.save(productos);
@@ -58,15 +58,15 @@ public class ProductosServices {
         productoExistente.setPrecioUnitario(productoActualizado.getPrecioUnitario());
         // productos.setCategoria(productoActualizado.getCategoria());
 
-        Integer categoriaId = productoActualizado.getCategoria().getCategoria_id();
+        //Integer categoriaId = productoActualizado.getCategoria().getCategoria_id();
         Integer proveedorId = productoActualizado.getProveedor().getProveedorId();
 
-        Categorias categorias = categoriasRepository.findById(categoriaId).
-                orElseThrow(()-> new RuntimeException("Categoría no encontrada"));
+        //Categorias categorias = categoriasRepository.findById(categoriaId).
+        //      orElseThrow(()-> new RuntimeException("Categoría no encontrada"));
         Proveedores proveedores = proveedoresRepository.findById(proveedorId).
                 orElseThrow(()-> new RuntimeException("Proveedor no encontrado"));
 
-        productoExistente.setCategoria(categorias);
+        //productoExistente.setCategoria(categorias);
         productoExistente.setProveedor(proveedores);
 
         return productosRepository.save(productoExistente);

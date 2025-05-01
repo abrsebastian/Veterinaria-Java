@@ -1,8 +1,10 @@
 package com.veterinaria.veterinariajava.Controllers;
 import java.util.List;
-import java.util.Optional;
 
+import com.veterinaria.veterinariajava.DTO.EmpleadosRequsetDTO;
+import com.veterinaria.veterinariajava.DTO.EmpleadosResponseDTO;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,29 +21,35 @@ public class EmpleadosController {
     private EmpleadosService empleadoService;
 
     @GetMapping
-    public List<Empleados> listarEmpleados(){
+    public List<EmpleadosResponseDTO> listarEmpleados(){
         return empleadoService.obtenerTodos();
     }
 
     @GetMapping("/{id}")
-    public Optional<Empleados> obtenerEmpleado(@PathVariable Integer id){
-        return empleadoService.obtenerPorId(id);
+    public ResponseEntity<EmpleadosResponseDTO> obtenerEmpleado(@PathVariable Integer id){
+        return empleadoService.obtenerPorId(id).
+                map(empleados
+                        -> ResponseEntity.ok().body(empleados)).
+                orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public Empleados crearEmpleados(@RequestBody Empleados empleados) {
-        return empleadoService.guardarEmpleados(empleados);
+    public ResponseEntity<EmpleadosResponseDTO> crearEmpleados(@Valid @RequestBody EmpleadosRequsetDTO dto) {
+        EmpleadosResponseDTO creado = empleadoService.guardarEmpleados(dto);
+        return ResponseEntity.ok(creado);
     }
 
     @DeleteMapping("/{id}")
-    public void eliminarEmpleado(@PathVariable Integer id){
+    public ResponseEntity<Void> eliminarEmpleado(@PathVariable Integer id) {
         empleadoService.eliminarEmpleado(id);
+        return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Empleados> actualizarEmpleado(@PathVariable Integer id, @RequestBody Empleados empleadoActualizado){
+    public ResponseEntity<EmpleadosResponseDTO> actualizarEmpleado(@PathVariable Integer id,
+                                                                   @Valid @RequestBody EmpleadosRequsetDTO dto){
         try {
-            Empleados actualizado = empleadoService.actualizarEmpleado(id, empleadoActualizado);
+            EmpleadosResponseDTO actualizado = empleadoService.actualizarEmpleado(id, dto);
             return ResponseEntity.ok(actualizado);
         }catch (EntityNotFoundException e){
             return ResponseEntity.notFound().build();

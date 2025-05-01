@@ -3,6 +3,10 @@ package com.veterinaria.veterinariajava.Services;
 import java.util.List;
 import java.util.Optional;
 
+import com.veterinaria.veterinariajava.DTO.EmpleadosRequsetDTO;
+import com.veterinaria.veterinariajava.DTO.EmpleadosResponseDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,23 +15,48 @@ import com.veterinaria.veterinariajava.Tables.Empleados;
 
 @Service
 public class EmpleadosService {
+    private static final Logger log = LoggerFactory.getLogger(EmpleadosService.class);
     @Autowired
     final private EmpleadosRepository empleadosRepository;
+
+    private Empleados mapToEntity(EmpleadosRequsetDTO dto){
+        Empleados empleados = new Empleados();
+        empleados.setNombreEmpleado(dto.getNombreEmpleado());
+        empleados.setTipoEmpleado(dto.getTipoEmpleado());
+        empleados.setHorasTrabajadas(dto.getHorasTrabajadas());
+        empleados.setSueldoPorHora(dto.getSueldoPorHora());
+        empleados.setSueldoTotal(dto.getSueldoPorHora() * dto.getHorasTrabajadas());
+        return empleados;
+    }
+
+    private EmpleadosResponseDTO mapToDTO(Empleados empleados){
+        EmpleadosResponseDTO dto = new EmpleadosResponseDTO();
+        dto.setEmpleadoId(empleados.getEmpleadoId());
+        dto.setNombreEmpleado(empleados.getNombreEmpleado());
+        dto.setTipoEmpleado(empleados.getTipoEmpleado());
+        dto.setSueldoTotal(empleados.getSueldoTotal());
+        dto.setComisionesTotal(empleados.getComisionesTotal());
+        dto.setSueldoFinal(empleados.getSueldoFinal());
+        return dto;
+    }
 
     public EmpleadosService(EmpleadosRepository empleadosRepository) {
         this.empleadosRepository = empleadosRepository;
     }
 
-    public List<Empleados>obtenerTodos(){
-        return empleadosRepository.findAll();
+    public List<EmpleadosResponseDTO>obtenerTodos(){
+        return empleadosRepository.findAll().stream().map(this::mapToDTO).toList();
     }
 
-    public Optional<Empleados>obtenerPorId(Integer id){
-        return empleadosRepository.findById(id);
+    public Optional<EmpleadosResponseDTO>obtenerPorId(Integer id){
+        return empleadosRepository.findById(id)
+                .map(this::mapToDTO);
     }
 
-    public Empleados guardarEmpleados(Empleados empleados){
-        return empleadosRepository.save(empleados);
+    public EmpleadosResponseDTO guardarEmpleados(EmpleadosRequsetDTO dto){
+        Empleados empleados = mapToEntity(dto);
+        Empleados guardado = empleadosRepository.save(empleados);
+        return mapToDTO(guardado);
     }
 
     public void eliminarEmpleado(Integer id){
@@ -44,14 +73,17 @@ public class EmpleadosService {
 
     }
 
-    public Empleados actualizarEmpleado(Integer id, Empleados empleadoActualizado){
-        empleadosRepository.findById(id).map(empleados -> {
-            empleados.setNombreEmpleado(empleadoActualizado.getNombreEmpleado());
-            empleados.setTipoEmpleado(empleadoActualizado.getTipoEmpleado());
-            empleados.setHorasTrabajadas(empleadoActualizado.getHorasTrabajadas());
-            empleados.setSueldoTotal(empleadoActualizado.getSueldoTotal());
-            return  empleadosRepository.save(empleados);
-        });
-        return empleadoActualizado;
+    public EmpleadosResponseDTO actualizarEmpleado(Integer id, EmpleadosRequsetDTO dto){
+        Empleados empleadoExistente = empleadosRepository.findById(id).
+                orElseThrow(()-> new RuntimeException("Empleado no encontrado"));
+
+        empleadoExistente.setNombreEmpleado(dto.getNombreEmpleado());
+        empleadoExistente.setTipoEmpleado(dto.getTipoEmpleado());
+        empleadoExistente.setHorasTrabajadas(dto.getHorasTrabajadas());
+        empleadoExistente.setSueldoPorHora(dto.getSueldoPorHora());
+        empleadoExistente.setSueldoTotal(dto.getSueldoPorHora() * dto.getHorasTrabajadas());
+
+        empleadosRepository.save(empleadoExistente);
+        return mapToDTO(empleadoExistente);
     }
 }
