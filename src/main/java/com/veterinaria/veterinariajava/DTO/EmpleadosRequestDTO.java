@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 
-public class EmpleadosRequsetDTO {
+public class EmpleadosRequestDTO {
 
     @NotNull(message = "Este campo no puede estar vacío")
     @Size(min = 3, max = 50, message = "El nombre debe tener entre 3 a 50 caracteres")

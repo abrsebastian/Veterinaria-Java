@@ -27,13 +27,14 @@ public class Productos {
     @Column(name = "stock")
     private int stock;
 
+    @ManyToOne
+    @JoinColumn(name = "proveedor_id")
+    private Proveedores proveedores;
+
     //@ManyToOne
     //@JoinColumn(name = "categoria_id")
     //private Categorias categorias;
 
-    @ManyToOne
-    @JoinColumn(name = "proveedor_id")
-    private Proveedores proveedores;
 
     public Productos(){}
 

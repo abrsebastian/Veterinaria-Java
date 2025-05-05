@@ -3,7 +3,10 @@ package com.veterinaria.veterinariajava.Controllers;
 import java.util.List;
 import java.util.Optional;
 
+import com.veterinaria.veterinariajava.DTO.ProductosRequestDTO;
+import com.veterinaria.veterinariajava.DTO.ProductosResponseDTO;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,8 +32,9 @@ public class ProductosController {
     }
 
     @PostMapping
-    public Productos crearProductos(@RequestBody Productos productos) {
-        return productosServices.guardarProductos(productos);
+    public Productos crearProductos(@Valid @RequestBody ProductosRequestDTO dto) {
+        Productos creado = productosServices.guardarProductos(dto);
+        return ResponseEntity.ok(creado).getBody();
     }
 
     @DeleteMapping("/{id}")
@@ -39,9 +43,9 @@ public class ProductosController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Productos> actualizarProducto(@PathVariable Integer id, @RequestBody Productos productoActualizado){
+    public ResponseEntity<Productos> actualizarProducto(@PathVariable Integer id, @RequestBody ProductosRequestDTO dto){
         try {
-            Productos actualizado = productosServices.actualizarProducto(id, productoActualizado);
+            Productos actualizado = productosServices.actualizarProducto(id, dto);
             return ResponseEntity.ok(actualizado);
         }catch (EntityNotFoundException e){
             return ResponseEntity.notFound().build();

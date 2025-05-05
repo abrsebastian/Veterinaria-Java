@@ -3,7 +3,7 @@ package com.veterinaria.veterinariajava.Services;
 import java.util.List;
 import java.util.Optional;
 
-import com.veterinaria.veterinariajava.DTO.EmpleadosRequsetDTO;
+import com.veterinaria.veterinariajava.DTO.EmpleadosRequestDTO;
 import com.veterinaria.veterinariajava.DTO.EmpleadosResponseDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +19,7 @@ public class EmpleadosService {
     @Autowired
     final private EmpleadosRepository empleadosRepository;
 
-    private Empleados mapToEntity(EmpleadosRequsetDTO dto){
+    private Empleados mapToEntity(EmpleadosRequestDTO dto){
         Empleados empleados = new Empleados();
         empleados.setNombreEmpleado(dto.getNombreEmpleado());
         empleados.setTipoEmpleado(dto.getTipoEmpleado());
@@ -53,7 +53,7 @@ public class EmpleadosService {
                 .map(this::mapToDTO);
     }
 
-    public EmpleadosResponseDTO guardarEmpleados(EmpleadosRequsetDTO dto){
+    public EmpleadosResponseDTO guardarEmpleados(EmpleadosRequestDTO dto){
         Empleados empleados = mapToEntity(dto);
         Empleados guardado = empleadosRepository.save(empleados);
         return mapToDTO(guardado);
@@ -73,7 +73,7 @@ public class EmpleadosService {
 
     }
 
-    public EmpleadosResponseDTO actualizarEmpleado(Integer id, EmpleadosRequsetDTO dto){
+    public EmpleadosResponseDTO actualizarEmpleado(Integer id, EmpleadosRequestDTO dto){
         Empleados empleadoExistente = empleadosRepository.findById(id).
                 orElseThrow(()-> new RuntimeException("Empleado no encontrado"));
 

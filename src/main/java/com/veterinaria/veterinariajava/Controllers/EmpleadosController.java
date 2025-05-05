@@ -1,14 +1,13 @@
 package com.veterinaria.veterinariajava.Controllers;
 import java.util.List;
 
-import com.veterinaria.veterinariajava.DTO.EmpleadosRequsetDTO;
+import com.veterinaria.veterinariajava.DTO.EmpleadosRequestDTO;
 import com.veterinaria.veterinariajava.DTO.EmpleadosResponseDTO;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.veterinaria.veterinariajava.Tables.Empleados;
 import com.veterinaria.veterinariajava.Services.EmpleadosService;
 
 
@@ -34,7 +33,7 @@ public class EmpleadosController {
     }
 
     @PostMapping
-    public ResponseEntity<EmpleadosResponseDTO> crearEmpleados(@Valid @RequestBody EmpleadosRequsetDTO dto) {
+    public ResponseEntity<EmpleadosResponseDTO> crearEmpleados(@Valid @RequestBody EmpleadosRequestDTO dto) {
         EmpleadosResponseDTO creado = empleadoService.guardarEmpleados(dto);
         return ResponseEntity.ok(creado);
     }
@@ -47,7 +46,7 @@ public class EmpleadosController {
 
     @PutMapping("/{id}")
     public ResponseEntity<EmpleadosResponseDTO> actualizarEmpleado(@PathVariable Integer id,
-                                                                   @Valid @RequestBody EmpleadosRequsetDTO dto){
+                                                                   @Valid @RequestBody EmpleadosRequestDTO dto){
         try {
             EmpleadosResponseDTO actualizado = empleadoService.actualizarEmpleado(id, dto);
             return ResponseEntity.ok(actualizado);
