@@ -6,6 +6,15 @@ public class ProductosResponseDTO {
     private Double precioProducto;
     private int stockProducto;
     private Integer proveedorId;
+    private String nombreProveedor;
+
+    public String getNombreProveedor() {
+        return nombreProveedor;
+    }
+
+    public void setNombreProveedor(String nombreProveedor) {
+        this.nombreProveedor = nombreProveedor;
+    }
 
     public String getNombreProducto() {
         return nombreProducto;

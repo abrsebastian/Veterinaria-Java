@@ -32,8 +32,8 @@ public class ProductosController {
     }
 
     @PostMapping
-    public Productos crearProductos(@Valid @RequestBody ProductosRequestDTO dto) {
-        Productos creado = productosServices.guardarProductos(dto);
+    public ProductosResponseDTO crearProductos(@Valid @RequestBody ProductosRequestDTO dto) {
+        ProductosResponseDTO creado = productosServices.guardarProductos(dto);
         return ResponseEntity.ok(creado).getBody();
     }
 
