@@ -52,4 +52,9 @@ public class ProductosController {
         }
     }
 
+    @GetMapping("/buscar")
+    public List<ProductosResponseDTO> buscarProductos(@RequestParam String nombre) {
+        return productosServices.buscarPorNombre(nombre);
+    }
+
 }

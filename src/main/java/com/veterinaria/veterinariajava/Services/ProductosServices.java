@@ -2,6 +2,7 @@ package com.veterinaria.veterinariajava.Services;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import com.veterinaria.veterinariajava.DTO.ProductosRequestDTO;
 import com.veterinaria.veterinariajava.DTO.ProductosResponseDTO;
@@ -70,6 +71,13 @@ public class ProductosServices {
         Productos productos = mapToEntity(dto);
         Productos productoGuardado = productosRepository.save(productos);
         return mapToResponseDTO(productoGuardado);
+    }
+
+    public List<ProductosResponseDTO> buscarPorNombre(String nombre) {
+        List<Productos> productos = productosRepository.findByNombreContainingIgnoreCase(nombre);
+        return productos.stream()
+                .map(this::mapToResponseDTO)
+                .collect(Collectors.toList());
     }
 
     public Productos actualizarProducto(Integer id, ProductosRequestDTO dto){
