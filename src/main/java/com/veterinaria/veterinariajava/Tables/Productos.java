@@ -29,7 +29,7 @@ public class Productos {
 
     @ManyToOne
     @JoinColumn(name = "proveedor_id")
-    private Proveedores proveedores;
+    private Proveedores proveedor;
 
     //@ManyToOne
     //@JoinColumn(name = "categoria_id")
@@ -79,11 +79,11 @@ public class Productos {
     // }
 
     public Proveedores getProveedor() {
-        return proveedores;
+        return proveedor;
     }
 
     public void setProveedor(Proveedores proveedores) {
-        this.proveedores = proveedores;
+        this.proveedor = proveedores;
     }
 
 }

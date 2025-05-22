@@ -14,7 +14,7 @@ public interface ProductosRepository extends JpaRepository<Productos, Integer> {
     @Query("SELECT p FROM Productos p WHERE LOWER(p.nombreProducto) LIKE LOWER(CONCAT('%', :nombre, '%'))")
     List<Productos> findByNombreContainingIgnoreCase(@Param("nombre") String nombre);
 
-    @Query("SELECT p FROM Productos p WHERE p.proveedor.id = :proveedorId")
+    @Query("SELECT p FROM Productos p WHERE p.proveedor.proveedorId = :proveedorId")
     List<Productos> findByProveedorId(@Param("proveedorId")Integer proveedorId);
 
 }
