@@ -70,13 +70,13 @@ public class Productos {
         this.stock = (int) stock;
     }
 
-   // public Categorias getCategoria() {
-   //     return categorias;
-   // }
+    // public Categorias getCategoria() {
+    //     return categorias;
+    // }
 
-   // public void setCategoria(Categorias categorias) {
-   //     this.categorias = categorias;
-   // }
+    // public void setCategoria(Categorias categorias) {
+    //     this.categorias = categorias;
+    // }
 
     public Proveedores getProveedor() {
         return proveedores;

@@ -57,4 +57,9 @@ public class ProductosController {
         return productosServices.buscarPorNombre(nombre);
     }
 
+    @GetMapping("/proveedor/{proveedorId}")
+    public ResponseEntity<List<ProductosResponseDTO>> obtenerPorProveedor(@PathVariable Integer proveedorId){
+        List<ProductosResponseDTO> productosDTO = productosServices.obtenerProductosPorProveedor(proveedorId);
+        return ResponseEntity.ok(productosDTO);
+    }
 }

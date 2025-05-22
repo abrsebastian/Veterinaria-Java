@@ -37,6 +37,14 @@ public class ProductosServices {
         return productosRepository.findById(id);
     }
 
+    public List<ProductosResponseDTO>obtenerProductosPorProveedor(Integer proveedorId){
+        List<Productos> productos = productosRepository.findByProveedorId(proveedorId);
+
+        return productos.stream()
+                .map(this::mapToResponseDTO)
+                .collect(Collectors.toList());
+    }
+
     private Productos mapToEntity(ProductosRequestDTO dto){
         Proveedores proveedores = proveedoresRepository.findById(dto.getProveedorId()).
                 orElseThrow(()-> new EntityNotFoundException("Proveedor no encontrado"));
