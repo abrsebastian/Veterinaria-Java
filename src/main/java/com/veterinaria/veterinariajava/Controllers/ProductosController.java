@@ -8,6 +8,8 @@ import com.veterinaria.veterinariajava.DTO.ProductosResponseDTO;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.veterinaria.veterinariajava.Services.ProductosServices;
@@ -61,5 +63,12 @@ public class ProductosController {
     public ResponseEntity<List<ProductosResponseDTO>> obtenerPorProveedor(@PathVariable Integer proveedorId){
         List<ProductosResponseDTO> productosDTO = productosServices.obtenerProductosPorProveedor(proveedorId);
         return ResponseEntity.ok(productosDTO);
+    }
+
+
+    @GetMapping
+    public ResponseEntity<Page<ProductosResponseDTO>> listarProductosPaginados(Pageable pageable) {
+        Page<ProductosResponseDTO> paginaProductos = productosServices.obtenerProductosPageable(pageable);
+        return ResponseEntity.ok(paginaProductos);
     }
 }

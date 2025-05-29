@@ -11,7 +11,9 @@ import com.veterinaria.veterinariajava.Repository.ProveedoresRepository;
 import com.veterinaria.veterinariajava.Tables.Proveedores;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Pageable;
 
 
 import com.veterinaria.veterinariajava.Repository.ProductosRepository;
@@ -43,6 +45,25 @@ public class ProductosServices {
         return productos.stream()
                 .map(this::mapToResponseDTO)
                 .collect(Collectors.toList());
+    }
+
+    public Page<ProductosResponseDTO>obtenerProductosPageable(Pageable pageable){
+
+        Page<Productos> paginaProductos = productosRepository.findAll(pageable);
+
+        Page<ProductosResponseDTO> paginaDTO = paginaProductos.map(productos -> {
+            ProductosResponseDTO dto = new ProductosResponseDTO();
+            dto.setNombreProducto(productos.getNombreProducto());
+            dto.setPrecioProducto(productos.getPrecioUnitario());
+            dto.setStockProducto(productos.getStock());
+            if(productos.getProveedor() != null){
+                dto.setProveedorId(productos.getProveedor().getProveedorId());
+                dto.setNombreProveedor(productos.getProveedor().getNombreProveedor());
+            }
+            return dto;
+        });
+
+        return paginaDTO;
     }
 
     private Productos mapToEntity(ProductosRequestDTO dto){
