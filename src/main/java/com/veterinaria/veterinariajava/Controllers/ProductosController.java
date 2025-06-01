@@ -23,10 +23,10 @@ public class ProductosController {
     @Autowired
     private ProductosServices productosServices;
 
-    @GetMapping
-    public List<Productos> listaProductos(){
-        return productosServices.obtenerTodos();
-    }
+//    @GetMapping
+//    public List<Productos> listaProductos(){
+//        return productosServices.obtenerTodos();
+//    }
 
     @GetMapping("/{id}")
     public Optional<Productos> obtenerProducto(@PathVariable Integer id){
