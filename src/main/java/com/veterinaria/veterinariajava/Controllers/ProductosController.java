@@ -3,6 +3,7 @@ package com.veterinaria.veterinariajava.Controllers;
 import java.util.List;
 import java.util.Optional;
 
+import com.veterinaria.veterinariajava.DTO.ProductosPageDTO;
 import com.veterinaria.veterinariajava.DTO.ProductosRequestDTO;
 import com.veterinaria.veterinariajava.DTO.ProductosResponseDTO;
 import jakarta.persistence.EntityNotFoundException;
@@ -67,8 +68,15 @@ public class ProductosController {
 
 
     @GetMapping
-    public ResponseEntity<Page<ProductosResponseDTO>> listarProductosPaginados(Pageable pageable) {
+    public ResponseEntity<ProductosPageDTO> listarProductosPaginados(Pageable pageable) {
         Page<ProductosResponseDTO> paginaProductos = productosServices.obtenerProductosPageable(pageable);
-        return ResponseEntity.ok(paginaProductos);
+
+        ProductosPageDTO respuesta = new ProductosPageDTO(
+                paginaProductos.getContent(),
+                paginaProductos.getNumber(),
+                paginaProductos.getTotalPages(),
+                (int) paginaProductos.getTotalElements()
+        );
+        return ResponseEntity.ok(respuesta);
     }
 }
