@@ -54,7 +54,7 @@ public class ProductosServices {
         Page<ProductosResponseDTO> paginaDTO = paginaProductos.map(productos -> {
             ProductosResponseDTO dto = new ProductosResponseDTO();
             dto.setNombreProducto(productos.getNombreProducto());
-            dto.setPrecioProducto(productos.getPrecioUnitario());
+            dto.setPrecioProducto(productos.getPrecioCosto());
             dto.setStockProducto(productos.getStock());
             if(productos.getProveedor() != null){
                 dto.setProveedorId(productos.getProveedor().getProveedorId());
@@ -73,9 +73,15 @@ public class ProductosServices {
         Productos productos = new Productos();
 
         productos.setNombreProducto(dto.getNombreProducto());
-        productos.setPrecioUnitario(dto.getPrecioProducto());
+        productos.setPrecioCosto(dto.getPrecioCostoProducto());
         productos.setStock(dto.getStockProducto());
         productos.setProveedor(proveedores);
+
+        double porcentaje = dto.getPorcentajeVenta() / 100;
+        double precioVenta = dto.getPrecioCostoProducto() + (dto.getPrecioCostoProducto() * porcentaje);
+
+        productos.setPorcentajeAgregado(porcentaje);
+        productos.setPrecioVenta(precioVenta);
 
         return productos;
     }
@@ -83,7 +89,7 @@ public class ProductosServices {
     private ProductosResponseDTO mapToResponseDTO(Productos productos){
         ProductosResponseDTO dto = new ProductosResponseDTO();
         dto.setNombreProducto(productos.getNombreProducto());
-        dto.setPrecioProducto(productos.getPrecioUnitario());
+        dto.setPrecioProducto(productos.getPrecioCosto());
         dto.setStockProducto(productos.getStock());
 
         if(productos.getProveedor() != null){
@@ -114,7 +120,7 @@ public class ProductosServices {
 
         productoExistente.setNombreProducto(dto.getNombreProducto());
         productoExistente.setStock(dto.getStockProducto());
-        productoExistente.setPrecioUnitario(dto.getPrecioProducto());
+        productoExistente.setPrecioCosto(dto.getPrecioCostoProducto());
         Integer proveedorId = dto.getProveedorId();
 
         Proveedores proveedores = proveedoresRepository.findById(proveedorId).

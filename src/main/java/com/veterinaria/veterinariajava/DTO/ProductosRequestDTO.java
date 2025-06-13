@@ -11,7 +11,11 @@ public class ProductosRequestDTO {
 
     @NotNull(message = "Este campo no puede estar vacío")
     @Positive(message = "EL precio debe ser mayor a cero")
-    private Double precioProducto;
+    private Double precioCostoProducto;
+
+    @NotNull(message = "Este campo no puede estar vacío")
+    @Min(value = 0, message = "El porcentaje debe ser mayor o igual a cero")
+    private Double porcentajeVenta;
 
     @NotNull(message = "Este campo no puede estar vacío")
     @Min(value = 0, message = "El Stock debe ser mayor o igual a cero")
@@ -28,12 +32,20 @@ public class ProductosRequestDTO {
         this.nombreProducto = nombreProducto;
     }
 
-    public Double getPrecioProducto() {
-        return precioProducto;
+    public Double getPrecioCostoProducto() {
+        return precioCostoProducto;
     }
 
-    public void setPrecioProducto(Double precioProducto) {
-        this.precioProducto = precioProducto;
+    public void setPrecioCostoProducto(Double precioCostoProducto) {
+        this.precioCostoProducto = precioCostoProducto;
+    }
+
+    public Double getPorcentajeVenta() {
+        return porcentajeVenta;
+    }
+
+    public void setPorcentajeVenta(Double porcentajeVenta) {
+        this.porcentajeVenta = porcentajeVenta;
     }
 
     public int getStockProducto() {

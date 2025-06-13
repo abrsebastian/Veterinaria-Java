@@ -13,7 +13,6 @@ import com.veterinaria.veterinariajava.Repository.EmpleadosRepository;
 import com.veterinaria.veterinariajava.Repository.ProductosRepository;
 import com.veterinaria.veterinariajava.Repository.VentasRepository;
 import com.veterinaria.veterinariajava.Tables.Empleados;
-import com.veterinaria.veterinariajava.Tables.Ganancias;
 import com.veterinaria.veterinariajava.Tables.Productos;
 import com.veterinaria.veterinariajava.Tables.Ventas;
 
@@ -56,7 +55,7 @@ public class VentasServices {
     }
 
     //Calcular datos
-    double precioUnitario = productos.getPrecioUnitario();
+    double precioUnitario = productos.getPrecioCosto();
     long cantidad = dto.getCantidad();
     double total = precioUnitario * cantidad;
     double comision = calcularComision(empleados, total);
@@ -116,7 +115,7 @@ public class VentasServices {
       throw new IllegalStateException("No hay suficiente stock para la venta");
     }
 
-    double nuevoPrecioUnitario = productos.getPrecioUnitario();
+    double nuevoPrecioUnitario = productos.getPrecioCosto();
     double nuevoTotal = nuevoPrecioUnitario * nuevaCantidad;
     double nuevaComision = calcularComision(empleados, nuevoTotal);
 

@@ -21,8 +21,14 @@ public class Productos {
     @Column(name = "nombre_producto")
     private String nombreProducto;
 
-    @Column(name = "precio_unitario")
-    private double precioUnitario;
+    @Column(name = "precio_costo")
+    private double precioCosto;
+
+    @Column(name = "porcentaje_agregado", nullable = true)
+    private double porcentajeAgregado;
+
+    @Column(name = "precio_venta", nullable = true)
+    private double precioVenta;
 
     @Column(name = "stock")
     private int stock;
@@ -30,11 +36,6 @@ public class Productos {
     @ManyToOne
     @JoinColumn(name = "proveedor_id")
     private Proveedores proveedor;
-
-    //@ManyToOne
-    //@JoinColumn(name = "categoria_id")
-    //private Categorias categorias;
-
 
     public Productos(){}
 
@@ -54,12 +55,28 @@ public class Productos {
         this.nombreProducto = nombreProducto;
     }
 
-    public double getPrecioUnitario() {
-        return precioUnitario;
+    public double getPrecioCosto() {
+        return precioCosto;
     }
 
-    public void setPrecioUnitario(double precioUnitario) {
-        this.precioUnitario = precioUnitario;
+    public void setPrecioCosto(double precioCosto) {
+        this.precioCosto = precioCosto;
+    }
+
+    public double getPrecioVenta() {
+        return precioVenta;
+    }
+
+    public void setPrecioVenta(double precioVenta) {
+        this.precioVenta = precioVenta;
+    }
+
+    public double getPorcentajeAgregado() {
+        return porcentajeAgregado;
+    }
+
+    public void setPorcentajeAgregado(double porcentajeAgregado) {
+        this.porcentajeAgregado = porcentajeAgregado;
     }
 
     public int getStock() {

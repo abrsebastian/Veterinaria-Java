@@ -17,7 +17,7 @@ public class CategoriaService {
         return categoriasRepository.findAll();
     }
 
-     public Optional<Categorias>obtenerPorId(Integer id){
+    public Optional<Categorias>obtenerPorId(Integer id){
         return categoriasRepository.findById(id);
     }
 
