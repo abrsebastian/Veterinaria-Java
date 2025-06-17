@@ -2,11 +2,29 @@ package com.veterinaria.veterinariajava.DTO;
 
 public class ProductosResponseDTO {
 
+    private Integer productoId;
     private String nombreProducto;
-    private Double precioProducto;
+    private Double precioCosto;
+    private Double precioVenta;
     private int stockProducto;
     private Integer proveedorId;
     private String nombreProveedor;
+
+    public Integer getProductoId() {
+        return productoId;
+    }
+
+    public void setProductoId(Integer productoId) {
+        this.productoId = productoId;
+    }
+
+    public Double getPrecioVenta() {
+        return precioVenta;
+    }
+
+    public void setPrecioVenta(Double precioVenta) {
+        this.precioVenta = precioVenta;
+    }
 
     public String getNombreProveedor() {
         return nombreProveedor;
@@ -24,12 +42,12 @@ public class ProductosResponseDTO {
         this.nombreProducto = nombreProducto;
     }
 
-    public Double getPrecioProducto() {
-        return precioProducto;
+    public Double getPrecioCosto() {
+        return precioCosto;
     }
 
-    public void setPrecioProducto(Double precioProducto) {
-        this.precioProducto = precioProducto;
+    public void setPrecioCosto(Double precioCosto) {
+        this.precioCosto = precioCosto;
     }
 
     public int getStockProducto() {

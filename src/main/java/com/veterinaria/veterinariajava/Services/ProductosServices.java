@@ -47,6 +47,8 @@ public class ProductosServices {
                 .collect(Collectors.toList());
     }
 
+    //Here i must modify
+
     public Page<ProductosResponseDTO>obtenerProductosPageable(Pageable pageable){
 
         Page<Productos> paginaProductos = productosRepository.findAll(pageable);
@@ -54,12 +56,13 @@ public class ProductosServices {
         Page<ProductosResponseDTO> paginaDTO = paginaProductos.map(productos -> {
             ProductosResponseDTO dto = new ProductosResponseDTO();
             dto.setNombreProducto(productos.getNombreProducto());
-            dto.setPrecioProducto(productos.getPrecioCosto());
+            dto.setPrecioCosto(productos.getPrecioCosto());
             dto.setStockProducto(productos.getStock());
             if(productos.getProveedor() != null){
                 dto.setProveedorId(productos.getProveedor().getProveedorId());
                 dto.setNombreProveedor(productos.getProveedor().getNombreProveedor());
             }
+            dto.setPrecioVenta(productos.getPrecioVenta());
             return dto;
         });
 
@@ -87,15 +90,20 @@ public class ProductosServices {
     }
 
     private ProductosResponseDTO mapToResponseDTO(Productos productos){
+
         ProductosResponseDTO dto = new ProductosResponseDTO();
+
+        dto.setProductoId(productos.getProductoId());
         dto.setNombreProducto(productos.getNombreProducto());
-        dto.setPrecioProducto(productos.getPrecioCosto());
+        dto.setPrecioCosto(productos.getPrecioCosto());
         dto.setStockProducto(productos.getStock());
 
         if(productos.getProveedor() != null){
             dto.setProveedorId(productos.getProveedor().getProveedorId());
             dto.setNombreProveedor(productos.getProveedor().getNombreProveedor());
         }
+
+        System.out.println("el ID es: " + dto.getProductoId());
 
         return dto;
     }

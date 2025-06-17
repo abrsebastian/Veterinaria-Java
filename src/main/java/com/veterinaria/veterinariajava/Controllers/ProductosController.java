@@ -24,11 +24,6 @@ public class ProductosController {
     @Autowired
     private ProductosServices productosServices;
 
-//    @GetMapping
-//    public List<Productos> listaProductos(){
-//        return productosServices.obtenerTodos();
-//    }
-
     @GetMapping("/{id}")
     public Optional<Productos> obtenerProducto(@PathVariable Integer id){
         return productosServices.obtenerPorId(id);
@@ -37,6 +32,9 @@ public class ProductosController {
     @PostMapping
     public ProductosResponseDTO crearProductos(@Valid @RequestBody ProductosRequestDTO dto) {
         ProductosResponseDTO creado = productosServices.guardarProductos(dto);
+
+        System.out.println("ID devuelto en DTO: " + creado.getProductoId());
+
         return ResponseEntity.ok(creado).getBody();
     }
 
@@ -55,9 +53,18 @@ public class ProductosController {
         }
     }
 
+    //GET /productos/buscar?nombre=shampoo
+
     @GetMapping("/buscar")
-    public List<ProductosResponseDTO> buscarProductos(@RequestParam String nombre) {
-        return productosServices.buscarPorNombre(nombre);
+    public ResponseEntity<List<ProductosResponseDTO>> buscarProductos(@RequestParam String nombre) {
+        List<ProductosResponseDTO> resultado = productosServices.buscarPorNombre(nombre);
+
+        if (resultado.isEmpty()){
+            System.out.println("No se han encontrado productos con el nombre: " + nombre);
+        }
+
+        return ResponseEntity.ok(resultado);
+
     }
 
     @GetMapping("/proveedor/{proveedorId}")
