@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import com.veterinaria.veterinariajava.DTO.EmpleadosRequestDTO;
 import com.veterinaria.veterinariajava.DTO.EmpleadosResponseDTO;
+import com.veterinaria.veterinariajava.Repository.VentasRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,10 @@ public class EmpleadosService {
         dto.setSueldoTotal(empleados.getSueldoTotal());
         dto.setComisionesTotal(empleados.getComisionesTotal());
         dto.setSueldoFinal(empleados.getSueldoFinal());
+        dto.setTotalVentas(empleadosRepository.cantidadDeVentas(empleados.getEmpleadoId()));
         return dto;
+
+        //Agregar una nueva linea para la columna total ventas
     }
 
     public EmpleadosService(EmpleadosRepository empleadosRepository) {

@@ -8,6 +8,7 @@ public class EmpleadosResponseDTO {
     private double sueldoTotal;
     private double comisionesTotal;
     private double sueldoFinal;
+    private Long totalVentas;
 
     public Integer getEmpleadoId() {
         return empleadoId;
@@ -55,5 +56,13 @@ public class EmpleadosResponseDTO {
 
     public void setSueldoFinal(double sueldoFinal) {
         this.sueldoFinal = sueldoFinal;
+    }
+
+    public Long getTotalVentas() {
+        return totalVentas;
+    }
+
+    public void setTotalVentas(Long totalVentas) {
+        this.totalVentas = totalVentas;
     }
 }

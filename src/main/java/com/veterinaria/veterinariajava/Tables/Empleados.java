@@ -115,4 +115,6 @@ public class Empleados {
         this.comisionesTotal = comisionesTotal;
     }
 
+    public void setTotalVentas(Ventas ventaGuardada) {
+    }
 }

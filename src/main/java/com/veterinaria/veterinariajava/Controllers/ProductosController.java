@@ -35,6 +35,8 @@ public class ProductosController {
 
         System.out.println("ID devuelto en DTO: " + creado.getProductoId());
 
+        System.out.println("ID en el DTO antes del return: " + creado.getProductoId());
+
         return ResponseEntity.ok(creado).getBody();
     }
 

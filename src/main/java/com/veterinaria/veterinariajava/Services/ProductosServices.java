@@ -55,6 +55,7 @@ public class ProductosServices {
 
         Page<ProductosResponseDTO> paginaDTO = paginaProductos.map(productos -> {
             ProductosResponseDTO dto = new ProductosResponseDTO();
+            dto.setProductoId(productos.getProductoId());
             dto.setNombreProducto(productos.getNombreProducto());
             dto.setPrecioCosto(productos.getPrecioCosto());
             dto.setStockProducto(productos.getStock());

@@ -73,7 +73,11 @@ public class VentasServices {
 
     Ventas ventaGuardada = ventasRepository.save(nuevaVenta);
 
-    gananciaService.registrarGananciasDeVentas(ventaGuardada); //esta linea
+    empleados.setTotalVentas(ventaGuardada);
+
+    gananciaService.registrarGananciasDeVentas(ventaGuardada);//esta linea
+
+
 
     //Devolver DTO
     return new VentasResponseDTO(
