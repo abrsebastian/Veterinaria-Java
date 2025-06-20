@@ -34,8 +34,27 @@ public class VentasServices {
   @Autowired
   private GananciaService gananciaService;
 
-  public List<Ventas> obtenerTodasLasVentas() {
-    return ventasRepository.findAll();
+  private VentasResponseDTO mapToEntity(Ventas ventas){
+    VentasResponseDTO dto = new VentasResponseDTO();
+    dto.setVentaId(ventas.getVentaId());
+    dto.setProductoId(ventas.getProductos().getProductoId());
+    dto.setNombreProducto(ventas.getProductos().getNombreProducto());
+    dto.setPrecioUnitario(ventas.getPrecioUnitarioPorVenta());
+    dto.setPrecioTotal(ventas.getPrecioTotal());
+    dto.setCantidad(ventas.getCantidadProductoVendido());
+    dto.setEmpleadoId(ventas.getEmpleados().getEmpleadoId());
+    dto.setNombreEmpleado(ventas.getEmpleados().getNombreEmpleado());
+    dto.setTipoEmpleado(ventas.getEmpleados().getTipoEmpleado());
+    dto.setComision(ventas.getComisionPorVenta());
+    dto.setFecha(ventas.getFecha());
+
+    return dto;
+  }
+
+
+  public List<VentasResponseDTO> obtenerTodasLasVentas() {
+    return ventasRepository.findAll().stream()
+            .map(this::mapToEntity).toList();
   }
 
   @Transactional
@@ -81,6 +100,7 @@ public class VentasServices {
 
     //Devolver DTO
     return new VentasResponseDTO(
+            nuevaVenta.getVentaId(),
             nuevaVenta.getProductos().getProductoId(),
             nuevaVenta.getProductos().getNombreProducto(),
             nuevaVenta.getEmpleados().getEmpleadoId(),
@@ -138,6 +158,7 @@ public class VentasServices {
     ventasRepository.save(ventaExistente);
 
     return new VentasResponseDTO(
+            ventaExistente.getVentaId(),
             ventaExistente.getProductos().getProductoId(),
             ventaExistente.getProductos().getNombreProducto(),
             ventaExistente.getEmpleados().getEmpleadoId(),

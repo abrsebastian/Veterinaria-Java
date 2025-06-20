@@ -3,6 +3,7 @@ package com.veterinaria.veterinariajava.DTO;
 import java.time.LocalDateTime;
 
 public class VentasResponseDTO {
+    private Integer ventaId;
     private Integer productoId;
     private String nombreProducto;
     private Double precioUnitario;
@@ -14,7 +15,8 @@ public class VentasResponseDTO {
     private Double comision;
     private LocalDateTime fecha;
 
-    public VentasResponseDTO(Integer productoId,
+    public VentasResponseDTO(Integer ventaId,
+                             Integer productoId,
                              String nombreProducto,
                              Integer empleadoId,
                              String tipoEmpleado,
@@ -24,6 +26,7 @@ public class VentasResponseDTO {
                              double total,
                              double comision,
                              LocalDateTime fecha){
+        this.ventaId = ventaId;
         this.productoId = productoId;
         this.nombreProducto = nombreProducto;
         this.precioUnitario = precioUnitario;
@@ -34,6 +37,18 @@ public class VentasResponseDTO {
         this.tipoEmpleado = tipoEmpleado;
         this.comision = comision;
         this.fecha = fecha;
+    }
+
+    public VentasResponseDTO() {
+
+    }
+
+    public Integer getVentaId() {
+        return ventaId;
+    }
+
+    public void setVentaId(Integer ventaId) {
+        this.ventaId = ventaId;
     }
 
     public LocalDateTime getFecha() {

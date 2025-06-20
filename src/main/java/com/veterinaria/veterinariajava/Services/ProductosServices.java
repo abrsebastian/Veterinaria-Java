@@ -64,6 +64,7 @@ public class ProductosServices {
                 dto.setNombreProveedor(productos.getProveedor().getNombreProveedor());
             }
             dto.setPrecioVenta(productos.getPrecioVenta());
+            dto.setCantidadDeVecesVendido(productosRepository.cantidadDeVecesVendido(productos.getProductoId()));
             return dto;
         });
 

@@ -9,6 +9,15 @@ public class ProductosResponseDTO {
     private int stockProducto;
     private Integer proveedorId;
     private String nombreProveedor;
+    private Long cantidadDeVecesVendido;
+
+    public Long getCantidadDeVecesVendido() {
+        return cantidadDeVecesVendido;
+    }
+
+    public void setCantidadDeVecesVendido(Long cantidadDeVecesVendido) {
+        this.cantidadDeVecesVendido = cantidadDeVecesVendido;
+    }
 
     public Integer getProductoId() {
         return productoId;

@@ -7,7 +7,6 @@ import com.veterinaria.veterinariajava.DTO.VentasResponseDTO;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +21,7 @@ public class VentasController {
     private VentasServices ventasServices;
 
     @GetMapping
-    public List<Ventas> obtenerTodasLasVentas() {
+    public List<VentasResponseDTO> obtenerTodasLasVentas() {
         return ventasServices.obtenerTodasLasVentas();
     }
 

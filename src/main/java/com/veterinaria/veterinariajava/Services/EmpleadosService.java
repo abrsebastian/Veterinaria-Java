@@ -49,7 +49,8 @@ public class EmpleadosService {
     }
 
     public List<EmpleadosResponseDTO>obtenerTodos(){
-        return empleadosRepository.findAll().stream().map(this::mapToDTO).toList();
+        return empleadosRepository.findAll().stream()
+                .map(this::mapToDTO).toList();
     }
 
     public Optional<EmpleadosResponseDTO>obtenerPorId(Integer id){
