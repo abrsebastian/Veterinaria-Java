@@ -22,28 +22,99 @@ public class Ganancias {
     @Column(name = "ganancia_id")
     private Integer gananciaId;
 
-    @ManyToOne
-    @JoinColumn(name = "producto_id", nullable = true)
-    private Productos productos;
-
-    @ManyToOne
-    @JoinColumn(name = "servicio_id", nullable = true)
-    private Servicios servicios;
+//    @ManyToOne
+//    @JoinColumn(name = "producto_id", nullable = true)
+//    private Productos productos;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "servicio_id", nullable = true)
+//    private Servicios servicios;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "fecha")
     private Date fecha; 
 
-    @Column(name = "total_ingresos", nullable = true)
-    private double totalIngresos;
+    @Column(name = "ingresos_brutos_total", nullable = true)
+    private double totalIngresosBrutos;
+
+    @Column(name = "ib_ventas", nullable = true)
+    private double iBVentas;
+
+    @Column(name = "ib_servicios_internos", nullable = true)
+    private double iBServiciosInternos;
+
+    @Column(name = "ib_servicios_externos", nullable = true)
+    private double iBServiciosExternos;
 
     @Column(name = "total_ganancia", nullable = true)
     private double totalGanancia;
+
+    @Column(name = "gastos_fijos_total", nullable = true)
+    private double gastosFijosTotal;
+
+    @Column(name = "gananciasLocal", nullable = true)
+    private double gananciasLocal;
+
 
     public Ganancias(){
 
     }
 
+    public double getiBVentas() {
+        return iBVentas;
+    }
+
+    public void setiBVentas(double iBVentas) {
+        this.iBVentas = iBVentas;
+    }
+
+    public double getGastosFijosTotal() {
+        return gastosFijosTotal;
+    }
+
+    public void setGastosFijosTotal(double gastosFijosTotal) {
+        this.gastosFijosTotal = gastosFijosTotal;
+    }
+
+    public double getGananciasLocal() {
+        return gananciasLocal;
+    }
+
+    public void setGananciasLocal(double gananciasLocal) {
+        this.gananciasLocal = gananciasLocal;
+    }
+
+//    public Productos getProductos() {
+//        return productos;
+//    }
+//
+//    public void setProductos(Productos productos) {
+//        this.productos = productos;
+//    }
+//
+//    public Servicios getServicios() {
+//        return servicios;
+//    }
+//
+//    public void setServicios(Servicios servicios) {
+//        this.servicios = servicios;
+//    }
+
+    public double getiBServiciosInternos() {
+        return iBServiciosInternos;
+    }
+
+    public void setiBServiciosInternos(double iBServiciosInternos) {
+        this.iBServiciosInternos = iBServiciosInternos;
+    }
+
+    public double getiBServiciosExternos() {
+        return iBServiciosExternos;
+    }
+
+    public void setiBServiciosExternos(double iBServiciosExternos) {
+        this.iBServiciosExternos = iBServiciosExternos;
+    }
 
     public Date getFecha() {
         return fecha;
@@ -61,28 +132,28 @@ public class Ganancias {
         this.gananciaId = gananciaId;
     }
 
-    public Productos getProducto() {
-        return productos;
+//    public Productos getProducto() {
+//        return productos;
+//    }
+//
+//    public void setProducto(Productos productos) {
+//        this.productos = productos;
+//    }
+//
+//    public Servicios getServicio() {
+//        return servicios;
+//    }
+//
+//    public void setServicioId(Servicios servicios) {
+//        this.servicios = servicios;
+//    }
+
+    public double getTotalIngresosBrutos() {
+        return totalIngresosBrutos;
     }
 
-    public void setProducto(Productos productos) {
-        this.productos = productos;
-    }
-
-    public Servicios getServicio() {
-        return servicios;
-    }
-
-    public void setServicioId(Servicios servicios) {
-        this.servicios = servicios;
-    }
-
-    public double getTotalIngresos() {
-        return totalIngresos;
-    }
-
-    public void setTotalIngresos(double totalGanancias) {
-        this.totalIngresos = totalGanancias;
+    public void setTotalIngresosBrutos(double totalGanancias) {
+        this.totalIngresosBrutos = totalGanancias;
     }
 
     public double getTotalGanancia() {

@@ -23,3 +23,8 @@ public class VeterinariajavaApplication {
 	}
 
 }
+
+// Modificar la tabla Ventas agregando medios de pago, agregar una nueva tabla llamada "Gastos fijos"
+// en la que va a contener: Gasto fijo id, tipo de gasto, precio
+//agregar nueva columna de comision a empleados porque van a ir comision por venta y comision por servicio
+//la tabla servicios tiene que modificarse en servicios internos y externos y dependiendo que logica se haga, se agregara un dto distinto

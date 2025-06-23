@@ -6,7 +6,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
-import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 
 @Entity
@@ -32,23 +31,38 @@ public class Empleados {
     @Column(name = "sueldo_total", nullable = true)
     private Double sueldoTotal = 0.0;
     
-    @Column(name = "comisiones", nullable = true)
-    private Double comisionesTotal = 0.0;
+    @Column(name = "comisiones_ventas", nullable = true)
+    private Double comisionesPorVentas = 0.0;
+
+    @Column(name = "comisiones_servicios", nullable = true)
+    private Double comisionPorServicio = 0.0;
     
     @Column(name = "sueldo_final", nullable = true)
     private Double sueldoFinal = 0.0;
 
-   public Empleados (){
+    public Empleados (){
    
-   }
+    }
 
     @PrePersist
     private void calcularSueldoTotal(){
         this.sueldoTotal = this.sueldoPorHora * this.horasTrabajadas;
     }
 
+    public void setComisionesPorVentas(Double comisionesPorVentas) {
+        this.comisionesPorVentas = comisionesPorVentas;
+    }
+
+    public Double getComisionPorServicio() {
+        return comisionPorServicio;
+    }
+
+    public void setComisionPorServicio(Double comisionPorServicio) {
+        this.comisionPorServicio = comisionPorServicio;
+    }
+
     public void set(Double comisionesTotal) {
-        this.comisionesTotal = comisionesTotal;
+        this.comisionesPorVentas = comisionesTotal;
     }
 
     public Double getSueldoFinal() {
@@ -107,12 +121,12 @@ public class Empleados {
         this.sueldoPorHora = sueldoPorHora;
     }
 
-    public Double getComisionesTotal() {
-        return comisionesTotal;
+    public Double getComisionesPorVentas() {
+        return comisionesPorVentas;
     }
 
-    public void setComisionesTotal(double comisionesTotal) {
-        this.comisionesTotal = comisionesTotal;
+    public void setComisionesPorVentas(double comisionesPorVentas) {
+        this.comisionesPorVentas = comisionesPorVentas;
     }
 
     public void setTotalVentas(Ventas ventaGuardada) {

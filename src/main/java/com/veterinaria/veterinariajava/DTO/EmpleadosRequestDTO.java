@@ -11,7 +11,7 @@ public class EmpleadosRequestDTO {
     private String nombreEmpleado;
 
     @NotNull(message = "Este campo no puede estar vacio")
-    private String TipoEmpleado;
+    private String tipoEmpleado;
 
     @Positive(message = "Las horas trabajadas deben ser mayor a cero")
     private double horasTrabajadas;
@@ -28,11 +28,11 @@ public class EmpleadosRequestDTO {
     }
 
     public String getTipoEmpleado() {
-        return TipoEmpleado;
+        return tipoEmpleado;
     }
 
     public void setTipoEmpleado(String tipoEmpleado) {
-        TipoEmpleado = tipoEmpleado;
+        this.tipoEmpleado = tipoEmpleado;
     }
 
     public double getHorasTrabajadas() {

@@ -74,14 +74,14 @@ public class VentasServices {
     }
 
     //Calcular datos
-    double precioUnitario = productos.getPrecioCosto();
+    double precioUnitario = productos.getPrecioVenta();
     long cantidad = dto.getCantidad();
     double total = precioUnitario * cantidad;
     double comision = calcularComision(empleados, total);
 
     //Actualizar stock y sueldo
     productos.setStock(productos.getStock()-cantidad);
-    empleados.setComisionesTotal(empleados.getComisionesTotal() + comision);
+    empleados.setComisionesPorVentas(empleados.getComisionesPorVentas() + comision);
     empleadosService.calcularSueldoFinal(empleados.getEmpleadoId());
 
     //actualizar tabla ganancias
@@ -144,7 +144,7 @@ public class VentasServices {
     double nuevaComision = calcularComision(empleados, nuevoTotal);
 
     productos.setStock(productos.getStock() - nuevaCantidad);
-    empleados.setComisionesTotal(empleados.getComisionesTotal() + nuevaComision);
+    empleados.setComisionesPorVentas(empleados.getComisionesPorVentas() + nuevaComision);
     empleadosService.calcularSueldoFinal(empleados.getEmpleadoId());
 
     //actualizar datos

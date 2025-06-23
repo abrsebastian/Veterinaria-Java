@@ -1,11 +1,7 @@
 package com.veterinaria.veterinariajava.Tables;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.veterinaria.veterinariajava.Models.TipoDeServicio;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "servicios")
@@ -20,8 +16,9 @@ public class Servicios {
     @Column(name ="nombre_servicio")
     private String nombreServicio;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "tipo_servicio")
-    private String tipoServicio;
+    private TipoDeServicio tipoServicio;
 
     @Column(name = "profesional")
     private String nombreDelProfesional;
@@ -29,15 +26,48 @@ public class Servicios {
     @Column(name = "precio_servicio")
     private double precioServicio;
 
+    @Column(name = "porcentaje_ganancia_local")
+    private Double porcentajeGananciaLocal;
+
+    @Column(name = "porcentaje_comision_empleado")
+    private Double porcentajeBonificacionEmpleado;
+
+    @Column(name = "precio_final")
+    private Double precioFinal;
+
     public Servicios(){
 
     }
 
-    public String getTipoServicio() {
+    public Double getPorcentajeGananciaLocal() {
+        return porcentajeGananciaLocal;
+    }
+
+    public void setPorcentajeGananciaLocal(Double porcentajeGananciaLocal) {
+        this.porcentajeGananciaLocal = porcentajeGananciaLocal;
+    }
+
+    public Double getPorcentajeBonificacionEmpleado() {
+        return porcentajeBonificacionEmpleado;
+    }
+
+    public void setPorcentajeBonificacionEmpleado(Double porcentajeBonificacionEmpleado) {
+        this.porcentajeBonificacionEmpleado = porcentajeBonificacionEmpleado;
+    }
+
+    public Double getPrecioFinal() {
+        return precioFinal;
+    }
+
+    public void setPrecioFinal(Double precioFinal) {
+        this.precioFinal = precioFinal;
+    }
+
+    public TipoDeServicio getTipoServicio() {
         return tipoServicio;
     }
 
-    public void setTipoServicio(String tipoServicio) {
+    public void setTipoServicio(TipoDeServicio tipoServicio) {
         this.tipoServicio = tipoServicio;
     }
 
