@@ -1,58 +1,55 @@
 package com.veterinaria.veterinariajava.Tables;
 
-import com.veterinaria.veterinariajava.Models.TipoDeServicio;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "servicios")
 
-public class Servicios {
+public class ServiciosInternos {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "servicio_id")
     private Integer servicioId;
 
-    @Column(name ="nombre_servicio")
-    private String nombreServicio;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "tipo_servicio")
-    private TipoDeServicio tipoServicio;
+    @ManyToOne
+    @JoinColumn(name = "empleado_id")
+    private Empleados empleados;
 
     @Column(name = "profesional")
     private String nombreDelProfesional;
 
+    @Column(name ="nombre_servicio")
+    private String nombreServicio;
+
     @Column(name = "precio_servicio")
     private double precioServicio;
 
-    @Column(name = "porcentaje_ganancia_local")
-    private Double porcentajeGananciaLocal;
-
     @Column(name = "porcentaje_comision_empleado")
-    private Double porcentajeBonificacionEmpleado;
+    private Double porcentajeEmpleado;
 
     @Column(name = "precio_final")
     private Double precioFinal;
 
-    public Servicios(){
+    public ServiciosInternos(){
 
     }
 
-    public Double getPorcentajeGananciaLocal() {
-        return porcentajeGananciaLocal;
+
+    public Double getPorcentajeEmpleado() {
+        return porcentajeEmpleado;
     }
 
-    public void setPorcentajeGananciaLocal(Double porcentajeGananciaLocal) {
-        this.porcentajeGananciaLocal = porcentajeGananciaLocal;
+    public Empleados getEmpleados() {
+        return empleados;
     }
 
-    public Double getPorcentajeBonificacionEmpleado() {
-        return porcentajeBonificacionEmpleado;
+    public void setEmpleados(Empleados empleados) {
+        this.empleados = empleados;
     }
 
-    public void setPorcentajeBonificacionEmpleado(Double porcentajeBonificacionEmpleado) {
-        this.porcentajeBonificacionEmpleado = porcentajeBonificacionEmpleado;
+    public void setPorcentajeEmpleado(Double porcentajeEmpleado) {
+        this.porcentajeEmpleado = porcentajeEmpleado;
     }
 
     public Double getPrecioFinal() {
@@ -61,14 +58,6 @@ public class Servicios {
 
     public void setPrecioFinal(Double precioFinal) {
         this.precioFinal = precioFinal;
-    }
-
-    public TipoDeServicio getTipoServicio() {
-        return tipoServicio;
-    }
-
-    public void setTipoServicio(TipoDeServicio tipoServicio) {
-        this.tipoServicio = tipoServicio;
     }
 
     public String getNombreDelProfesional() {

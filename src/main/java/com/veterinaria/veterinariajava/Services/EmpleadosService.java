@@ -70,7 +70,7 @@ public class EmpleadosService {
     public void calcularSueldoFinal(Integer empleadoId){
         Empleados empleados = empleadosRepository.findById(empleadoId).orElseThrow(() -> new RuntimeException("Empleado no encontrado"));
 
-        double sueldoFinal = empleados.getSueldoTotal() + empleados.getComisionesPorVentas();
+        double sueldoFinal = empleados.getSueldoTotal() + empleados.getComisionesPorVentas() + empleados.getComisionPorServicio();
         empleados.setSueldoFinal(sueldoFinal);
 
         empleadosRepository.save(empleados);

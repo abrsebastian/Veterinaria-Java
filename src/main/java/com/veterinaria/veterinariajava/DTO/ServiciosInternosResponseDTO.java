@@ -1,13 +1,31 @@
 package com.veterinaria.veterinariajava.DTO;
 
-public class ServicioResponseDTO {
+public class ServiciosInternosResponseDTO {
     private Integer servicioId;
+    private Integer empleadoId;
+    private String nombreEmpleado;
     private String nombreServicio;
-    private String tipoServicio;
     private Double precioBase;
-    private Double porcentajeGananciaLocal;
-    private Double porcentajeBonificacionEmpleado;
+    private Double porcentajeEmpleado;
     private Double precioFinal;
+
+    public ServiciosInternosResponseDTO(){}
+
+    public Integer getEmpleadoId() {
+        return empleadoId;
+    }
+
+    public void setEmpleadoId(Integer empleadoId) {
+        this.empleadoId = empleadoId;
+    }
+
+    public String getNombreEmpleado() {
+        return nombreEmpleado;
+    }
+
+    public void setNombreEmpleado(String nombreEmpleado) {
+        this.nombreEmpleado = nombreEmpleado;
+    }
 
     public Integer getServicioId() {
         return servicioId;
@@ -25,14 +43,6 @@ public class ServicioResponseDTO {
         this.nombreServicio = nombreServicio;
     }
 
-    public String getTipoServicio() {
-        return tipoServicio;
-    }
-
-    public void setTipoServicio(String tipoServicio) {
-        this.tipoServicio = tipoServicio;
-    }
-
     public Double getPrecioBase() {
         return precioBase;
     }
@@ -41,20 +51,12 @@ public class ServicioResponseDTO {
         this.precioBase = precioBase;
     }
 
-    public Double getPorcentajeGananciaLocal() {
-        return porcentajeGananciaLocal;
+    public Double getPorcentajeEmpleado() {
+        return porcentajeEmpleado;
     }
 
-    public void setPorcentajeGananciaLocal(Double porcentajeGananciaLocal) {
-        this.porcentajeGananciaLocal = porcentajeGananciaLocal;
-    }
-
-    public Double getPorcentajeBonificacionEmpleado() {
-        return porcentajeBonificacionEmpleado;
-    }
-
-    public void setPorcentajeBonificacionEmpleado(Double porcentajeBonificacionEmpleado) {
-        this.porcentajeBonificacionEmpleado = porcentajeBonificacionEmpleado;
+    public void setPorcentajeEmpleado(Double porcentajeEmpleado) {
+        this.porcentajeEmpleado = porcentajeEmpleado;
     }
 
     public Double getPrecioFinal() {

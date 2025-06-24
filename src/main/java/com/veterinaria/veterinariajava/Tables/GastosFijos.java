@@ -1,6 +1,9 @@
 package com.veterinaria.veterinariajava.Tables;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "gatos_fijos")
@@ -17,8 +20,20 @@ public class GastosFijos {
     @Column(name="monto")
     private Double montoGasto;
 
+    @Column(name = "fecha")
+    @CreationTimestamp
+    private LocalDateTime fecha;
+
 
     public  GastosFijos(){}
+
+    public LocalDateTime getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(LocalDateTime fecha) {
+        this.fecha = fecha;
+    }
 
     public Integer getGastoFijoId() {
         return gastoFijoId;

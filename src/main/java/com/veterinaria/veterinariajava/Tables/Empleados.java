@@ -49,10 +49,6 @@ public class Empleados {
         this.sueldoTotal = this.sueldoPorHora * this.horasTrabajadas;
     }
 
-    public void setComisionesPorVentas(Double comisionesPorVentas) {
-        this.comisionesPorVentas = comisionesPorVentas;
-    }
-
     public Double getComisionPorServicio() {
         return comisionPorServicio;
     }

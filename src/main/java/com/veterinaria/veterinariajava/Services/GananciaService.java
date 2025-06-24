@@ -4,7 +4,7 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
-import com.veterinaria.veterinariajava.Tables.Servicios;
+import com.veterinaria.veterinariajava.Tables.ServiciosInternos;
 import com.veterinaria.veterinariajava.Tables.Ventas;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,14 +34,12 @@ public class GananciaService {
         gananciasRepository.deleteById(id);
     }
 
-    public void registrarGananciasDesdeServicios(Servicios servicios){
+    public void registrarGananciasDesdeServicios(ServiciosInternos servicios){
         Ganancias ganancias = new Ganancias();
 
         //ganancias.setServicioId(servicios);
 
-        if("Interno".equalsIgnoreCase(servicios.getTipoServicio())){
 
-        }
 
         ganancias.setTotalIngresosBrutos(servicios.getPrecioServicio());
         ganancias.setFecha(new Date(System.currentTimeMillis()));
