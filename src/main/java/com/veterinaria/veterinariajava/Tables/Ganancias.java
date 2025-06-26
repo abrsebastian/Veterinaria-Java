@@ -7,8 +7,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -17,102 +15,76 @@ import jakarta.persistence.TemporalType;
 @Table(name = "ganancias")
 
 public class Ganancias {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ganancia_id")
     private Integer gananciaId;
 
-//    @ManyToOne
-//    @JoinColumn(name = "producto_id", nullable = true)
-//    private Productos productos;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "servicio_id", nullable = true)
-//    private Servicios servicios;
-
     @Temporal(TemporalType.DATE)
     @Column(name = "fecha")
     private Date fecha; 
 
-    @Column(name = "ingresos_brutos_total", nullable = true)
-    private double totalIngresosBrutos;
-
     @Column(name = "ib_ventas", nullable = true)
-    private double iBVentas;
+    private Double iBVentas = 0.0;
 
     @Column(name = "ib_servicios_internos", nullable = true)
-    private double iBServiciosInternos;
+    private Double iBServiciosInternos = 0.0;
 
     @Column(name = "ib_servicios_externos", nullable = true)
-    private double iBServiciosExternos;
+    private Double iBServiciosExternos = 0.0;
 
     @Column(name = "total_ganancia", nullable = true)
-    private double totalGanancia;
+    private Double totalGanancia = 0.0;
 
     @Column(name = "gastos_fijos_total", nullable = true)
-    private double gastosFijosTotal;
+    private Double gastosFijosTotal = 0.0;
 
     @Column(name = "gananciasLocal", nullable = true)
-    private double gananciasLocal;
+    private Double gananciasLocal = 0.0;
 
 
     public Ganancias(){
 
     }
 
-    public double getiBVentas() {
+    public Double getiBVentas() {
         return iBVentas;
     }
 
-    public void setiBVentas(double iBVentas) {
+    public void setiBVentas(Double iBVentas) {
         this.iBVentas = iBVentas;
     }
 
-    public double getGastosFijosTotal() {
+    public Double getGastosFijosTotal() {
         return gastosFijosTotal;
     }
 
-    public void setGastosFijosTotal(double gastosFijosTotal) {
+    public void setGastosFijosTotal(Double gastosFijosTotal) {
         this.gastosFijosTotal = gastosFijosTotal;
     }
 
-    public double getGananciasLocal() {
+    public Double getGananciasLocal() {
         return gananciasLocal;
     }
 
-    public void setGananciasLocal(double gananciasLocal) {
+    public void setGananciasLocal(Double gananciasLocal) {
         this.gananciasLocal = gananciasLocal;
     }
 
-//    public Productos getProductos() {
-//        return productos;
-//    }
-//
-//    public void setProductos(Productos productos) {
-//        this.productos = productos;
-//    }
-//
-//    public Servicios getServicios() {
-//        return servicios;
-//    }
-//
-//    public void setServicios(Servicios servicios) {
-//        this.servicios = servicios;
-//    }
-
-    public double getiBServiciosInternos() {
+    public Double getiBServiciosInternos() {
         return iBServiciosInternos;
     }
 
-    public void setiBServiciosInternos(double iBServiciosInternos) {
+    public void setiBServiciosInternos(Double iBServiciosInternos) {
         this.iBServiciosInternos = iBServiciosInternos;
     }
 
-    public double getiBServiciosExternos() {
+    public Double getiBServiciosExternos() {
         return iBServiciosExternos;
     }
 
-    public void setiBServiciosExternos(double iBServiciosExternos) {
+    public void setiBServiciosExternos(Double iBServiciosExternos) {
         this.iBServiciosExternos = iBServiciosExternos;
     }
 
@@ -132,35 +104,11 @@ public class Ganancias {
         this.gananciaId = gananciaId;
     }
 
-//    public Productos getProducto() {
-//        return productos;
-//    }
-//
-//    public void setProducto(Productos productos) {
-//        this.productos = productos;
-//    }
-//
-//    public Servicios getServicio() {
-//        return servicios;
-//    }
-//
-//    public void setServicioId(Servicios servicios) {
-//        this.servicios = servicios;
-//    }
-
-    public double getTotalIngresosBrutos() {
-        return totalIngresosBrutos;
-    }
-
-    public void setTotalIngresosBrutos(double totalGanancias) {
-        this.totalIngresosBrutos = totalGanancias;
-    }
-
-    public double getTotalGanancia() {
+    public Double getTotalGanancia() {
         return totalGanancia;
     }
 
-    public void setTotalGanancia(double totalGanancia) {
+    public void setTotalGanancia(Double totalGanancia) {
         this.totalGanancia = totalGanancia;
     }
 

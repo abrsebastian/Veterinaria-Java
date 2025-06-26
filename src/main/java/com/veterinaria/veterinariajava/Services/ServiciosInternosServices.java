@@ -39,6 +39,8 @@ public class ServiciosInternosServices {
         return dto;
     }
 
+
+
     public List<ServiciosInternosResponseDTO> obtenerTodosLosServicios(){
         return serviciosInternosRepository.findAll().stream()
                 .map(this::mapToEntity).toList();
@@ -49,10 +51,7 @@ public class ServiciosInternosServices {
         ServiciosInternos serviciosInternos = new ServiciosInternos();
 
         Empleados empleados = empleadosRepository.findById(dto.getIdProfesional())
-                        .orElseThrow(()-> new RuntimeException("Empleado no encontrado"));
-
-        serviciosInternos.setNombreServicio(dto.getNombreServicio());
-        serviciosInternos.setPrecioServicio(dto.getPrecioBase());
+                .orElseThrow(()-> new RuntimeException("Empleado no encontrado"));
 
         //calcular datos Precio base, porcentaje empleado preciofinal
 
@@ -60,19 +59,27 @@ public class ServiciosInternosServices {
         double porcentajeEmpleado = precioBase * (dto.getPorcentajeComision()/100);
         double precioFinal = precioBase - porcentajeEmpleado;
 
-        //actualizar empleadoService
+        //actualizar empleadoService y ganancias
 
         empleados.setComisionPorServicio(empleados.getComisionPorServicio() + porcentajeEmpleado);
         empleadosService.calcularSueldoFinal(empleados.getEmpleadoId());
 
-        ServiciosInternos nuevoSI = new ServiciosInternos();
+        serviciosInternos.setNombreServicio(dto.getNombreServicio());
+        serviciosInternos.setPrecioServicio(dto.getPrecioBase());
+        serviciosInternos.setPorcentajeEmpleado(porcentajeEmpleado);
+        serviciosInternos.setPrecioFinal(precioFinal);
+        serviciosInternos.setNombreDelProfesional(empleados.getNombreEmpleado());
 
-        ServiciosInternos SIGuardado = serviciosInternosRepository.save(nuevoSI);
+        serviciosInternos.setEmpleados(empleados); //Lo he agregado recientemente
+
+
+      //  ServiciosInternos nuevoSI = new ServiciosInternos();
+
+        ServiciosInternos SIGuardado = serviciosInternosRepository.save(serviciosInternos);
 
         //Devolver DTO
 
-        return new ServiciosInternosResponseDTO(
-        );
+        return mapToEntity(SIGuardado);
 
     }
 
@@ -87,7 +94,7 @@ public class ServiciosInternosServices {
     public ServiciosInternos guardarServicio(ServiciosInternos servicios){
         ServiciosInternos servicioGuardado = serviciosInternosRepository.save(servicios);
 
-        gananciaService.registrarGananciasDesdeServicios(servicioGuardado);
+        gananciaService.registrarGananciaServicioInterno(servicioGuardado);
         return servicioGuardado;
     }
 

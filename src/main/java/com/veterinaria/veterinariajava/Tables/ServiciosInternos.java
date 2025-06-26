@@ -1,6 +1,9 @@
 package com.veterinaria.veterinariajava.Tables;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.sql.Date;
 
 @Entity
 @Table(name = "servicios")
@@ -31,10 +34,21 @@ public class ServiciosInternos {
     @Column(name = "precio_final")
     private Double precioFinal;
 
+    @Column(name = "fecha")
+    @CreationTimestamp
+    private Date fecha;
+
     public ServiciosInternos(){
 
     }
 
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha() {
+        this.fecha = fecha;
+    }
 
     public Double getPorcentajeEmpleado() {
         return porcentajeEmpleado;

@@ -20,6 +20,7 @@ public class VeterinariajavaApplication {
         System.setProperty("SPRING_SECURITY_PASSWORD", dotenv.get("SPRING_SECURITY_PASSWORD"));
 
         SpringApplication.run(VeterinariajavaApplication.class, args);
+
 	}
 
 }

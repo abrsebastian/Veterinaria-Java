@@ -34,18 +34,15 @@ public class GananciaService {
         gananciasRepository.deleteById(id);
     }
 
-    public void registrarGananciasDesdeServicios(ServiciosInternos servicios){
+    public void registrarGananciaServicioInterno(ServiciosInternos servicios){
+
         Ganancias ganancias = new Ganancias();
-
-        //ganancias.setServicioId(servicios);
-
-
-
-        ganancias.setTotalIngresosBrutos(servicios.getPrecioServicio());
+        ganancias.setiBServiciosInternos(servicios.getPrecioServicio());
         ganancias.setFecha(new Date(System.currentTimeMillis()));
 
         gananciasRepository.save(ganancias);
     }
+
 
     public void registrarGananciasDeVentas(Ventas ventas){
         Ganancias gananciasVentas = new Ganancias();
@@ -58,7 +55,7 @@ public class GananciaService {
       //  double gananciaTotal = ingresoTotal * 0.30;
 
         //gananciasVentas.setProducto(ventas.getProductos());
-        gananciasVentas.setTotalIngresosBrutos(ingresoTotal);
+        gananciasVentas.setiBVentas(ingresoTotal);
         //gananciasVentas.setTotalGanancia(gananciaTotal);
         gananciasVentas.setFecha(new Date(System.currentTimeMillis()));
 
