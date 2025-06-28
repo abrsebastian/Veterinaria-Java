@@ -50,7 +50,11 @@ public class Ventas {
     public Ventas() {
     };
 
-    public Ventas(Productos productos, Empleados empleados, Long cantidad, double precioUnitarioPorVenta, double comisionPorVenta) {
+    public Ventas(Productos productos,
+                  Empleados empleados,
+                  Long cantidad,
+                  double precioUnitarioPorVenta,
+                  double comisionPorVenta) {
         this.productos = productos;
         this.empleados = empleados;
         this.cantidadProductoVendido = cantidad;

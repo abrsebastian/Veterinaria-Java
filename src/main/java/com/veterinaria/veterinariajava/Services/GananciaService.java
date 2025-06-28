@@ -47,16 +47,10 @@ public class GananciaService {
     public void registrarGananciasDeVentas(Ventas ventas){
         Ganancias gananciasVentas = new Ganancias();
 
-        double precioTotal = ventas.getPrecioTotal();
-        Long cantidad = ventas.getCantidadProductoVendido();
-        //double comisionAsignada = ventas.getComisionPorVenta();
+        double ibVentas = ventas.getPrecioTotal();
 
-        double ingresoTotal = (precioTotal * cantidad); //- comisionAsignada;
-      //  double gananciaTotal = ingresoTotal * 0.30;
-
-        //gananciasVentas.setProducto(ventas.getProductos());
+        double ingresoTotal = (ibVentas);
         gananciasVentas.setiBVentas(ingresoTotal);
-        //gananciasVentas.setTotalGanancia(gananciaTotal);
         gananciasVentas.setFecha(new Date(System.currentTimeMillis()));
 
         gananciasRepository.save(gananciasVentas);

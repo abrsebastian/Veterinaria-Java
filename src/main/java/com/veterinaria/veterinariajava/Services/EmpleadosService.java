@@ -35,9 +35,11 @@ public class EmpleadosService {
         dto.setNombreEmpleado(empleados.getNombreEmpleado());
         dto.setTipoEmpleado(empleados.getTipoEmpleado());
         dto.setSueldoTotal(empleados.getSueldoTotal());
-        dto.setComisionesTotal(empleados.getComisionesPorVentas());
+        dto.setComisionesPorVenta(empleados.getComisionesPorVentas());
+        dto.setComisionesPorServicios(empleados.getComisionPorServicio());
         dto.setSueldoFinal(empleados.getSueldoFinal());
         dto.setTotalVentas(empleadosRepository.cantidadDeVentas(empleados.getEmpleadoId()));
+        dto.setTotalServicios(empleadosRepository.cantidadDeServicios(empleados.getEmpleadoId()));
         return dto;
 
         //Agregar una nueva linea para la columna total ventas

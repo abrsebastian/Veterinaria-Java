@@ -12,4 +12,7 @@ public interface EmpleadosRepository extends JpaRepository<Empleados, Integer> {
     @Query(value = "SELECT COUNT(*) as total_ventas FROM ventas WHERE empleado_id = :empleadoId", nativeQuery = true)
     Long cantidadDeVentas(@Param("empleadoId")Integer empleadoId);
 
+    @Query(value = "SELECT COUNT(*) as cds_prestados FROM Servicios WHERE empleado_id = :empleadoId", nativeQuery = true)
+    Long cantidadDeServicios(@Param("empleadoId")Integer empleadoId);
+
 }

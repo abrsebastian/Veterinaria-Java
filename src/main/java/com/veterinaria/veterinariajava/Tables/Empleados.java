@@ -30,22 +30,22 @@ public class Empleados {
 
     @Column(name = "sueldo_total", nullable = true)
     private Double sueldoTotal = 0.0;
-    
+
     @Column(name = "comisiones_ventas", nullable = true)
     private Double comisionesPorVentas = 0.0;
 
     @Column(name = "comisiones_servicios", nullable = true)
     private Double comisionPorServicio = 0.0;
-    
+
     @Column(name = "sueldo_final", nullable = true)
     private Double sueldoFinal = 0.0;
 
-    public Empleados (){
-   
+    public Empleados() {
+
     }
 
     @PrePersist
-    private void calcularSueldoTotal(){
+    private void calcularSueldoTotal() {
         this.sueldoTotal = this.sueldoPorHora * this.horasTrabajadas;
     }
 

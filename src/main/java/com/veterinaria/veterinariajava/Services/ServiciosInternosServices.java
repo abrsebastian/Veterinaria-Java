@@ -77,6 +77,9 @@ public class ServiciosInternosServices {
 
         ServiciosInternos SIGuardado = serviciosInternosRepository.save(serviciosInternos);
 
+        gananciaService.registrarGananciaServicioInterno(SIGuardado);
+
+
         //Devolver DTO
 
         return mapToEntity(SIGuardado);
