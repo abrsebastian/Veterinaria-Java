@@ -34,9 +34,6 @@ public class Ganancias {
     @Column(name = "ib_servicios_externos", nullable = true)
     private Double iBServiciosExternos = 0.0;
 
-    @Column(name = "total_ganancia", nullable = true)
-    private Double totalGanancia = 0.0;
-
     @Column(name = "gastos_fijos_total", nullable = true)
     private Double gastosFijosTotal = 0.0;
 
@@ -103,14 +100,5 @@ public class Ganancias {
     public void setGananciaId(Integer gananciaId) {
         this.gananciaId = gananciaId;
     }
-
-    public Double getTotalGanancia() {
-        return totalGanancia;
-    }
-
-    public void setTotalGanancia(Double totalGanancia) {
-        this.totalGanancia = totalGanancia;
-    }
-
 
 }

@@ -8,7 +8,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.veterinaria.veterinariajava.Services.EmpleadosService;
+import com.veterinaria.veterinariajava.Services.EmpleadosServices;
 
 
 @RestController
@@ -17,7 +17,7 @@ import com.veterinaria.veterinariajava.Services.EmpleadosService;
 public class EmpleadosController {
 
     @Autowired
-    private EmpleadosService empleadoService;
+    private EmpleadosServices empleadoService;
 
     @GetMapping
     public List<EmpleadosResponseDTO> listarEmpleados(){

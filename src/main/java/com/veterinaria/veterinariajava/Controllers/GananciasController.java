@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.veterinaria.veterinariajava.Services.GananciaService;
+import com.veterinaria.veterinariajava.Services.GananciaServices;
 
 import com.veterinaria.veterinariajava.Tables.Ganancias;
 
@@ -21,26 +21,26 @@ import com.veterinaria.veterinariajava.Tables.Ganancias;
 public class GananciasController {
 
     @Autowired
-    private GananciaService gananciaService;
+    private GananciaServices gananciaServices;
 
     @GetMapping
     public List<Ganancias> listaGanancias(){
-        return gananciaService.obtenerTodas();
+        return gananciaServices.obtenerTodas();
     }
 
     @GetMapping("/{id}")
     public Optional<Ganancias> obtenerGanancia(@PathVariable Integer id){
-        return gananciaService.obtenerPorId(id);
+        return gananciaServices.obtenerPorId(id);
     }
 
     @PostMapping
     public Ganancias crearGanancia(@RequestBody Ganancias ganancias) {
-        return gananciaService.guardarGanancia(ganancias);
+        return gananciaServices.guardarGanancia(ganancias);
     }
 
     @DeleteMapping("/{id}")
     public void eliminarGanancia(@PathVariable Integer id){
-        gananciaService.eliminarGanancia(id);
+        gananciaServices.eliminarGanancia(id);
     }
 
 }

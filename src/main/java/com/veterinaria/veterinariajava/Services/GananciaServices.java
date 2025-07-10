@@ -14,7 +14,7 @@ import com.veterinaria.veterinariajava.Repository.GananciasRepository;
 import com.veterinaria.veterinariajava.Tables.Ganancias;
 
 @Service
-public class GananciaService {
+public class GananciaServices {
     @Autowired
     private GananciasRepository gananciasRepository;
 

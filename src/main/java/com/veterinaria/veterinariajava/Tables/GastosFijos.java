@@ -1,5 +1,6 @@
 package com.veterinaria.veterinariajava.Tables;
 
+import com.veterinaria.veterinariajava.Models.TipoDeGasto;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -14,8 +15,9 @@ public class GastosFijos {
     @Column(name="gasto_id")
     private Integer gastoFijoId;
 
+    @Enumerated(EnumType.STRING)
     @Column(name="tipo_de_gasto")
-    private String tipoDeGasto;
+    private TipoDeGasto tipoDeGasto;
 
     @Column(name="monto")
     private Double montoGasto;
@@ -43,11 +45,11 @@ public class GastosFijos {
         this.gastoFijoId = gastoFijoId;
     }
 
-    public String getTipoDeGasto() {
+    public TipoDeGasto getTipoDeGasto() {
         return tipoDeGasto;
     }
 
-    public void setTipoDeGasto(String tipoDeGasto) {
+    public void setTipoDeGasto(TipoDeGasto tipoDeGasto) {
         this.tipoDeGasto = tipoDeGasto;
     }
 

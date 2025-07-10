@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.veterinaria.veterinariajava.DTO.VentasResponseDTO;
 import com.veterinaria.veterinariajava.DTO.VentasRequestDTO;
+import com.veterinaria.veterinariajava.Tables.SueldosMensuales;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,10 +30,16 @@ public class VentasServices {
   private ProductosRepository productosRepository;
 
   @Autowired
-  private  EmpleadosService empleadosService;
+  private EmpleadosServices empleadosServices;
 
   @Autowired
-  private GananciaService gananciaService;
+  private SueldosMensuales sueldosMensuales;
+
+  @Autowired
+  private GananciaServices gananciaServices;
+
+  @Autowired
+  private SueldosMensualesServices sueldosMensualesServices;
 
   private VentasResponseDTO mapToEntity(Ventas ventas){
     VentasResponseDTO dto = new VentasResponseDTO();
@@ -81,8 +88,8 @@ public class VentasServices {
 
     //Actualizar stock y sueldo
     productos.setStock(productos.getStock()-cantidad);
-    empleados.setComisionesPorVentas(empleados.getComisionesPorVentas() + comision);
-    empleadosService.calcularSueldoFinal(empleados.getEmpleadoId());
+    sueldosMensuales.setComisionesPorVentas(sueldosMensuales.getComisionesPorVentas() + comision);
+    sueldosMensualesServices.calcularSueldoFinal(empleados.getEmpleadoId(), sueldosMensuales.getSueldoId());
 
     //actualizar tabla ganancias
 
@@ -94,9 +101,7 @@ public class VentasServices {
 
     empleados.setTotalVentas(ventaGuardada);
 
-    gananciaService.registrarGananciasDeVentas(ventaGuardada);//esta linea
-
-
+    gananciaServices.registrarGananciasDeVentas(ventaGuardada);//esta linea
 
     //Devolver DTO
     return new VentasResponseDTO(
@@ -144,8 +149,8 @@ public class VentasServices {
     double nuevaComision = calcularComision(empleados, nuevoTotal);
 
     productos.setStock(productos.getStock() - nuevaCantidad);
-    empleados.setComisionesPorVentas(empleados.getComisionesPorVentas() + nuevaComision);
-    empleadosService.calcularSueldoFinal(empleados.getEmpleadoId());
+    sueldosMensuales.setComisionesPorVentas(sueldosMensuales.getComisionesPorVentas() + nuevaComision);
+    sueldosMensualesServices.calcularSueldoFinal(empleados.getEmpleadoId(), sueldosMensuales.getSueldoId());
 
     //actualizar datos
 

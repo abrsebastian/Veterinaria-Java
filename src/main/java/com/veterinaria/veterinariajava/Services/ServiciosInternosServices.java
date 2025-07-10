@@ -6,6 +6,7 @@ import com.veterinaria.veterinariajava.DTO.ServiciosInternosRequestDTO;
 import com.veterinaria.veterinariajava.DTO.ServiciosInternosResponseDTO;
 import com.veterinaria.veterinariajava.Repository.EmpleadosRepository;
 import com.veterinaria.veterinariajava.Tables.Empleados;
+import com.veterinaria.veterinariajava.Tables.SueldosMensuales;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,10 +22,13 @@ public class ServiciosInternosServices {
     private EmpleadosRepository empleadosRepository;
 
     @Autowired
-    private GananciaService gananciaService;
+    private GananciaServices gananciaServices;
 
     @Autowired
-    private EmpleadosService empleadosService;
+    private SueldosMensuales sueldosMensuales;
+
+    @Autowired
+    private EmpleadosServices empleadosServices;
 
     private ServiciosInternosResponseDTO mapToEntity(ServiciosInternos serviciosInternos){
         ServiciosInternosResponseDTO dto = new ServiciosInternosResponseDTO();
@@ -61,8 +65,8 @@ public class ServiciosInternosServices {
 
         //actualizar empleadoService y ganancias
 
-        empleados.setComisionPorServicio(empleados.getComisionPorServicio() + porcentajeEmpleado);
-        empleadosService.calcularSueldoFinal(empleados.getEmpleadoId());
+        sueldosMensuales.setComisionPorServicio(sueldosMensuales.getComisionPorServicio() + porcentajeEmpleado);
+        empleadosServices.calcularSueldoFinal(empleados.getEmpleadoId());
 
         serviciosInternos.setNombreServicio(dto.getNombreServicio());
         serviciosInternos.setPrecioServicio(dto.getPrecioBase());
@@ -77,7 +81,7 @@ public class ServiciosInternosServices {
 
         ServiciosInternos SIGuardado = serviciosInternosRepository.save(serviciosInternos);
 
-        gananciaService.registrarGananciaServicioInterno(SIGuardado);
+        gananciaServices.registrarGananciaServicioInterno(SIGuardado);
 
 
         //Devolver DTO
@@ -97,7 +101,7 @@ public class ServiciosInternosServices {
     public ServiciosInternos guardarServicio(ServiciosInternos servicios){
         ServiciosInternos servicioGuardado = serviciosInternosRepository.save(servicios);
 
-        gananciaService.registrarGananciaServicioInterno(servicioGuardado);
+        gananciaServices.registrarGananciaServicioInterno(servicioGuardado);
         return servicioGuardado;
     }
 
