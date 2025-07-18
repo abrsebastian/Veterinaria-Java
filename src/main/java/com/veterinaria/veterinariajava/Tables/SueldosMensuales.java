@@ -15,12 +15,6 @@ public class SueldosMensuales {
     @JoinColumn(name = "empleado_id")
     private Empleados empleados;
 
-    @Column(name = "horas_trabajadas")
-    private double horasTrabajadas;
-
-    @Column(name = "sueldo_por_hora")
-    private double sueldoPorHora;
-
     @Column(name = "sueldo_total", nullable = true)
     private Double sueldoTotal = 0.0;
 
@@ -41,11 +35,6 @@ public class SueldosMensuales {
 
     public SueldosMensuales() {}
 
-    @PrePersist
-    private void calcularSueldoTotal() {
-        this.sueldoTotal = this.sueldoPorHora * this.horasTrabajadas;
-    }
-
     public Integer getSueldoId() {
         return sueldoId;
     }
@@ -60,22 +49,6 @@ public class SueldosMensuales {
 
     public void setEmpleados(Empleados empleados) {
         this.empleados = empleados;
-    }
-
-    public double getHorasTrabajadas() {
-        return horasTrabajadas;
-    }
-
-    public void setHorasTrabajadas(double horasTrabajadas) {
-        this.horasTrabajadas = horasTrabajadas;
-    }
-
-    public double getSueldoPorHora() {
-        return sueldoPorHora;
-    }
-
-    public void setSueldoPorHora(double sueldoPorHora) {
-        this.sueldoPorHora = sueldoPorHora;
     }
 
     public Double getSueldoTotal() {

@@ -28,9 +28,14 @@ public class EmpleadosServices {
         Empleados empleados = new Empleados();
         empleados.setNombreEmpleado(dto.getNombreEmpleado());
         empleados.setTipoEmpleado(dto.getTipoEmpleado());
-        sueldosMensuales.setHorasTrabajadas(dto.getHorasTrabajadas());
-        sueldosMensuales.setSueldoPorHora(dto.getSueldoPorHora());
-        sueldosMensuales.setSueldoTotal(dto.getSueldoPorHora() * dto.getHorasTrabajadas());
+
+        double horasTrabajadas = dto.getHorasTrabajadas();
+        double sueldoPorHora = dto.getSueldoPorHora();
+        double sueldoTotal = horasTrabajadas * sueldoPorHora;
+
+        empleados.setHorasTrabajadas(dto.getHorasTrabajadas());
+        empleados.setSueldoPorHora(dto.getSueldoPorHora());
+        // sueldosMensuales.setSueldoTotal(dto.getSueldoPorHora() * dto.getHorasTrabajadas());
         return empleados;
     }
 
@@ -39,10 +44,10 @@ public class EmpleadosServices {
         dto.setEmpleadoId(empleados.getEmpleadoId());
         dto.setNombreEmpleado(empleados.getNombreEmpleado());
         dto.setTipoEmpleado(empleados.getTipoEmpleado());
-        dto.setSueldoTotal(sueldosMensuales.getSueldoTotal());
-        dto.setComisionesPorVenta(sueldosMensuales.getComisionesPorVentas());
-        dto.setComisionesPorServicios(sueldosMensuales.getComisionPorServicio());
-        dto.setSueldoFinal(sueldosMensuales.getSueldoFinal());
+//        dto.setSueldoTotal(sueldosMensuales.getSueldoTotal());
+//        dto.setComisionesPorVenta(sueldosMensuales.getComisionesPorVentas());
+//        dto.setComisionesPorServicios(sueldosMensuales.getComisionPorServicio());
+//        dto.setSueldoFinal(sueldosMensuales.getSueldoFinal());
         dto.setTotalVentas(empleadosRepository.cantidadDeVentas(empleados.getEmpleadoId()));
         dto.setTotalServicios(empleadosRepository.cantidadDeServicios(empleados.getEmpleadoId()));
         return dto;

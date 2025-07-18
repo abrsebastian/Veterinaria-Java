@@ -30,6 +30,9 @@ public class ServiciosInternosServices {
     @Autowired
     private EmpleadosServices empleadosServices;
 
+    @Autowired
+    private SueldosMensualesServices sueldosMensualesServices;
+
     private ServiciosInternosResponseDTO mapToEntity(ServiciosInternos serviciosInternos){
         ServiciosInternosResponseDTO dto = new ServiciosInternosResponseDTO();
         dto.setServicioId(serviciosInternos.getServicioId());
@@ -42,7 +45,6 @@ public class ServiciosInternosServices {
 
         return dto;
     }
-
 
 
     public List<ServiciosInternosResponseDTO> obtenerTodosLosServicios(){
@@ -66,7 +68,7 @@ public class ServiciosInternosServices {
         //actualizar empleadoService y ganancias
 
         sueldosMensuales.setComisionPorServicio(sueldosMensuales.getComisionPorServicio() + porcentajeEmpleado);
-        empleadosServices.calcularSueldoFinal(empleados.getEmpleadoId());
+        sueldosMensualesServices.calcularSueldoFinal(empleados.getEmpleadoId(), sueldosMensuales.getSueldoId());
 
         serviciosInternos.setNombreServicio(dto.getNombreServicio());
         serviciosInternos.setPrecioServicio(dto.getPrecioBase());

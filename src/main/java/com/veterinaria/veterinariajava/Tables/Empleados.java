@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
 
 @Entity
 @Table(name = "empleados")
@@ -21,11 +22,12 @@ public class Empleados {
     @Column(name = "tipo_empleado")
     private String tipoEmpleado;
 
-//    @Column(name = "horas_trabajadas")
-//    private double horasTrabajadas;
-//
-//    @Column(name = "sueldo_por_hora")
-//    private double sueldoPorHora;
+
+    @Column(name = "horas_trabajadas")
+    private double horasTrabajadas;
+
+    @Column(name = "sueldo_por_hora")
+    private double sueldoPorHora;
 //
 //    @Column(name = "sueldo_total", nullable = true)
 //    private Double sueldoTotal = 0.0;
@@ -100,21 +102,21 @@ public class Empleados {
         this.tipoEmpleado = tipoEmpleado;
     }
 
-//    public Double getHorasTrabajadas() {
-//        return horasTrabajadas;
-//    }
-//
-//    public void setHorasTrabajadas(double horasTrabajadas) {
-//        this.horasTrabajadas = horasTrabajadas;
-//    }
-//
-//    public Double getSueldoPorHora() {
-//        return sueldoPorHora;
-//    }
-//
-//    public void setSueldoPorHora(double sueldoPorHora) {
-//        this.sueldoPorHora = sueldoPorHora;
-//    }
+    public Double getHorasTrabajadas() {
+        return horasTrabajadas;
+    }
+
+    public void setHorasTrabajadas(double horasTrabajadas) {
+        this.horasTrabajadas = horasTrabajadas;
+    }
+
+    public Double getSueldoPorHora() {
+        return sueldoPorHora;
+    }
+
+    public void setSueldoPorHora(double sueldoPorHora) {
+        this.sueldoPorHora = sueldoPorHora;
+    }
 //
 //    public Double getComisionesPorVentas() {
 //        return comisionesPorVentas;
