@@ -6,8 +6,10 @@ import com.veterinaria.veterinariajava.Repository.SueldosMensualesRepository;
 import com.veterinaria.veterinariajava.Tables.Empleados;
 import com.veterinaria.veterinariajava.Tables.SueldosMensuales;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -67,76 +69,87 @@ public class SueldosMensualesServices {
         sueldosMensualesRepository.deleteById(id);
     }
 
-    public void calcularSueldoFinal(Integer empleadoId, Integer sueldoId){
-        Empleados empleados = empleadosRepository.findById(empleadoId).
-                orElseThrow(() -> new RuntimeException("Empleado no encontrado"));
+    public SueldosMensuales actualizarSueldoConVenta(Integer empleadoId, double comisionVenta){
+        LocalDate now = LocalDate.now();
+        int year = now.getYear();
+        int month = now.getMonthValue();
 
-        SueldosMensuales sueldosMensuales = sueldosMensualesRepository.findById(sueldoId).
-                orElseThrow(() -> new RuntimeException("Sueldo no encontrado"));
+        SueldosMensuales sueldosMensuales = sueldosMensualesRepository.findByEmpleadoAndYearAndMonthNative(empleadoId, year, month).
+                orElseGet(()-> {
+                    //Si no existe, crear nuevo
+                    SueldosMensuales nuevoSueldo = new SueldosMensuales();
+
+                    Empleados empleados = empleadosRepository.findById(empleadoId)
+                            .orElseThrow(()-> new RuntimeException("Empleado no encontrado"));
+                    nuevoSueldo.setEmpleados(empleados);
+                    nuevoSueldo.setYear(year);
+                    nuevoSueldo.setMonth(month);
+                    double sueldoBase = empleados.getSueldoPorHora() * empleados.getHorasTrabajadas();
+                    nuevoSueldo.setSueldoTotal(sueldoBase);
+                    nuevoSueldo.setComisionPorServicio(0.0);
+                    nuevoSueldo.setComisionesPorVentas(0.0);
+                    nuevoSueldo.setSueldoFinal(sueldoBase);
+
+                    return nuevoSueldo;
+        });
+
+        double nuevaComisionPorVenta = sueldosMensuales.getComisionesPorVentas() + comisionVenta;
+        sueldosMensuales.setComisionesPorVentas(nuevaComisionPorVenta);
 
         double sueldoFinal = sueldosMensuales.getSueldoTotal()
                 + sueldosMensuales.getComisionesPorVentas()
                 + sueldosMensuales.getComisionPorServicio();
-
         sueldosMensuales.setSueldoFinal(sueldoFinal);
 
-        sueldosMensualesRepository.save(sueldosMensuales);
-
+        return sueldosMensualesRepository.save(sueldosMensuales);
     }
+
+
+
+//    public void calcularSueldoFinal(Integer empleadoId, Integer sueldoId){
+//        Empleados empleados = empleadosRepository.findById(empleadoId).
+//                orElseThrow(() -> new RuntimeException("Empleado no encontrado"));
+//
+//        SueldosMensuales sueldosMensuales = sueldosMensualesRepository.findById(sueldoId).
+//                orElseThrow(() -> new RuntimeException("Sueldo no encontrado"));
+//
+//        double sueldoFinal = sueldosMensuales.getSueldoTotal()
+//                + sueldosMensuales.getComisionesPorVentas()
+//                + sueldosMensuales.getComisionPorServicio();
+//
+//        sueldosMensuales.setSueldoFinal(sueldoFinal);
+//
+//        sueldosMensualesRepository.save(sueldosMensuales);
+//
+//    }
 
     public List<SueldosMensualesResponseDTO> generarSueldoDelMes(int year, int  month){
         List<Empleados> empleados = empleadosRepository.findAll();
         List<SueldosMensualesResponseDTO> responseDTOS = new ArrayList<>();
 
         for (Empleados e : empleados){
-            SueldosMensuales sueldo = new SueldosMensuales();
+            SueldosMensuales sueldosMensuales = sueldosMensualesRepository.
+                    findByEmpleadoAndYearAndMonthNative(e.getEmpleadoId(), year, month).orElseGet(()->{
+                       SueldosMensuales nuevo = new SueldosMensuales();
+                       nuevo.setEmpleados(e);
+                       nuevo.setYear(year);
+                       nuevo.setMonth(month);
+                       nuevo.setSueldoTotal(e.getHorasTrabajadas() * e.getSueldoPorHora());
+                       return nuevo;
+                    });
 
-            sueldo.setEmpleados(e);
-            sueldo.setYear(year);
-            sueldo.setMonth(month);
-            sueldo.setSueldoTotal(e.getSueldoPorHora() * e.getHorasTrabajadas());
-            sueldo.setComisionPorServicio();
+            double sueldoFinal = sueldosMensuales.getSueldoTotal()
+                    + sueldosMensuales.getComisionPorServicio()
+                    + sueldosMensuales.getComisionesPorVentas();
+            sueldosMensuales.setSueldoFinal(sueldoFinal);
 
+            SueldosMensuales guardado = sueldosMensualesRepository.save(sueldosMensuales);
 
+            SueldosMensualesResponseDTO dto = mapToEntity(guardado);
+            responseDTOS.add(dto);
         }
+        return  responseDTOS;
 
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
