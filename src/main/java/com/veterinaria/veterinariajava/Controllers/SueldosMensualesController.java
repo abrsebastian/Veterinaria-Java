@@ -29,11 +29,10 @@ public class SueldosMensualesController {
         return sueldosMensualesServices.obtenerPorId(id);
     }
 
-    @PostMapping
-    public ResponseEntity<SueldosMensualesResponseDTO> crearSueldo(@Valid @RequestBody SueldosMensualesRequestDTO dto){
-        SueldosMensualesResponseDTO responseDTO = sueldosMensualesServices.guardarSueldo(dto);
-        return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
-    }
+//    @PostMapping
+//    public ResponseEntity<SueldosMensualesResponseDTO> crearSueldo(@RequestBody SueldosMensuales sueldosMensuales){
+//        sueldosMensualesServices.guardarSueldoBase(sueldosMensuales)
+//    }
 
     @DeleteMapping("/{id}")
     public void eliminarSueldo(@PathVariable Integer id){

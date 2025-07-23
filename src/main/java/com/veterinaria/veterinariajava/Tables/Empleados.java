@@ -22,13 +22,12 @@ public class Empleados {
     @Column(name = "tipo_empleado")
     private String tipoEmpleado;
 
-
     @Column(name = "horas_trabajadas")
     private double horasTrabajadas;
 
     @Column(name = "sueldo_por_hora")
     private double sueldoPorHora;
-//
+
 //    @Column(name = "sueldo_total", nullable = true)
 //    private Double sueldoTotal = 0.0;
 //

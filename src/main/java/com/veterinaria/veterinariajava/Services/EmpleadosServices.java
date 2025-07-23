@@ -17,12 +17,14 @@ import com.veterinaria.veterinariajava.Tables.Empleados;
 @Service
 public class EmpleadosServices {
 
-//    @Autowired
-//    final private SueldosMensuales sueldosMensuales;
+
 
     private static final Logger log = LoggerFactory.getLogger(EmpleadosServices.class);
     @Autowired
     final private EmpleadosRepository empleadosRepository;
+
+    @Autowired
+    private SueldosMensualesServices sueldosMensualesServices;
 
     private Empleados mapToEntity(EmpleadosRequestDTO dto){
         Empleados empleados = new Empleados();
@@ -73,6 +75,8 @@ public class EmpleadosServices {
     public EmpleadosResponseDTO guardarEmpleados(EmpleadosRequestDTO dto){
         Empleados empleados = mapToEntity(dto);
         Empleados guardado = empleadosRepository.save(empleados);
+        sueldosMensualesServices.guardarSueldoBase(empleados.getEmpleadoId());
+
         return mapToDTO(guardado);
     }
 

@@ -67,8 +67,8 @@ public class ServiciosInternosServices {
 
         //actualizar empleadoService y ganancias
 
-        sueldosMensuales.setComisionPorServicio(sueldosMensuales.getComisionPorServicio() + porcentajeEmpleado);
-        sueldosMensualesServices.calcularSueldoFinal(empleados.getEmpleadoId(), sueldosMensuales.getSueldoId());
+//        sueldosMensuales.setComisionPorServicio(sueldosMensuales.getComisionPorServicio() + porcentajeEmpleado);
+//        sueldosMensualesServices.calcularSueldoFinal(empleados.getEmpleadoId(), sueldosMensuales.getSueldoId());
 
         serviciosInternos.setNombreServicio(dto.getNombreServicio());
         serviciosInternos.setPrecioServicio(dto.getPrecioBase());
@@ -82,6 +82,8 @@ public class ServiciosInternosServices {
       //  ServiciosInternos nuevoSI = new ServiciosInternos();
 
         ServiciosInternos SIGuardado = serviciosInternosRepository.save(serviciosInternos);
+
+        sueldosMensualesServices.actualizarSueldoConServicio(empleados.getEmpleadoId(), porcentajeEmpleado);
 
         gananciaServices.registrarGananciaServicioInterno(SIGuardado);
 
