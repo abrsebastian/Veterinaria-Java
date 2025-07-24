@@ -24,9 +24,14 @@ public class SueldosMensualesController {
         return sueldosMensualesServices.obtenerTodas();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/buscar/{id}")
     public Optional<SueldosMensuales> obtenerSueldo(@PathVariable Integer id){
         return sueldosMensualesServices.obtenerPorId(id);
+    }
+
+    @PostMapping("/{generar}")
+    public List<SueldosMensualesResponseDTO> resumenSueldosMensuales(@RequestParam int year, @RequestParam int month){
+        return sueldosMensualesServices.generarSueldoDelMes(year, month);
     }
 
 //    @PostMapping

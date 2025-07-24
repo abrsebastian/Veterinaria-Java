@@ -62,11 +62,6 @@ public class ServiciosInternosServices {
         double porcentajeEmpleado = precioBase * (dto.getPorcentajeComision()/100);
         double precioFinal = precioBase - porcentajeEmpleado;
 
-        //actualizar empleadoService y ganancias
-
-//        sueldosMensuales.setComisionPorServicio(sueldosMensuales.getComisionPorServicio() + porcentajeEmpleado);
-//        sueldosMensualesServices.calcularSueldoFinal(empleados.getEmpleadoId(), sueldosMensuales.getSueldoId());
-
         serviciosInternos.setNombreServicio(dto.getNombreServicio());
         serviciosInternos.setPrecioServicio(dto.getPrecioBase());
         serviciosInternos.setPorcentajeEmpleado(porcentajeEmpleado);
@@ -74,9 +69,6 @@ public class ServiciosInternosServices {
         serviciosInternos.setNombreDelProfesional(empleados.getNombreEmpleado());
 
         serviciosInternos.setEmpleados(empleados); //Lo he agregado recientemente
-
-
-        //  ServiciosInternos nuevoSI = new ServiciosInternos();
 
         ServiciosInternos SIGuardado = serviciosInternosRepository.save(serviciosInternos);
 

@@ -1,5 +1,4 @@
 package com.veterinaria.veterinariajava.Services;
-
 import com.veterinaria.veterinariajava.DTO.SueldosMensualesResponseDTO;
 import com.veterinaria.veterinariajava.Repository.EmpleadosRepository;
 import com.veterinaria.veterinariajava.Repository.SueldosMensualesRepository;
@@ -20,7 +19,6 @@ public class SueldosMensualesServices {
 
     @Autowired
     private SueldosMensualesRepository sueldosMensualesRepository;
-
 
     private EmpleadosServices empleadosServices;
 
@@ -88,7 +86,7 @@ public class SueldosMensualesServices {
         int year = now.getYear();
         int month = now.getMonthValue();
 
-        SueldosMensuales sueldosMensuales = sueldosMensualesRepository.findByEmpleadoAndYearAndMonthNative(empleadoId, year, month).
+        SueldosMensuales sueldosMensuales = sueldosMensualesRepository.findByEmpleadoAndYearAndMonthNative(year, month).
                 orElseGet(()-> {
                     //Si no existe, crear nuevo
                     SueldosMensuales nuevoSueldo = new SueldosMensuales();
@@ -123,7 +121,7 @@ public class SueldosMensualesServices {
         int year = now.getYear();
         int month = now.getMonthValue();
 
-        SueldosMensuales sueldosMensuales = sueldosMensualesRepository.findByEmpleadoAndYearAndMonthNative(empleadoId, year, month).
+        SueldosMensuales sueldosMensuales = sueldosMensualesRepository.findByEmpleadoAndYearAndMonthNative(year, month).
                 orElseGet(()-> {
                     //Si no existe, crear nuevo
                     SueldosMensuales nuevoSueldo = new SueldosMensuales();
@@ -153,32 +151,13 @@ public class SueldosMensualesServices {
         return sueldosMensualesRepository.save(sueldosMensuales);
     }
 
-
-
-//    public void calcularSueldoFinal(Integer empleadoId, Integer sueldoId){
-//        Empleados empleados = empleadosRepository.findById(empleadoId).
-//                orElseThrow(() -> new RuntimeException("Empleado no encontrado"));
-//
-//        SueldosMensuales sueldosMensuales = sueldosMensualesRepository.findById(sueldoId).
-//                orElseThrow(() -> new RuntimeException("Sueldo no encontrado"));
-//
-//        double sueldoFinal = sueldosMensuales.getSueldoTotal()
-//                + sueldosMensuales.getComisionesPorVentas()
-//                + sueldosMensuales.getComisionPorServicio();
-//
-//        sueldosMensuales.setSueldoFinal(sueldoFinal);
-//
-//        sueldosMensualesRepository.save(sueldosMensuales);
-//
-//    }
-
     public List<SueldosMensualesResponseDTO> generarSueldoDelMes(int year, int  month){
         List<Empleados> empleados = empleadosRepository.findAll();
         List<SueldosMensualesResponseDTO> responseDTOS = new ArrayList<>();
 
         for (Empleados e : empleados){
             SueldosMensuales sueldosMensuales = sueldosMensualesRepository.
-                    findByEmpleadoAndYearAndMonthNative(e.getEmpleadoId(), year, month).orElseGet(()->{
+                    findByEmpleadoAndYearAndMonthNative(year, month).orElseGet(()->{
                        SueldosMensuales nuevo = new SueldosMensuales();
                        nuevo.setEmpleados(e);
                        nuevo.setYear(year);
@@ -198,9 +177,5 @@ public class SueldosMensualesServices {
             responseDTOS.add(dto);
         }
         return  responseDTOS;
-
     }
-
-
-
 }
