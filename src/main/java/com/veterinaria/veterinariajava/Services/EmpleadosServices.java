@@ -21,7 +21,7 @@ public class EmpleadosServices {
 
     private static final Logger log = LoggerFactory.getLogger(EmpleadosServices.class);
     @Autowired
-    final private EmpleadosRepository empleadosRepository;
+    private EmpleadosRepository empleadosRepository;
 
     @Autowired
     private SueldosMensualesServices sueldosMensualesServices;
@@ -57,10 +57,10 @@ public class EmpleadosServices {
         //Agregar una nueva linea para la columna total ventas
     }
 
-    public EmpleadosServices(SueldosMensuales sueldosMensuales, EmpleadosRepository empleadosRepository) {
-        //this.sueldosMensuales = sueldosMensuales;
-        this.empleadosRepository = empleadosRepository;
-    }
+//    public EmpleadosServices(SueldosMensuales sueldosMensuales, EmpleadosRepository empleadosRepository) {
+//        //this.sueldosMensuales = sueldosMensuales;
+//        this.empleadosRepository = empleadosRepository;
+//    }
 
     public List<EmpleadosResponseDTO>obtenerTodos(){
         return empleadosRepository.findAll().stream()

@@ -7,6 +7,7 @@ import com.veterinaria.veterinariajava.Tables.Empleados;
 import com.veterinaria.veterinariajava.Tables.SueldosMensuales;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.Local;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -20,11 +21,17 @@ public class SueldosMensualesServices {
     @Autowired
     private SueldosMensualesRepository sueldosMensualesRepository;
 
-    @Autowired
+
     private EmpleadosServices empleadosServices;
 
     @Autowired
     private EmpleadosRepository empleadosRepository;
+
+    @Autowired
+    @Lazy
+    public void setEmpleadosServices(EmpleadosServices empleadosServices){
+        this.empleadosServices=empleadosServices;
+    }
 
         //continuar con el mapToentity para crear el service de crear sueldo
 
@@ -193,5 +200,7 @@ public class SueldosMensualesServices {
         return  responseDTOS;
 
     }
+
+
 
 }

@@ -33,9 +33,6 @@ public class VentasServices {
   private EmpleadosServices empleadosServices;
 
   @Autowired
-  private SueldosMensuales sueldosMensuales;
-
-  @Autowired
   private GananciaServices gananciaServices;
 
   @Autowired

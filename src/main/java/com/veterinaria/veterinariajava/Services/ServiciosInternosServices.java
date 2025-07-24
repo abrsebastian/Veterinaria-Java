@@ -25,9 +25,6 @@ public class ServiciosInternosServices {
     private GananciaServices gananciaServices;
 
     @Autowired
-    private SueldosMensuales sueldosMensuales;
-
-    @Autowired
     private EmpleadosServices empleadosServices;
 
     @Autowired
@@ -79,7 +76,7 @@ public class ServiciosInternosServices {
         serviciosInternos.setEmpleados(empleados); //Lo he agregado recientemente
 
 
-      //  ServiciosInternos nuevoSI = new ServiciosInternos();
+        //  ServiciosInternos nuevoSI = new ServiciosInternos();
 
         ServiciosInternos SIGuardado = serviciosInternosRepository.save(serviciosInternos);
 
