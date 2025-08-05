@@ -31,7 +31,7 @@ public class SueldosMensualesServices {
         this.empleadosServices=empleadosServices;
     }
 
-        //continuar con el mapToentity para crear el service de crear sueldo
+    //continuar con el mapToentity para crear el service de crear sueldo
 
     private SueldosMensualesResponseDTO mapToEntity(SueldosMensuales sueldosMensuales){
 
@@ -138,7 +138,7 @@ public class SueldosMensualesServices {
                     nuevoSueldo.setSueldoFinal(sueldoBase);
 
                     return nuevoSueldo;
-        });
+                });
 
         double nuevaComisionPorVenta = sueldosMensuales.getComisionesPorVentas() + comisionVenta;
         sueldosMensuales.setComisionesPorVentas(nuevaComisionPorVenta);
@@ -158,12 +158,12 @@ public class SueldosMensualesServices {
         for (Empleados e : empleados){
             SueldosMensuales sueldosMensuales = sueldosMensualesRepository.
                     findByEmpleadoAndYearAndMonthNative(year, month).orElseGet(()->{
-                       SueldosMensuales nuevo = new SueldosMensuales();
-                       nuevo.setEmpleados(e);
-                       nuevo.setYear(year);
-                       nuevo.setMonth(month);
-                       nuevo.setSueldoTotal(e.getHorasTrabajadas() * e.getSueldoPorHora());
-                       return nuevo;
+                        SueldosMensuales nuevo = new SueldosMensuales();
+                        nuevo.setEmpleados(e);
+                        nuevo.setYear(year);
+                        nuevo.setMonth(month);
+                        nuevo.setSueldoTotal(e.getHorasTrabajadas() * e.getSueldoPorHora());
+                        return nuevo;
                     });
 
             double sueldoFinal = sueldosMensuales.getSueldoTotal()
@@ -177,5 +177,16 @@ public class SueldosMensualesServices {
             responseDTOS.add(dto);
         }
         return  responseDTOS;
+    }
+
+    public List<SueldosMensualesResponseDTO>obtenerSueldoDelMes(int year, int month){
+        List<SueldosMensuales> sueldosMensuales = sueldosMensualesRepository.obtenerListaSueldos(year, month);
+        List<SueldosMensualesResponseDTO> responseDTOS = new ArrayList<>();
+
+        for(SueldosMensuales s : sueldosMensuales){
+            responseDTOS.add(mapToEntity(s));
+        }
+
+        return responseDTOS;
     }
 }
