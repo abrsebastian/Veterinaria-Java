@@ -13,8 +13,8 @@ import java.util.Optional;
 @Repository
 public interface SueldosMensualesRepository extends JpaRepository<SueldosMensuales, Integer> {
 
-    @Query(value = "SELECT * FROM sueldos_mensuales WHERE year = :year AND month = :month", nativeQuery = true)
-    Optional<SueldosMensuales> findByEmpleadoAndYearAndMonthNative(@Param("year") int year, @Param("month") int month);
+    @Query(value = "SELECT * FROM sueldos_mensuales WHERE empleado_id = :empleado_id AND year = :year AND month = :month", nativeQuery = true)
+    List<SueldosMensuales> findByEmpleadoAndYearAndMonthNative(@Param("empleado_id")Integer empleado_id, @Param("year") int year, @Param("month") int month);
 
     @Query(value = "SELECT * FROM sueldos_mensuales WHERE year = :year AND month = :month", nativeQuery = true)
     List<SueldosMensuales> obtenerListaSueldos(@Param("year") int year, @Param("month") int month);

@@ -2,8 +2,11 @@ package com.veterinaria.veterinariajava.Services;
 import com.veterinaria.veterinariajava.DTO.SueldosMensualesResponseDTO;
 import com.veterinaria.veterinariajava.Repository.EmpleadosRepository;
 import com.veterinaria.veterinariajava.Repository.SueldosMensualesRepository;
+import com.veterinaria.veterinariajava.Repository.VentasRepository;
 import com.veterinaria.veterinariajava.Tables.Empleados;
 import com.veterinaria.veterinariajava.Tables.SueldosMensuales;
+import com.veterinaria.veterinariajava.Tables.Ventas;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.Local;
 import org.springframework.context.annotation.Lazy;
@@ -19,6 +22,9 @@ public class SueldosMensualesServices {
 
     @Autowired
     private SueldosMensualesRepository sueldosMensualesRepository;
+
+    @Autowired
+    private VentasRepository ventasRepository;
 
     private EmpleadosServices empleadosServices;
 
@@ -86,7 +92,7 @@ public class SueldosMensualesServices {
         int year = now.getYear();
         int month = now.getMonthValue();
 
-        SueldosMensuales sueldosMensuales = sueldosMensualesRepository.findByEmpleadoAndYearAndMonthNative(year, month).
+        SueldosMensuales sueldosMensuales = sueldosMensualesRepository.findByEmpleadoAndYearAndMonthNative(empleadoId,year, month).
                 orElseGet(()-> {
                     //Si no existe, crear nuevo
                     SueldosMensuales nuevoSueldo = new SueldosMensuales();
@@ -149,6 +155,39 @@ public class SueldosMensualesServices {
         sueldosMensuales.setSueldoFinal(sueldoFinal);
 
         return sueldosMensualesRepository.save(sueldosMensuales);
+    }
+
+    private double calcularComisionPorVenta(Integer empleadoId, int month, int year){
+
+        Empleados empleados = empleadosRepository.findById(empleadoId).
+                orElseThrow(()-> new RuntimeException("Empleado no encontrado"));
+
+        List<Ventas> ventas = ventasRepository.findEmpleadoIdAndFecha(year, month, empleadoId);
+
+        double nuevoTotal = 0;
+
+        for(Ventas v : ventas){
+            nuevoTotal += v.getPrecioTotal();
+        }
+
+        return comisionTipoEmpleado(empleados, nuevoTotal);
+
+    }
+
+//    private double calcularComisionPorServicio(Integer empleadoId, int month, int year){
+//
+//    }
+
+    private double comisionTipoEmpleado(Empleados empleados, double total){
+
+        if(empleados.getTipoEmpleado().equalsIgnoreCase("Veterinario")){
+            return total * 0.15;
+        }
+        else if (empleados.getTipoEmpleado().equalsIgnoreCase("Recepcionista")){
+            return total * 0.10;
+        }
+
+        return total;
     }
 
     public List<SueldosMensualesResponseDTO> generarSueldoDelMes(int year, int  month){
