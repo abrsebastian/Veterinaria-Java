@@ -92,32 +92,36 @@ public class SueldosMensualesServices {
         int year = now.getYear();
         int month = now.getMonthValue();
 
-        SueldosMensuales sueldosMensuales = sueldosMensualesRepository.findByEmpleadoAndYearAndMonthNative(empleadoId,year, month).
-                orElseGet(()-> {
-                    //Si no existe, crear nuevo
-                    SueldosMensuales nuevoSueldo = new SueldosMensuales();
+        List<SueldosMensuales> resultados = sueldosMensualesRepository.
+                findByEmpleadoAndYearAndMonthNative(empleadoId, year, month);
 
-                    Empleados empleados = empleadosRepository.findById(empleadoId)
-                            .orElseThrow(()-> new RuntimeException("Empleado no encontrado"));
-                    nuevoSueldo.setEmpleados(empleados);
-                    nuevoSueldo.setYear(year);
-                    nuevoSueldo.setMonth(month);
-                    double sueldoBase = empleados.getSueldoPorHora() * empleados.getHorasTrabajadas();
-                    nuevoSueldo.setSueldoTotal(sueldoBase);
-                    nuevoSueldo.setComisionPorServicio(0.0);
-                    nuevoSueldo.setComisionesPorVentas(0.0);
-                    nuevoSueldo.setSueldoFinal(sueldoBase);
+        SueldosMensuales sueldosMensuales;
 
-                    return nuevoSueldo;
-                });
+        if(resultados.isEmpty()){
 
-        double nuevaComisionPorServicio = sueldosMensuales.getComisionPorServicio() + comisionServicio;
-        sueldosMensuales.setComisionPorServicio(nuevaComisionPorServicio);
+            Empleados empleados = empleadosRepository.findById(empleadoId).
+                    orElseThrow(()-> new RuntimeException("Empleado no encontrado"));
 
-        double sueldoFinal = sueldosMensuales.getSueldoTotal()
-                + sueldosMensuales.getComisionPorServicio()
-                + sueldosMensuales.getComisionesPorVentas();
-        sueldosMensuales.setSueldoFinal(sueldoFinal);
+            sueldosMensuales = new SueldosMensuales();
+            sueldosMensuales.setEmpleados(empleados);
+            sueldosMensuales.setYear(year);
+            sueldosMensuales.setMonth(month);
+            sueldosMensuales.setSueldoTotal(empleados.getSueldoPorHora() * empleados.getHorasTrabajadas());
+            sueldosMensuales.setComisionPorServicio(0.0);
+            sueldosMensuales.setComisionesPorVentas(0.0);
+            sueldosMensuales.setSueldoFinal(sueldosMensuales.getSueldoTotal());
+        }
+        else {
+            sueldosMensuales = resultados.get(0);
+
+            double nuevaComisionPorServicio = sueldosMensuales.getComisionPorServicio() + comisionServicio;
+            sueldosMensuales.setComisionPorServicio(nuevaComisionPorServicio);
+
+            double sueldoFinal = sueldosMensuales.getSueldoTotal()
+                    + sueldosMensuales.getComisionPorServicio()
+                    + sueldosMensuales.getComisionesPorVentas();
+            sueldosMensuales.setSueldoFinal(sueldoFinal);
+        }
 
         return sueldosMensualesRepository.save(sueldosMensuales);
     }
@@ -127,24 +131,28 @@ public class SueldosMensualesServices {
         int year = now.getYear();
         int month = now.getMonthValue();
 
-        SueldosMensuales sueldosMensuales = sueldosMensualesRepository.findByEmpleadoAndYearAndMonthNative(year, month).
-                orElseGet(()-> {
-                    //Si no existe, crear nuevo
-                    SueldosMensuales nuevoSueldo = new SueldosMensuales();
+        List<SueldosMensuales> resultados = sueldosMensualesRepository.
+                findByEmpleadoAndYearAndMonthNative(empleadoId, year, month);
 
-                    Empleados empleados = empleadosRepository.findById(empleadoId)
-                            .orElseThrow(()-> new RuntimeException("Empleado no encontrado"));
-                    nuevoSueldo.setEmpleados(empleados);
-                    nuevoSueldo.setYear(year);
-                    nuevoSueldo.setMonth(month);
-                    double sueldoBase = empleados.getSueldoPorHora() * empleados.getHorasTrabajadas();
-                    nuevoSueldo.setSueldoTotal(sueldoBase);
-                    nuevoSueldo.setComisionPorServicio(0.0);
-                    nuevoSueldo.setComisionesPorVentas(0.0);
-                    nuevoSueldo.setSueldoFinal(sueldoBase);
+        SueldosMensuales sueldosMensuales;
 
-                    return nuevoSueldo;
-                });
+        if(resultados.isEmpty()){
+
+            Empleados empleados = empleadosRepository.findById(empleadoId).
+                    orElseThrow(()-> new RuntimeException("Empleado no encontrado"));
+
+            sueldosMensuales = new SueldosMensuales();
+            sueldosMensuales.setEmpleados(empleados);
+            sueldosMensuales.setYear(year);
+            sueldosMensuales.setMonth(month);
+            sueldosMensuales.setSueldoTotal(empleados.getSueldoPorHora() * empleados.getHorasTrabajadas());
+            sueldosMensuales.setComisionPorServicio(0.0);
+            sueldosMensuales.setComisionesPorVentas(0.0);
+            sueldosMensuales.setSueldoFinal(sueldosMensuales.getSueldoTotal());
+        }
+        else {
+            sueldosMensuales = resultados.get(0);
+        }
 
         double nuevaComisionPorVenta = sueldosMensuales.getComisionesPorVentas() + comisionVenta;
         sueldosMensuales.setComisionesPorVentas(nuevaComisionPorVenta);
@@ -190,30 +198,14 @@ public class SueldosMensualesServices {
         return total;
     }
 
-    public List<SueldosMensualesResponseDTO> generarSueldoDelMes(int year, int  month){
+    public List<SueldosMensualesResponseDTO> generarSueldoDelMes(Integer empleados_id, int year, int  month){
         List<Empleados> empleados = empleadosRepository.findAll();
         List<SueldosMensualesResponseDTO> responseDTOS = new ArrayList<>();
 
         for (Empleados e : empleados){
-            SueldosMensuales sueldosMensuales = sueldosMensualesRepository.
-                    findByEmpleadoAndYearAndMonthNative(year, month).orElseGet(()->{
-                        SueldosMensuales nuevo = new SueldosMensuales();
-                        nuevo.setEmpleados(e);
-                        nuevo.setYear(year);
-                        nuevo.setMonth(month);
-                        nuevo.setSueldoTotal(e.getHorasTrabajadas() * e.getSueldoPorHora());
-                        return nuevo;
-                    });
+            Integer empleadoId = e.getEmpleadoId();
 
-            double sueldoFinal = sueldosMensuales.getSueldoTotal()
-                    + sueldosMensuales.getComisionPorServicio()
-                    + sueldosMensuales.getComisionesPorVentas();
-            sueldosMensuales.setSueldoFinal(sueldoFinal);
-
-            SueldosMensuales guardado = sueldosMensualesRepository.save(sueldosMensuales);
-
-            SueldosMensualesResponseDTO dto = mapToEntity(guardado);
-            responseDTOS.add(dto);
+            Optional<SueldosMensuales> sueldoExistente = sueldosMensualesRepository.findByEmpleadoAndYearAndMonthNative(empleados_id, year, month);
         }
         return  responseDTOS;
     }
