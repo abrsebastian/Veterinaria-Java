@@ -197,18 +197,18 @@ public class SueldosMensualesServices {
 
         return total;
     }
-
-    public List<SueldosMensualesResponseDTO> generarSueldoDelMes(Integer empleados_id, int year, int  month){
-        List<Empleados> empleados = empleadosRepository.findAll();
-        List<SueldosMensualesResponseDTO> responseDTOS = new ArrayList<>();
-
-        for (Empleados e : empleados){
-            Integer empleadoId = e.getEmpleadoId();
-
-            Optional<SueldosMensuales> sueldoExistente = sueldosMensualesRepository.findByEmpleadoAndYearAndMonthNative(empleados_id, year, month);
-        }
-        return  responseDTOS;
-    }
+//
+//    public List<SueldosMensualesResponseDTO> generarSueldoDelMes(Integer empleados_id, int year, int  month){
+//        List<Empleados> empleados = empleadosRepository.findAll();
+//        List<SueldosMensualesResponseDTO> responseDTOS = new ArrayList<>();
+//
+//        for (Empleados e : empleados){
+//            Integer empleadoId = e.getEmpleadoId();
+//
+//            Optional<SueldosMensuales> sueldoExistente = sueldosMensualesRepository.findByEmpleadoAndYearAndMonthNative(empleados_id, year, month);
+//        }
+//        return  responseDTOS;
+//    }
 
     public List<SueldosMensualesResponseDTO>obtenerSueldoDelMes(int year, int month){
         List<SueldosMensuales> sueldosMensuales = sueldosMensualesRepository.obtenerListaSueldos(year, month);
