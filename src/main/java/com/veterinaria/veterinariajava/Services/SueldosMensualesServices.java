@@ -1,21 +1,19 @@
 package com.veterinaria.veterinariajava.Services;
 import com.veterinaria.veterinariajava.DTO.SueldosMensualesResponseDTO;
 import com.veterinaria.veterinariajava.Repository.EmpleadosRepository;
+import com.veterinaria.veterinariajava.Repository.RegistroSalarialMensualRepository;
 import com.veterinaria.veterinariajava.Repository.SueldosMensualesRepository;
 import com.veterinaria.veterinariajava.Repository.VentasRepository;
 import com.veterinaria.veterinariajava.Tables.Empleados;
+import com.veterinaria.veterinariajava.Tables.RegistroSalarialMensual;
 import com.veterinaria.veterinariajava.Tables.SueldosMensuales;
 import com.veterinaria.veterinariajava.Tables.Ventas;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class SueldosMensualesServices {
@@ -30,6 +28,9 @@ public class SueldosMensualesServices {
 
     @Autowired
     private EmpleadosRepository empleadosRepository;
+
+    @Autowired
+    private RegistroSalarialMensualRepository registroSalarialMensualRepository;
 
     @Autowired
     @Lazy
@@ -197,18 +198,63 @@ public class SueldosMensualesServices {
 
         return total;
     }
-//
-//    public List<SueldosMensualesResponseDTO> generarSueldoDelMes(Integer empleados_id, int year, int  month){
-//        List<Empleados> empleados = empleadosRepository.findAll();
-//        List<SueldosMensualesResponseDTO> responseDTOS = new ArrayList<>();
-//
-//        for (Empleados e : empleados){
-//            Integer empleadoId = e.getEmpleadoId();
-//
-//            Optional<SueldosMensuales> sueldoExistente = sueldosMensualesRepository.findByEmpleadoAndYearAndMonthNative(empleados_id, year, month);
-//        }
-//        return  responseDTOS;
-//    }
+
+
+    public List<SueldosMensualesResponseDTO> generarSueldoDelMes(int month, int year){
+
+        List<Empleados>empleados = empleadosRepository.findAll();
+        if(empleados.isEmpty()){
+            System.out.println("No hay empleados para registrar sueldos");
+            return Collections.emptyList();
+        }
+
+        List<SueldosMensualesResponseDTO> responseDTOS = new ArrayList<>();
+
+        for (Empleados e : empleados){
+            List<SueldosMensuales> sueldosMensuales =
+                    sueldosMensualesRepository.findByEmpleadoAndYearAndMonthNative(e.getEmpleadoId(), year, month);
+
+            if(sueldosMensuales.isEmpty()){
+                SueldosMensuales sMensuales = sueldosMensuales.get(0);
+
+                double sueldoFinal = sMensuales.getSueldoFinal();
+                double sueldoBase = sMensuales.getSueldoTotal();
+                double comisionVentas = sMensuales.getComisionesPorVentas();
+                double comisionServicios = sMensuales.getComisionPorServicio();
+
+                //crear registro historico
+                RegistroSalarialMensual registro = new RegistroSalarialMensual();
+                registro.setEmpleados(e);
+                registro.setMonth(month);
+                registro.setYear(year);
+                registro.setSueldoBase(sueldoBase);
+                registro.setComisionServicios(comisionServicios);
+                registro.setComisionVentas(comisionVentas);
+                registro.setSueldoFinal(sueldoFinal);
+                registro.setFechaGeneracion(LocalDate.now());
+
+                registroSalarialMensualRepository.save(registro);
+
+                //mapear a dto
+                SueldosMensualesResponseDTO dto = new SueldosMensualesResponseDTO();
+                dto.setEmpleadoId(e.getEmpleadoId());
+                dto.setNombreEmpleado(e.getNombreEmpleado());
+                dto.setYear(year);
+                dto.setMonth(month);
+                dto.setSueldoTotal(sueldoBase);
+                dto.setComisionPorVenta(comisionVentas);
+                dto.setComisionPorServicio(comisionServicios);
+                dto.setSueldoFinal(sueldoFinal);
+
+                responseDTOS.add(dto);
+            }
+            else{
+                System.out.println("No se ha encontrado el empleado " + e.getEmpleadoId());
+            }
+        }
+
+        return responseDTOS;
+    }
 
     public List<SueldosMensualesResponseDTO>obtenerSueldoDelMes(int year, int month){
         List<SueldosMensuales> sueldosMensuales = sueldosMensualesRepository.obtenerListaSueldos(year, month);
