@@ -26,9 +26,9 @@ public class SueldosMensualesController {
         return sueldosMensualesServices.obtenerPorId(id);
     }
 
-    @PostMapping("/{generar}") ///generar?year=2025&month=7
+    @PostMapping("/generar") ///generar?year=2025&month=7
     public List<SueldosMensualesResponseDTO> resumenSueldosMensuales(@RequestParam int year, @RequestParam int month){
-        return sueldosMensualesServices.generarSueldoDelMes(year, month);
+        return sueldosMensualesServices.generarSueldoDelMes(month, year);
     }
 
     @GetMapping("/listar") ///listar?year=2025&month=7

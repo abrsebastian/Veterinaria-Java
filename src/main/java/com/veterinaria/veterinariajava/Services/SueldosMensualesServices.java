@@ -202,7 +202,7 @@ public class SueldosMensualesServices {
 
     public List<SueldosMensualesResponseDTO> generarSueldoDelMes(int month, int year){
 
-        List<Empleados>empleados = empleadosRepository.findAll();
+        List<Empleados> empleados = empleadosRepository.findAll();
         if(empleados.isEmpty()){
             System.out.println("No hay empleados para registrar sueldos");
             return Collections.emptyList();
@@ -214,8 +214,7 @@ public class SueldosMensualesServices {
             List<SueldosMensuales> sueldosMensuales =
                     sueldosMensualesRepository.findByEmpleadoAndYearAndMonthNative(e.getEmpleadoId(), year, month);
 
-            if(sueldosMensuales.isEmpty()){
-                SueldosMensuales sMensuales = sueldosMensuales.get(0);
+            for(SueldosMensuales sMensuales : sueldosMensuales){
 
                 double sueldoFinal = sMensuales.getSueldoFinal();
                 double sueldoBase = sMensuales.getSueldoTotal();
@@ -247,9 +246,6 @@ public class SueldosMensualesServices {
                 dto.setSueldoFinal(sueldoFinal);
 
                 responseDTOS.add(dto);
-            }
-            else{
-                System.out.println("No se ha encontrado el empleado " + e.getEmpleadoId());
             }
         }
 
