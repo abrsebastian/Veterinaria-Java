@@ -1,9 +1,6 @@
 package com.veterinaria.veterinariajava.Services;
 import com.veterinaria.veterinariajava.DTO.SueldosMensualesResponseDTO;
-import com.veterinaria.veterinariajava.Repository.EmpleadosRepository;
-import com.veterinaria.veterinariajava.Repository.RegistroSalarialMensualRepository;
-import com.veterinaria.veterinariajava.Repository.SueldosMensualesRepository;
-import com.veterinaria.veterinariajava.Repository.VentasRepository;
+import com.veterinaria.veterinariajava.Repository.*;
 import com.veterinaria.veterinariajava.Tables.Empleados;
 import com.veterinaria.veterinariajava.Tables.RegistroSalarialMensual;
 import com.veterinaria.veterinariajava.Tables.SueldosMensuales;
@@ -27,10 +24,16 @@ public class SueldosMensualesServices {
     private EmpleadosServices empleadosServices;
 
     @Autowired
+    private GastosFijosServices gastosFijosServices;
+
+    @Autowired
     private EmpleadosRepository empleadosRepository;
 
     @Autowired
     private RegistroSalarialMensualRepository registroSalarialMensualRepository;
+
+    @Autowired
+    private GastosFijosRepository gastosFijosRepository;
 
     @Autowired
     @Lazy
@@ -183,10 +186,6 @@ public class SueldosMensualesServices {
 
     }
 
-//    private double calcularComisionPorServicio(Integer empleadoId, int month, int year){
-//
-//    }
-
     private double comisionTipoEmpleado(Empleados empleados, double total){
 
         if(empleados.getTipoEmpleado().equalsIgnoreCase("Veterinario")){
@@ -209,6 +208,7 @@ public class SueldosMensualesServices {
         }
 
         List<SueldosMensualesResponseDTO> responseDTOS = new ArrayList<>();
+        double totalSueldos = 0.0;
 
         for (Empleados e : empleados){
             List<SueldosMensuales> sueldosMensuales =
@@ -246,10 +246,16 @@ public class SueldosMensualesServices {
                 dto.setSueldoFinal(sueldoFinal);
 
                 responseDTOS.add(dto);
+
+                totalSueldos += dto.getSueldoFinal();
+                System.out.println("El total de los sueldos es de: " + totalSueldos);
+
             }
         }
 
+        gastosFijosServices.registrarGastoFijoPorSueldo(totalSueldos, year, month);
         return responseDTOS;
+
     }
 
     public List<SueldosMensualesResponseDTO>obtenerSueldoDelMes(int year, int month){
