@@ -56,8 +56,9 @@ public class SueldosMensualesServices {
         return dto;
     }
 
-    public List<SueldosMensuales> obtenerTodas(){
-        return sueldosMensualesRepository.findAll();
+    public List<SueldosMensualesResponseDTO> obtenerTodas(){
+        return sueldosMensualesRepository.findAll().stream()
+                .map(this::mapToEntity).toList();
     }
 
     public Optional<SueldosMensuales> obtenerPorId(Integer id){
@@ -245,6 +246,7 @@ public class SueldosMensualesServices {
                 dto.setComisionPorServicio(comisionServicios);
                 dto.setSueldoFinal(sueldoFinal);
 
+
                 responseDTOS.add(dto);
 
                 totalSueldos += dto.getSueldoFinal();
@@ -254,6 +256,7 @@ public class SueldosMensualesServices {
         }
 
         gastosFijosServices.registrarGastoFijoPorSueldo(totalSueldos, year, month);
+
         return responseDTOS;
 
     }

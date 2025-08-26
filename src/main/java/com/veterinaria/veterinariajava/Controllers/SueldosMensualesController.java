@@ -17,7 +17,7 @@ public class SueldosMensualesController {
     private SueldosMensualesServices sueldosMensualesServices;
 
     @GetMapping
-    public List<SueldosMensuales> listaSueldos(){
+    public List<SueldosMensualesResponseDTO> listaSueldos(){
         return sueldosMensualesServices.obtenerTodas();
     }
 

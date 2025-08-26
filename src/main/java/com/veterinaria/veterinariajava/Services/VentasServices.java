@@ -87,9 +87,6 @@ public class VentasServices {
     productos.setStock(productos.getStock()-cantidad);
     productosRepository.save(productos);
 
-//    sueldosMensuales.setComisionesPorVentas(sueldosMensuales.getComisionesPorVentas() + comision);
-//    sueldosMensualesServices.calcularSueldoFinal(empleados.getEmpleadoId(), sueldosMensuales.getSueldoId());
-
     sueldosMensualesServices.actualizarSueldoConVenta(empleados.getEmpleadoId(), comision);
 
     //actualizar tabla ganancias
@@ -150,9 +147,6 @@ public class VentasServices {
     double nuevaComision = calcularComision(empleados, nuevoTotal);
 
     productos.setStock(productos.getStock() - nuevaCantidad);
-
-//    sueldosMensuales.setComisionesPorVentas(sueldosMensuales.getComisionesPorVentas() + nuevaComision);
-//    sueldosMensualesServices.calcularSueldoFinal(empleados.getEmpleadoId(), sueldosMensuales.getSueldoId());
 
     sueldosMensualesServices.actualizarSueldoConVenta(empleados.getEmpleadoId(), nuevaComision);
 

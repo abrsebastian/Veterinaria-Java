@@ -58,7 +58,7 @@ public class GastosFijosServices {
         return gastosFijosRepository.save(gastosFijos);
     }
 
-    public void eliminarGanancia(Integer id){
+    public void eliminarGastoFijo(Integer id){
         gastosFijosRepository.deleteById(id);
     }
 

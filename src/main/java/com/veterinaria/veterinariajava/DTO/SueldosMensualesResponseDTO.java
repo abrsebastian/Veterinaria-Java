@@ -14,6 +14,23 @@ public class SueldosMensualesResponseDTO {
     public SueldosMensualesResponseDTO() {
     }
 
+    public SueldosMensualesResponseDTO(Integer empleadoId,
+                                       String nombreEmpleado,
+                                       Double sueldoTotal,
+                                       Double comisionPorVenta,
+                                       Double comisionPorServicio,
+                                       Double sueldoFinal,
+                                       int year, int month) {
+        this.empleadoId = empleadoId;
+        this.nombreEmpleado = nombreEmpleado;
+        this.sueldoTotal = sueldoTotal;
+        this.comisionPorVenta = comisionPorVenta;
+        this.comisionPorServicio = comisionPorServicio;
+        this.sueldoFinal = sueldoFinal;
+        this.year = year;
+        this.month = month;
+    }
+
     public int getYear() {
         return year;
     }
