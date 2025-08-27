@@ -4,6 +4,7 @@ import com.veterinaria.veterinariajava.DTO.GastosFijosRequestDTO;
 import com.veterinaria.veterinariajava.DTO.GastosFijosResponseDTO;
 import com.veterinaria.veterinariajava.Models.TipoDeGasto;
 import com.veterinaria.veterinariajava.Repository.GastosFijosRepository;
+import com.veterinaria.veterinariajava.Tables.Ganancias;
 import com.veterinaria.veterinariajava.Tables.GastosFijos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,6 +54,7 @@ public class GastosFijosServices {
 
         gastosFijosRepository.save(gastosFijos);
     }
+
 
     public GastosFijos guardarGanancia(GastosFijos gastosFijos){
         return gastosFijosRepository.save(gastosFijos);

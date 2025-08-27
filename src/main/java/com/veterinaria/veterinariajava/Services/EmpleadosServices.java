@@ -37,7 +37,7 @@ public class EmpleadosServices {
 
         empleados.setHorasTrabajadas(dto.getHorasTrabajadas());
         empleados.setSueldoPorHora(dto.getSueldoPorHora());
-        // sueldosMensuales.setSueldoTotal(dto.getSueldoPorHora() * dto.getHorasTrabajadas());
+
         return empleados;
     }
 
@@ -46,21 +46,12 @@ public class EmpleadosServices {
         dto.setEmpleadoId(empleados.getEmpleadoId());
         dto.setNombreEmpleado(empleados.getNombreEmpleado());
         dto.setTipoEmpleado(empleados.getTipoEmpleado());
-//        dto.setSueldoTotal(sueldosMensuales.getSueldoTotal());
-//        dto.setComisionesPorVenta(sueldosMensuales.getComisionesPorVentas());
-//        dto.setComisionesPorServicios(sueldosMensuales.getComisionPorServicio());
-//        dto.setSueldoFinal(sueldosMensuales.getSueldoFinal());
         dto.setTotalVentas(empleadosRepository.cantidadDeVentas(empleados.getEmpleadoId()));
         dto.setTotalServicios(empleadosRepository.cantidadDeServicios(empleados.getEmpleadoId()));
         return dto;
 
         //Agregar una nueva linea para la columna total ventas
     }
-
-//    public EmpleadosServices(SueldosMensuales sueldosMensuales, EmpleadosRepository empleadosRepository) {
-//        //this.sueldosMensuales = sueldosMensuales;
-//        this.empleadosRepository = empleadosRepository;
-//    }
 
     public List<EmpleadosResponseDTO>obtenerTodos(){
         return empleadosRepository.findAll().stream()
@@ -84,15 +75,6 @@ public class EmpleadosServices {
         empleadosRepository.deleteById(id);
     }
 
-//    public void calcularSueldoFinal(Integer empleadoId){
-//        Empleados empleados = empleadosRepository.findById(empleadoId).orElseThrow(() -> new RuntimeException("Empleado no encontrado"));
-//
-//        double sueldoFinal = sueldosMensuales.getSueldoTotal() + sueldosMensuales.getComisionesPorVentas() + sueldosMensuales.getComisionPorServicio();
-//        sueldosMensuales.setSueldoFinal(sueldoFinal);
-//
-//        empleadosRepository.save(empleados);
-//
-//    }
 
     public EmpleadosResponseDTO actualizarEmpleado(Integer id, EmpleadosRequestDTO dto){
         Empleados empleadoExistente = empleadosRepository.findById(id).
@@ -100,9 +82,6 @@ public class EmpleadosServices {
 
         empleadoExistente.setNombreEmpleado(dto.getNombreEmpleado());
         empleadoExistente.setTipoEmpleado(dto.getTipoEmpleado());
-//        empleadoExistente.setHorasTrabajadas(dto.getHorasTrabajadas());
-//        empleadoExistente.setSueldoPorHora(dto.getSueldoPorHora());
-//        empleadoExistente.setSueldoTotal(dto.getSueldoPorHora() * dto.getHorasTrabajadas());
 
         empleadosRepository.save(empleadoExistente);
         return mapToDTO(empleadoExistente);
