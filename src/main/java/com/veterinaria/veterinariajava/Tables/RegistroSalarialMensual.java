@@ -4,7 +4,6 @@ package com.veterinaria.veterinariajava.Tables;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
-
 @Entity
 @Table(name = "registro_salarial_mensual",
         uniqueConstraints = @UniqueConstraint(columnNames = {"empleado_id", "year", "month"}))
@@ -15,9 +14,8 @@ public class RegistroSalarialMensual {
     @Column(name = "registro_id")
     private Integer registroId;
 
-    @ManyToOne
-    @JoinColumn(name = "empleado_id", nullable = false)
-    private Empleados empleados;
+    @Column(name = "empleado_id", nullable = false)
+    private Integer empleadoHistoricoId;
 
     @Column(name = "year")
     private Integer year;
@@ -48,12 +46,12 @@ public class RegistroSalarialMensual {
         this.registroId = registroId;
     }
 
-    public Empleados getEmpleados() {
-        return empleados;
+    public Integer getEmpleadoHistoricoId() {
+        return empleadoHistoricoId;
     }
 
-    public void setEmpleados(Empleados empleados) {
-        this.empleados = empleados;
+    public void setEmpleadoHistoricoId(Integer empleadoHistoricoId) {
+        this.empleadoHistoricoId = empleadoHistoricoId;
     }
 
     public Integer getYear() {

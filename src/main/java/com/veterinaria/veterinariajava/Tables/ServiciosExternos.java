@@ -18,6 +18,9 @@ public class ServiciosExternos {
     @Column(name = "profesional")
     private String profesional;
 
+    @Column(name = "nombre_servicio")
+    private String nombreServicio;
+
     @Column(name = "contacto")
     private Long numeroDeContacto;
 
@@ -33,17 +36,36 @@ public class ServiciosExternos {
     @Column(name = "precio_final")
     private Double precioFinal;
 
+    @Column(name = "comision_local")
+    private Double comisionLocal;
+
     @Column(name = "fecha")
     @CreationTimestamp
     private Date fecha;
 
-    @Column(name = "year")
-    private Integer year;
-
-    @Column(name = "month")
-    private Integer month;
+//    @Column(name = "year")
+//    private Integer year;
+//
+//    @Column(name = "month")
+//    private Integer month;
 
     public ServiciosExternos() {
+    }
+
+    public Double getComisionLocal() {
+        return comisionLocal;
+    }
+
+    public void setComisionLocal(Double comisionLocal) {
+        this.comisionLocal = comisionLocal;
+    }
+
+    public String getNombreServicio() {
+        return nombreServicio;
+    }
+
+    public void setNombreServicio(String nombreServicio) {
+        this.nombreServicio = nombreServicio;
     }
 
     public Integer getServicioExternoId() {
@@ -110,19 +132,19 @@ public class ServiciosExternos {
         this.fecha = fecha;
     }
 
-    public Integer getYear() {
-        return year;
-    }
-
-    public void setYear(Integer year) {
-        this.year = year;
-    }
-
-    public Integer getMonth() {
-        return month;
-    }
-
-    public void setMonth(Integer month) {
-        this.month = month;
-    }
+//    public Integer getYear() {
+//        return year;
+//    }
+//
+//    public void setYear(Integer year) {
+//        this.year = year;
+//    }
+//
+//    public Integer getMonth() {
+//        return month;
+//    }
+//
+//    public void setMonth(Integer month) {
+//        this.month = month;
+//    }
 }

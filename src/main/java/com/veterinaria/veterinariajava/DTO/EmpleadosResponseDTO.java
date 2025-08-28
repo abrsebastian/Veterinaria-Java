@@ -5,10 +5,6 @@ public class EmpleadosResponseDTO {
     private Integer empleadoId;
     private String nombreEmpleado;
     private String tipoEmpleado;
-//    private double sueldoTotal;
-//    private double comisionesPorVenta;
-//    private double comisionesPorServicios;
-//    private double sueldoFinal;
     private Long totalVentas;
     private Long totalServicios;
 
@@ -44,37 +40,6 @@ public class EmpleadosResponseDTO {
         this.tipoEmpleado = tipoEmpleado;
     }
 
-//    public double getSueldoTotal() {
-//        return sueldoTotal;
-//    }
-//
-//    public void setSueldoTotal(double sueldoTotal) {
-//        this.sueldoTotal = sueldoTotal;
-//    }
-//
-//    public double getComisionesPorVenta() {
-//        return comisionesPorVenta;
-//    }
-//
-//    public void setComisionesPorVenta(double comisionesPorVenta) {
-//        this.comisionesPorVenta = comisionesPorVenta;
-//    }
-//
-//    public double getComisionesPorServicios() {
-//        return comisionesPorServicios;
-//    }
-//
-//    public void setComisionesPorServicios(double comisionesPorServicios) {
-//        this.comisionesPorServicios = comisionesPorServicios;
-//    }
-//
-//    public double getSueldoFinal() {
-//        return sueldoFinal;
-//    }
-//
-//    public void setSueldoFinal(double sueldoFinal) {
-//        this.sueldoFinal = sueldoFinal;
-//    }
 
     public Long getTotalVentas() {
         return totalVentas;

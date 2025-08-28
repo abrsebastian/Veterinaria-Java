@@ -99,7 +99,7 @@ public class VentasServices {
 
     empleados.setTotalVentas(ventaGuardada);
 
-    gananciaServices.registrarGananciasDeVentas(ventaGuardada);//esta linea
+    //gananciaServices.registrarGananciasDeVentas(ventaGuardada);//esta linea
 
     //Devolver DTO
     return new VentasResponseDTO(

@@ -38,11 +38,11 @@ public class ServiciosInternos {
     @CreationTimestamp
     private Date fecha;
 
-    @Column(name = "year")
-    private Integer year;
-
-    @Column(name = "month")
-    private Integer month;
+//    @Column(name = "year")
+//    private Integer year;
+//
+//    @Column(name = "month")
+//    private Integer month;
 
     public ServiciosInternos(){
 
@@ -52,21 +52,21 @@ public class ServiciosInternos {
         this.fecha = fecha;
     }
 
-    public Integer getYear() {
-        return year;
-    }
-
-    public void setYear(Integer year) {
-        this.year = year;
-    }
-
-    public Integer getMonth() {
-        return month;
-    }
-
-    public void setMonth(Integer month) {
-        this.month = month;
-    }
+//    public Integer getYear() {
+//        return year;
+//    }
+//
+//    public void setYear(Integer year) {
+//        this.year = year;
+//    }
+//
+//    public Integer getMonth() {
+//        return month;
+//    }
+//
+//    public void setMonth(Integer month) {
+//        this.month = month;
+//    }
 
     public Date getFecha() {
         return fecha;

@@ -5,10 +5,19 @@ public class ServiciosExternosRequestDTO {
     private String profesional;
     private Long numeroDeContacto;
     private String nombreEmpresa;
+    private String tipoDeServicio;
     private Double costoServicioExterno;
     private Double porcentajeAgregado;
 
     public ServiciosExternosRequestDTO() {
+    }
+
+    public String getTipoDeServicio() {
+        return tipoDeServicio;
+    }
+
+    public void setTipoDeServicio(String tipoDeServicio) {
+        this.tipoDeServicio = tipoDeServicio;
     }
 
     public String getProfesional() {

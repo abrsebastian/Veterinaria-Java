@@ -24,8 +24,8 @@ public class ServiciosInternosController {
     private ServiciosInternosServices serviciosInternosServices;
    
     @GetMapping
-    public List<ServiciosInternos> listaServicios(){
-        return serviciosInternosServices.obtenerTodos();
+    public List<ServiciosInternosResponseDTO> listaServicios(){
+        return serviciosInternosServices.obtenerTodosLosServicios();
     }
 
     @GetMapping("/{id}")

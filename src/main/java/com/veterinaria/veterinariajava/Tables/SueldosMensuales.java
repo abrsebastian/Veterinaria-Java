@@ -1,6 +1,9 @@
 package com.veterinaria.veterinariajava.Tables;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "sueldos_mensuales")
@@ -27,13 +30,20 @@ public class SueldosMensuales {
     @Column(name = "sueldo_final", nullable = true)
     private Double sueldoFinal = 0.0;
 
-    @Column(name = "year")
-    private Integer year;
+    @Column(name = "fecha")
+    @CreationTimestamp
+    private LocalDateTime fecha;
 
-    @Column(name = "month")
-    private Integer month;
 
     public SueldosMensuales() {}
+
+    public LocalDateTime getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(LocalDateTime fecha) {
+        this.fecha = fecha;
+    }
 
     public Integer getSueldoId() {
         return sueldoId;
@@ -83,21 +93,21 @@ public class SueldosMensuales {
         this.sueldoFinal = sueldoFinal;
     }
 
-    public Integer getYear() {
-        return year;
-    }
-
-    public void setYear(Integer year) {
-        this.year = year;
-    }
-
-    public Integer getMonth() {
-        return month;
-    }
-
-    public void setMonth(Integer month) {
-        this.month = month;
-    }
+//    public Integer getYear() {
+//        return year;
+//    }
+//
+//    public void setYear(Integer year) {
+//        this.year = year;
+//    }
+//
+//    public Integer getMonth() {
+//        return month;
+//    }
+//
+//    public void setMonth(Integer month) {
+//        this.month = month;
+//    }
 
 
 }

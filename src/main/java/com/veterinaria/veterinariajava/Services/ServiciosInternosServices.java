@@ -63,7 +63,7 @@ public class ServiciosInternosServices {
         double precioFinal = precioBase - porcentajeEmpleado;
 
         serviciosInternos.setNombreServicio(dto.getNombreServicio());
-        serviciosInternos.setPrecioServicio(dto.getPrecioBase());
+        serviciosInternos.setPrecioServicio(precioBase);
         serviciosInternos.setPorcentajeEmpleado(porcentajeEmpleado);
         serviciosInternos.setPrecioFinal(precioFinal);
         serviciosInternos.setNombreDelProfesional(empleados.getNombreEmpleado());
@@ -74,7 +74,7 @@ public class ServiciosInternosServices {
 
         sueldosMensualesServices.actualizarSueldoConServicio(empleados.getEmpleadoId(), porcentajeEmpleado);
 
-        gananciaServices.registrarGananciaServicioInterno(SIGuardado);
+        //gananciaServices.registrarGananciaServicioInterno(SIGuardado);
 
 
         //Devolver DTO
@@ -94,7 +94,7 @@ public class ServiciosInternosServices {
     public ServiciosInternos guardarServicio(ServiciosInternos servicios){
         ServiciosInternos servicioGuardado = serviciosInternosRepository.save(servicios);
 
-        gananciaServices.registrarGananciaServicioInterno(servicioGuardado);
+        //gananciaServices.registrarGananciaServicioInterno(servicioGuardado);
         return servicioGuardado;
     }
 

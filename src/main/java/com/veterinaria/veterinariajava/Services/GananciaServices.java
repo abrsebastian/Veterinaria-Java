@@ -34,25 +34,25 @@ public class GananciaServices {
         gananciasRepository.deleteById(id);
     }
 
-    public void registrarGananciaServicioInterno(ServiciosInternos servicios){
-
-        Ganancias ganancias = new Ganancias();
-        ganancias.setiBServiciosInternos(servicios.getPrecioServicio());
-        ganancias.setFecha(new Date(System.currentTimeMillis()));
-
-        gananciasRepository.save(ganancias);
-    }
-
-
-    public void registrarGananciasDeVentas(Ventas ventas){
-        Ganancias gananciasVentas = new Ganancias();
-
-        double ibVentas = ventas.getPrecioTotal();
-
-        double ingresoTotal = (ibVentas);
-        gananciasVentas.setiBVentas(ingresoTotal);
-        gananciasVentas.setFecha(new Date(System.currentTimeMillis()));
-
-        gananciasRepository.save(gananciasVentas);
-    }
+//    public void registrarGananciaServicioInterno(ServiciosInternos servicios){
+//
+//        Ganancias ganancias = new Ganancias();
+//        ganancias.setiBServiciosInternos(servicios.getPrecioServicio());
+//        ganancias.setFecha(new Date(System.currentTimeMillis()));
+//
+//        gananciasRepository.save(ganancias);
+//    }
+//
+//
+//    public void registrarGananciasDeVentas(Ventas ventas){
+//        Ganancias gananciasVentas = new Ganancias();
+//
+//        double ibVentas = ventas.getPrecioTotal();
+//
+//        double ingresoTotal = (ibVentas);
+//        gananciasVentas.setiBVentas(ingresoTotal);
+//        gananciasVentas.setFecha(new Date(System.currentTimeMillis()));
+//
+//        gananciasRepository.save(gananciasVentas);
+//    }
 }

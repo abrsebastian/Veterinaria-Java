@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -52,6 +53,7 @@ public class SueldosMensualesServices {
         dto.setComisionPorServicio(sueldosMensuales.getComisionPorServicio());
         dto.setComisionPorVenta(sueldosMensuales.getComisionesPorVentas());
         dto.setSueldoFinal(sueldosMensuales.getSueldoFinal());
+        dto.setFecha(LocalDateTime.now());
 
         return dto;
     }
@@ -74,8 +76,6 @@ public class SueldosMensualesServices {
         sueldosMensuales.setEmpleados(empleados);
 
         LocalDate now = LocalDate.now();
-        sueldosMensuales.setYear(now.getYear());
-        sueldosMensuales.setMonth(now.getMonthValue());
 
         double sueldoTotal = empleados.getSueldoPorHora() * empleados.getHorasTrabajadas();
         sueldosMensuales.setSueldoTotal(sueldoTotal);
@@ -109,8 +109,6 @@ public class SueldosMensualesServices {
 
             sueldosMensuales = new SueldosMensuales();
             sueldosMensuales.setEmpleados(empleados);
-            sueldosMensuales.setYear(year);
-            sueldosMensuales.setMonth(month);
             sueldosMensuales.setSueldoTotal(empleados.getSueldoPorHora() * empleados.getHorasTrabajadas());
             sueldosMensuales.setComisionPorServicio(0.0);
             sueldosMensuales.setComisionesPorVentas(0.0);
@@ -148,8 +146,6 @@ public class SueldosMensualesServices {
 
             sueldosMensuales = new SueldosMensuales();
             sueldosMensuales.setEmpleados(empleados);
-            sueldosMensuales.setYear(year);
-            sueldosMensuales.setMonth(month);
             sueldosMensuales.setSueldoTotal(empleados.getSueldoPorHora() * empleados.getHorasTrabajadas());
             sueldosMensuales.setComisionPorServicio(0.0);
             sueldosMensuales.setComisionesPorVentas(0.0);
@@ -224,7 +220,7 @@ public class SueldosMensualesServices {
 
                 //crear registro historico
                 RegistroSalarialMensual registro = new RegistroSalarialMensual();
-                registro.setEmpleados(e);
+                registro.setEmpleadoHistoricoId(e.getEmpleadoId());
                 registro.setMonth(month);
                 registro.setYear(year);
                 registro.setSueldoBase(sueldoBase);
@@ -239,12 +235,12 @@ public class SueldosMensualesServices {
                 SueldosMensualesResponseDTO dto = new SueldosMensualesResponseDTO();
                 dto.setEmpleadoId(e.getEmpleadoId());
                 dto.setNombreEmpleado(e.getNombreEmpleado());
-                dto.setYear(year);
-                dto.setMonth(month);
+                dto.setFecha(LocalDateTime.now());
                 dto.setSueldoTotal(sueldoBase);
                 dto.setComisionPorVenta(comisionVentas);
                 dto.setComisionPorServicio(comisionServicios);
                 dto.setSueldoFinal(sueldoFinal);
+                dto.setFecha(LocalDateTime.now());
 
 
                 responseDTOS.add(dto);

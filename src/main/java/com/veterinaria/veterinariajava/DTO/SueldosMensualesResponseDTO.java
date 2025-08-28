@@ -1,5 +1,8 @@
 package com.veterinaria.veterinariajava.DTO;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 public class SueldosMensualesResponseDTO {
 
     private Integer empleadoId;
@@ -8,8 +11,7 @@ public class SueldosMensualesResponseDTO {
     private Double comisionPorVenta;
     private Double comisionPorServicio;
     private Double sueldoFinal;
-    private int year;
-    private int month;
+    private LocalDateTime fecha;
 
     public SueldosMensualesResponseDTO() {
     }
@@ -20,31 +22,22 @@ public class SueldosMensualesResponseDTO {
                                        Double comisionPorVenta,
                                        Double comisionPorServicio,
                                        Double sueldoFinal,
-                                       int year, int month) {
+                                       LocalDateTime fecha) {
         this.empleadoId = empleadoId;
         this.nombreEmpleado = nombreEmpleado;
         this.sueldoTotal = sueldoTotal;
         this.comisionPorVenta = comisionPorVenta;
         this.comisionPorServicio = comisionPorServicio;
         this.sueldoFinal = sueldoFinal;
-        this.year = year;
-        this.month = month;
+        this.fecha = fecha;
     }
 
-    public int getYear() {
-        return year;
+    public LocalDateTime getFecha() {
+        return fecha;
     }
 
-    public void setYear(int year) {
-        this.year = year;
-    }
-
-    public int getMonth() {
-        return month;
-    }
-
-    public void setMonth(int month) {
-        this.month = month;
+    public void setFecha(LocalDateTime fecha) {
+        this.fecha = fecha;
     }
 
     public Integer getEmpleadoId() {
