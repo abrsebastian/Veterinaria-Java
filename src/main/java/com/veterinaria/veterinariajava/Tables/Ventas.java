@@ -22,19 +22,19 @@ public class Ventas {
     @Column(name = "venta_id")
     private Integer ventaId;
 
-    @ManyToOne
-    @JoinColumn(name = "producto_id")
-    private Productos productos;
+//    @ManyToOne
+//    @JoinColumn(name = "producto_id")
+//    private Productos productos;
 
     @ManyToOne
     @JoinColumn(name = "empleado_id")
     private Empleados empleados;
 
-    @Column(name = "cantidad")
-    private Long cantidadProductoVendido;
+//    @Column(name = "cantidad")
+//    private Long cantidadProductoVendido;
 
-    @Column(name = "precio_unitario")
-    private double precioUnitarioPorVenta;
+//    @Column(name = "precio_unitario")
+//    private double precioUnitarioPorVenta;
 
     @Column(name = "precio_total")
     private double precioTotal;
@@ -54,10 +54,7 @@ public class Ventas {
                   Long cantidad,
                   double precioUnitarioPorVenta,
                   double comisionPorVenta) {
-        this.productos = productos;
         this.empleados = empleados;
-        this.cantidadProductoVendido = cantidad;
-        this.precioUnitarioPorVenta = precioUnitarioPorVenta;
         this.precioTotal = precioUnitarioPorVenta * cantidad;
         this.comisionPorVenta = comisionPorVenta;
     }
@@ -78,36 +75,12 @@ public class Ventas {
         this.ventaId = ventaId;
     }
 
-    public Productos getProductos() {
-        return productos;
-    }
-
-    public void setProductos(Productos productos) {
-        this.productos = productos;
-    }
-
     public Empleados getEmpleados() {
         return empleados;
     }
 
     public void setEmpleados(Empleados empleados) {
         this.empleados = empleados;
-    }
-
-    public Long getCantidadProductoVendido() {
-        return cantidadProductoVendido;
-    }
-
-    public void setCantidadProductoVendido(Long cantidadProductoVendido) {
-        this.cantidadProductoVendido = cantidadProductoVendido;
-    }
-
-    public double getPrecioUnitarioPorVenta() {
-        return precioUnitarioPorVenta;
-    }
-
-    public void setPrecioUnitarioPorVenta(double precioUnitarioPorVenta) {
-        this.precioUnitarioPorVenta = precioUnitarioPorVenta;
     }
 
     public double getComisionPorVenta() {

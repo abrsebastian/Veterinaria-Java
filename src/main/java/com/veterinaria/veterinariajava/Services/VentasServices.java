@@ -1,5 +1,6 @@
 package com.veterinaria.veterinariajava.Services;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.veterinaria.veterinariajava.DTO.VentasResponseDTO;
@@ -41,11 +42,7 @@ public class VentasServices {
   private VentasResponseDTO mapToEntity(Ventas ventas){
     VentasResponseDTO dto = new VentasResponseDTO();
     dto.setVentaId(ventas.getVentaId());
-    dto.setProductoId(ventas.getProductos().getProductoId());
-    dto.setNombreProducto(ventas.getProductos().getNombreProducto());
-    dto.setPrecioUnitario(ventas.getPrecioUnitarioPorVenta());
     dto.setPrecioTotal(ventas.getPrecioTotal());
-    dto.setCantidad(ventas.getCantidadProductoVendido());
     dto.setEmpleadoId(ventas.getEmpleados().getEmpleadoId());
     dto.setNombreEmpleado(ventas.getEmpleados().getNombreEmpleado());
     dto.setTipoEmpleado(ventas.getEmpleados().getTipoEmpleado());
@@ -64,57 +61,45 @@ public class VentasServices {
   @Transactional
   public VentasResponseDTO registrarVentas(VentasRequestDTO dto) {
 
-    System.out.printf("Empleado ID recibido: " + dto.getEmpleadoId());
-    System.out.printf("Producto ID recibido: " + dto.getProductoId());
-
     Empleados empleados = empleadosRepository.findById(dto.getEmpleadoId()).
             orElseThrow(()-> new RuntimeException("Empleado no encontrado"));
 
-    Productos productos = productosRepository.findById(dto.getProductoId()).
-            orElseThrow(()-> new RuntimeException("Producto no encontrado"));
-
-    if(productos.getStock() < dto.getCantidad()){
-      throw new IllegalStateException("No hay suficiente stock disponible");
-    }
-
-    //Calcular datos
-    double precioUnitario = productos.getPrecioVenta();
-    long cantidad = dto.getCantidad();
-    double total = precioUnitario * cantidad;
-    double comision = calcularComision(empleados, total);
-
-    //Actualizar stock y sueldo
-    productos.setStock(productos.getStock()-cantidad);
-    productosRepository.save(productos);
-
-    sueldosMensualesServices.actualizarSueldoConVenta(empleados.getEmpleadoId(), comision);
-
-    //actualizar tabla ganancias
+    Ventas ventas = new Ventas();
+    ventas.setEmpleados(empleados);
+    ventas.setFecha(LocalDateTime.now());
 
 
-    //Guardar venta
-    Ventas nuevaVenta = new Ventas(productos, empleados, cantidad, precioUnitario, comision);
 
-    Ventas ventaGuardada = ventasRepository.save(nuevaVenta);
-
-    empleados.setTotalVentas(ventaGuardada);
-
-    //gananciaServices.registrarGananciasDeVentas(ventaGuardada);//esta linea
-
-    //Devolver DTO
-    return new VentasResponseDTO(
-            nuevaVenta.getVentaId(),
-            nuevaVenta.getProductos().getProductoId(),
-            nuevaVenta.getProductos().getNombreProducto(),
-            nuevaVenta.getEmpleados().getEmpleadoId(),
-            nuevaVenta.getEmpleados().getTipoEmpleado(),
-            nuevaVenta.getEmpleados().getNombreEmpleado(),
-            nuevaVenta.getPrecioUnitarioPorVenta(),
-            nuevaVenta.getCantidadProductoVendido(),
-            nuevaVenta.getPrecioTotal(),
-            nuevaVenta.getComisionPorVenta(),
-            nuevaVenta.getFecha()
-    );
+//    Productos productos = productosRepository.findById(dto.getProductoId()).
+//            orElseThrow(()-> new RuntimeException("Producto no encontrado"));
+//
+//    if(productos.getStock() < dto.getCantidad()){
+//      throw new IllegalStateException("No hay suficiente stock disponible");
+//    }
+//
+//    //Calcular datos
+//    double precioUnitario = productos.getPrecioVenta();
+//    long cantidad = dto.getCantidad();
+//    double total = precioUnitario * cantidad;
+//    double comision = calcularComision(empleados, total);
+//
+//    //Actualizar stock y sueldo
+//    productos.setStock(productos.getStock()-cantidad);
+//    productosRepository.save(productos);
+//
+//    sueldosMensualesServices.actualizarSueldoConVenta(empleados.getEmpleadoId(), comision);
+//
+//    //actualizar tabla ganancias
+//
+//
+//    //Guardar venta
+//    Ventas nuevaVenta = new Ventas(productos, empleados, cantidad, precioUnitario, comision);
+//
+//    Ventas ventaGuardada = ventasRepository.save(nuevaVenta);
+//
+//    empleados.setTotalVentas(ventaGuardada);
+//
+//    //Devolver DTO
 
   }
 
@@ -175,6 +160,10 @@ public class VentasServices {
     );
 
 
+  }
+
+  public void eliminarVenta(Integer id){
+    ventasRepository.deleteById(id);
   }
 
   private double calcularComision(Empleados empleados, double total) {

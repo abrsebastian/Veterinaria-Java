@@ -35,8 +35,8 @@ public class EmpleadosServices {
         double sueldoPorHora = dto.getSueldoPorHora();
         double sueldoTotal = horasTrabajadas * sueldoPorHora;
 
-        empleados.setHorasTrabajadas(dto.getHorasTrabajadas());
-        empleados.setSueldoPorHora(dto.getSueldoPorHora());
+        empleados.setHorasTrabajadas(horasTrabajadas);
+        empleados.setSueldoPorHora(sueldoPorHora);
 
         return empleados;
     }
@@ -64,6 +64,7 @@ public class EmpleadosServices {
     }
 
     public EmpleadosResponseDTO guardarEmpleados(EmpleadosRequestDTO dto){
+
         Empleados empleados = mapToEntity(dto);
         Empleados guardado = empleadosRepository.save(empleados);
         sueldosMensualesServices.guardarSueldoBase(empleados.getEmpleadoId());
@@ -71,19 +72,23 @@ public class EmpleadosServices {
         return mapToDTO(guardado);
     }
 
-    public void eliminarEmpleado(Integer id){
-        empleadosRepository.deleteById(id);
-    }
-
-
     public EmpleadosResponseDTO actualizarEmpleado(Integer id, EmpleadosRequestDTO dto){
         Empleados empleadoExistente = empleadosRepository.findById(id).
                 orElseThrow(()-> new RuntimeException("Empleado no encontrado"));
 
-        empleadoExistente.setNombreEmpleado(dto.getNombreEmpleado());
         empleadoExistente.setTipoEmpleado(dto.getTipoEmpleado());
+        empleadoExistente.setNombreEmpleado(dto.getNombreEmpleado());
+        empleadoExistente.setHorasTrabajadas(dto.getHorasTrabajadas());
+        empleadoExistente.setSueldoPorHora(dto.getSueldoPorHora());
+
+        sueldosMensualesServices.guardarSueldoBase(empleadoExistente.getEmpleadoId());
 
         empleadosRepository.save(empleadoExistente);
         return mapToDTO(empleadoExistente);
     }
+
+    public void eliminarEmpleado(Integer id){
+        empleadosRepository.deleteById(id);
+    }
+
 }

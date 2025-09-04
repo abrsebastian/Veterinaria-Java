@@ -36,4 +36,9 @@ public class VentasController {
         return ventasServices.actualizarVentas(ventaId, nuevaVenta);
     }
 
+    @DeleteMapping("/{id}")
+    public void eliminarVenta(@PathVariable Integer id){
+        ventasServices.eliminarVenta(id);
+    }
+
 }
