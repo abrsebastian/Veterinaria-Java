@@ -1,17 +1,11 @@
 package com.veterinaria.veterinariajava.Tables;
 
+import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "ventas")
@@ -22,19 +16,9 @@ public class Ventas {
     @Column(name = "venta_id")
     private Integer ventaId;
 
-//    @ManyToOne
-//    @JoinColumn(name = "producto_id")
-//    private Productos productos;
-
     @ManyToOne
     @JoinColumn(name = "empleado_id")
     private Empleados empleados;
-
-//    @Column(name = "cantidad")
-//    private Long cantidadProductoVendido;
-
-//    @Column(name = "precio_unitario")
-//    private double precioUnitarioPorVenta;
 
     @Column(name = "precio_total")
     private double precioTotal;
@@ -45,6 +29,9 @@ public class Ventas {
     @Column(name = "fecha")
     @CreationTimestamp
     private LocalDateTime fecha;
+
+    @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL)
+    private List<VentasDetalles> detallesList = new ArrayList<>();
 
     public Ventas() {
     };
@@ -97,5 +84,13 @@ public class Ventas {
 
     public void setFecha(LocalDateTime fecha) {
         this.fecha = fecha;
+    }
+
+    public List<VentasDetalles> getDetallesList() {
+        return detallesList;
+    }
+
+    public void setDetallesList(List<VentasDetalles> detallesList) {
+        this.detallesList = detallesList;
     }
 }

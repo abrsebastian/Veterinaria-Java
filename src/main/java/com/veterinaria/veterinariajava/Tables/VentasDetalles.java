@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Entity
 @Table(name = "ventas_detalles")
@@ -15,7 +16,7 @@ public class VentasDetalles {
     private Integer detalleId;
 
     @Column(name = "cantidad")
-    private Long cantidadProductoVendido;
+    private int cantidadProductoVendido;
 
     @Column(name = "precio_unitario")
     private double precioUnitarioPorVenta;
@@ -33,7 +34,7 @@ public class VentasDetalles {
 
     @ManyToOne
     @JoinColumn(name = "venta_id")
-    private Ventas ventas;
+    private Ventas venta;
 
     public VentasDetalles() {
     }
@@ -46,11 +47,11 @@ public class VentasDetalles {
         this.detalleId = detalleId;
     }
 
-    public Long getCantidadProductoVendido() {
+    public int getCantidadProductoVendido() {
         return cantidadProductoVendido;
     }
 
-    public void setCantidadProductoVendido(Long cantidadProductoVendido) {
+    public void setCantidadProductoVendido(int cantidadProductoVendido) {
         this.cantidadProductoVendido = cantidadProductoVendido;
     }
 
@@ -87,10 +88,10 @@ public class VentasDetalles {
     }
 
     public Ventas getVentas() {
-        return ventas;
+        return venta;
     }
 
-    public void setVentas(Ventas ventas) {
-        this.ventas = ventas;
+    public void setVentas(Ventas venta) {
+        this.venta = venta;
     }
 }

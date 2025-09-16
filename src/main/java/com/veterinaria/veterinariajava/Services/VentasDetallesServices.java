@@ -14,21 +14,22 @@ public class VentasDetallesServices {
     @Autowired
     private VentasDetallesRepository ventasDetallesRepository;
 
-    public VentasDetalles crearDetalle(Ventas venta, Productos producto, Long cantidad) {
 
-        Double precioVenta = producto.getPrecioVenta();
+    public VentasDetalles crearDetalle(Ventas venta, Productos producto, int cantidad) {
+
+
 
         VentasDetalles detalle = new VentasDetalles();
         detalle.setVentas(venta);
         detalle.setProductos(producto);
         detalle.setCantidadProductoVendido(cantidad);
-        detalle.setPrecioUnitarioPorVenta(precioVenta);
-        detalle.setSubtotal(precioVenta * cantidad);
+        detalle.setPrecioUnitarioPorVenta(producto.getPrecioVenta());
+        detalle.setSubtotal(producto.getPrecioVenta() * cantidad);
 
         return ventasDetallesRepository.save(detalle);
     }
 
     public List<VentasDetalles> listarPorVenta(Ventas venta) {
-        return ventasDetallesRepository.findByVentas(venta);
+        return ventasDetallesRepository.findByVenta(venta);
     }
 }

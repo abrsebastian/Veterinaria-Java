@@ -35,7 +35,7 @@ public class ProductosServices {
         return productosRepository.findAll();
     }
 
-    public Optional<Productos>obtenerPorId(Integer id){
+    public Optional<Productos> obtenerPorId(Integer id){
         return productosRepository.findById(id);
     }
 
@@ -143,6 +143,19 @@ public class ProductosServices {
 
     public void eliminarProducto(Integer id){
         productosRepository.deleteById(id);
+    }
+
+    public void descontarStock(Integer productoId, int cantidad){
+
+        Productos productos = productosRepository.findById(productoId).
+                orElseThrow(()-> new RuntimeException("Producto no encontrado"));
+
+        if (productos.getStock() < cantidad){
+            throw new IllegalStateException("No hay Stock suficiente, quedan " + productos.getStock() + " unidades de este producto");
+        }
+
+        productos.setStock(productos.getStock() - cantidad);
+        productosRepository.save(productos);
     }
 
 }

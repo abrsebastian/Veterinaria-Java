@@ -13,13 +13,29 @@ public class VentasRequestDTO {
     @NotNull(message = "El ID del empleado no puede ser nulo")
     private Integer empleadoId;
 
-    private List<ProductosVentaDTO> productos;
+    private List<ProductoVentaDTO> productos;
 
-    @Data
-    public static  class ProductosVentaDTO{
-        private Integer productoId;
-        private Integer cantidad;
+    public VentasRequestDTO() {
     }
 
+    public VentasRequestDTO(Integer empleadoId, List<ProductoVentaDTO> productos) {
+        this.empleadoId = empleadoId;
+        this.productos = productos;
+    }
 
+    public Integer getEmpleadoId() {
+        return empleadoId;
+    }
+
+    public void setEmpleadoId(Integer empleadoId) {
+        this.empleadoId = empleadoId;
+    }
+
+    public List<ProductoVentaDTO> getProductos() {
+        return productos;
+    }
+
+    public void setProductos(List<ProductoVentaDTO> productos) {
+        this.productos = productos;
+    }
 }

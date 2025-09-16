@@ -1,46 +1,23 @@
 package com.veterinaria.veterinariajava.DTO;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class VentasResponseDTO {
-    private Integer ventaId;
-    private Integer productoId;
-    private String nombreProducto;
-    private Double precioUnitario;
-    private Long cantidad;
-    private Double precioTotal;
-    private Integer empleadoId;
-    private String nombreEmpleado;
-    private String tipoEmpleado;
-    private Double comision;
-    private LocalDateTime fecha;
 
-    public VentasResponseDTO(Integer ventaId,
-                             Integer productoId,
-                             String nombreProducto,
-                             Integer empleadoId,
-                             String tipoEmpleado,
-                             String nombreEmpleado,
-                             double precioUnitario,
-                             long cantidad,
-                             double total,
-                             double comision,
-                             LocalDateTime fecha){
-        this.ventaId = ventaId;
-        this.productoId = productoId;
-        this.nombreProducto = nombreProducto;
-        this.precioUnitario = precioUnitario;
-        this.cantidad = cantidad;
-        this.precioTotal =total;
-        this.empleadoId = empleadoId;
-        this.nombreEmpleado = nombreEmpleado;
-        this.tipoEmpleado = tipoEmpleado;
-        this.comision = comision;
-        this.fecha = fecha;
+    private Integer ventaId;
+    private String nombreEmpleado;
+    private Double total;
+    private List<VentasDetallesResponseDTO>detallesResponseDTOS;
+
+    public VentasResponseDTO(Integer ventaId, LocalDateTime fecha, Integer empleadoId, String nombreEmpleado, double sum, List<VentasDetallesResponseDTO> detallesResponseDTOS) {
     }
 
-    public VentasResponseDTO() {
-
+    public VentasResponseDTO(Integer ventaId, String nombreEmpleado, Double total, List<VentasDetallesResponseDTO> detallesResponseDTOS) {
+        this.ventaId = ventaId;
+        this.nombreEmpleado = nombreEmpleado;
+        this.total = total;
+        this.detallesResponseDTOS = detallesResponseDTOS;
     }
 
     public Integer getVentaId() {
@@ -51,62 +28,6 @@ public class VentasResponseDTO {
         this.ventaId = ventaId;
     }
 
-    public LocalDateTime getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(LocalDateTime fecha) {
-        this.fecha = fecha;
-    }
-
-    public Integer getProductoId() {
-        return productoId;
-    }
-
-    public void setProductoId(Integer productoId) {
-        this.productoId = productoId;
-    }
-
-    public String getNombreProducto() {
-        return nombreProducto;
-    }
-
-    public void setNombreProducto(String nombreProducto) {
-        this.nombreProducto = nombreProducto;
-    }
-
-    public Double getPrecioUnitario() {
-        return precioUnitario;
-    }
-
-    public void setPrecioUnitario(Double precioUnitario) {
-        this.precioUnitario = precioUnitario;
-    }
-
-    public Long getCantidad() {
-        return cantidad;
-    }
-
-    public void setCantidad(Long cantidad) {
-        this.cantidad = cantidad;
-    }
-
-    public Double getPrecioTotal() {
-        return precioTotal;
-    }
-
-    public void setPrecioTotal(Double precioTotal) {
-        this.precioTotal = precioTotal;
-    }
-
-    public Integer getEmpleadoId() {
-        return empleadoId;
-    }
-
-    public void setEmpleadoId(Integer empleadoId) {
-        this.empleadoId = empleadoId;
-    }
-
     public String getNombreEmpleado() {
         return nombreEmpleado;
     }
@@ -115,19 +36,19 @@ public class VentasResponseDTO {
         this.nombreEmpleado = nombreEmpleado;
     }
 
-    public String getTipoEmpleado() {
-        return tipoEmpleado;
+    public Double getTotal() {
+        return total;
     }
 
-    public void setTipoEmpleado(String tipoEmpleado) {
-        this.tipoEmpleado = tipoEmpleado;
+    public void setTotal(Double total) {
+        this.total = total;
     }
 
-    public Double getComision() {
-        return comision;
+    public List<VentasDetallesResponseDTO> getDetallesResponseDTOS() {
+        return detallesResponseDTOS;
     }
 
-    public void setComision(Double comision) {
-        this.comision = comision;
+    public void setDetallesResponseDTOS(List<VentasDetallesResponseDTO> detallesResponseDTOS) {
+        this.detallesResponseDTOS = detallesResponseDTOS;
     }
 }

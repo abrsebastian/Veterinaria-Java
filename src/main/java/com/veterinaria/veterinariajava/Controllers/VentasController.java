@@ -31,10 +31,10 @@ public class VentasController {
         return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{ventaId}")
-    public VentasResponseDTO actualizarVenta(@PathVariable Integer ventaId, @RequestBody Ventas nuevaVenta){
-        return ventasServices.actualizarVentas(ventaId, nuevaVenta);
-    }
+//    @PutMapping("/{ventaId}")
+//    public VentasResponseDTO actualizarVenta(@PathVariable Integer ventaId, @RequestBody Ventas nuevaVenta){
+//        return ventasServices.actualizarVentas(ventaId, nuevaVenta);
+//    }
 
     @DeleteMapping("/{id}")
     public void eliminarVenta(@PathVariable Integer id){
