@@ -10,13 +10,16 @@ public class VentasResponseDTO {
     private Double total;
     private List<VentasDetallesResponseDTO>detallesResponseDTOS;
 
-    public VentasResponseDTO(Integer ventaId, LocalDateTime fecha, Integer empleadoId, String nombreEmpleado, double sum, List<VentasDetallesResponseDTO> detallesResponseDTOS) {
-    }
-
-    public VentasResponseDTO(Integer ventaId, String nombreEmpleado, Double total, List<VentasDetallesResponseDTO> detallesResponseDTOS) {
+    public VentasResponseDTO(
+            Integer ventaId,
+            LocalDateTime fecha,
+            Integer empleadoId,
+            String nombreEmpleado,
+            double sum,
+            List<VentasDetallesResponseDTO> detallesResponseDTOS) {
         this.ventaId = ventaId;
         this.nombreEmpleado = nombreEmpleado;
-        this.total = total;
+        this.total = sum;
         this.detallesResponseDTOS = detallesResponseDTOS;
     }
 

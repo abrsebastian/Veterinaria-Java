@@ -109,7 +109,7 @@ public class VentasServices {
 
     empleados.setTotalVentas(ventaNueva);
 
-    return mapToEntity(ventas);
+    return mapToEntity(ventaNueva);
   }
 //    Productos productos = productosRepository.findById(dto.getProductoId()).
 //            orElseThrow(()-> new RuntimeException("Producto no encontrado"));
