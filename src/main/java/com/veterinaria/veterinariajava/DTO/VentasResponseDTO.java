@@ -8,6 +8,8 @@ public class VentasResponseDTO {
     private Integer ventaId;
     private String nombreEmpleado;
     private Double total;
+    private LocalDateTime fecha;
+    private Integer empleadoId;
     private List<VentasDetallesResponseDTO>detallesResponseDTOS;
 
     public VentasResponseDTO(
@@ -17,10 +19,28 @@ public class VentasResponseDTO {
             String nombreEmpleado,
             double sum,
             List<VentasDetallesResponseDTO> detallesResponseDTOS) {
+        this.fecha = fecha;
+        this.empleadoId = empleadoId;
         this.ventaId = ventaId;
         this.nombreEmpleado = nombreEmpleado;
         this.total = sum;
         this.detallesResponseDTOS = detallesResponseDTOS;
+    }
+
+    public LocalDateTime getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(LocalDateTime fecha) {
+        this.fecha = fecha;
+    }
+
+    public Integer getEmpleadoId() {
+        return empleadoId;
+    }
+
+    public void setEmpleadoId(Integer empleadoId) {
+        this.empleadoId = empleadoId;
     }
 
     public Integer getVentaId() {

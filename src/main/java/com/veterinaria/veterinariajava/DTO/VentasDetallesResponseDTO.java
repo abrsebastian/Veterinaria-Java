@@ -7,9 +7,6 @@ public class VentasDetallesResponseDTO {
     private Double precioUnitario;
     private Double subtotal;
 
-    public VentasDetallesResponseDTO(Integer productoId, String nombreProducto, int cantidadProductoVendido, double precioUnitarioPorVenta, double subtotal) {
-    }
-
     public VentasDetallesResponseDTO(String nombreProducto, int cantidad, Double precioUnitario, Double subtotal) {
         this.nombreProducto = nombreProducto;
         this.cantidad = cantidad;

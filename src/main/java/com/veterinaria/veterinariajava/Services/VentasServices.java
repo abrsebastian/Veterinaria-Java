@@ -49,7 +49,6 @@ public class VentasServices {
   private VentasResponseDTO mapToEntity(Ventas ventas){
     List<VentasDetallesResponseDTO> detallesResponseDTOS = ventas.getDetallesList().stream()
             .map(d -> new VentasDetallesResponseDTO(
-                    d.getProductos().getProductoId(),
                     d.getProductos().getNombreProducto(),
                     d.getCantidadProductoVendido(),
                     d.getPrecioUnitarioPorVenta(),
@@ -67,7 +66,7 @@ public class VentasServices {
 
 
   public List<VentasResponseDTO> obtenerTodasLasVentas() {
-    return ventasRepository.findAll().stream()
+    return ventasRepository.findAllConDetallesYProductos().stream()
             .map(this::mapToEntity).toList();
   }
 

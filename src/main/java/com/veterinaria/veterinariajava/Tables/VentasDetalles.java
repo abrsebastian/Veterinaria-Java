@@ -28,11 +28,11 @@ public class VentasDetalles {
     @CreationTimestamp
     private LocalDateTime fecha;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "producto_id")
     private Productos productos;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "venta_id")
     private Ventas venta;
 
