@@ -30,7 +30,7 @@ public class Ventas {
     @CreationTimestamp
     private LocalDateTime fecha;
 
-    @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<VentasDetalles> detallesList = new ArrayList<>();
 
     public Ventas() {

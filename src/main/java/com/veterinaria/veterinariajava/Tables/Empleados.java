@@ -1,12 +1,10 @@
 package com.veterinaria.veterinariajava.Tables;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "empleados")
@@ -28,11 +26,24 @@ public class Empleados {
     @Column(name = "sueldo_por_hora")
     private double sueldoPorHora;
 
+    @OneToMany(mappedBy = "empleados", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Ventas> ventas = new ArrayList<>();
+
+    @OneToMany(mappedBy = "empleados", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ServiciosInternos> serviciosInternos = new ArrayList<>();
+
 
     public Empleados() {
 
     }
 
+    public List<Ventas> getVentas() {
+        return ventas;
+    }
+
+    public void setVentas(List<Ventas> ventas) {
+        this.ventas = ventas;
+    }
 
     public Integer getEmpleadoId() {
         return empleadoId;

@@ -119,12 +119,13 @@ public class SueldosMensualesServices {
 
             double nuevaComisionPorServicio = sueldosMensuales.getComisionPorServicio() + comisionServicio;
             sueldosMensuales.setComisionPorServicio(nuevaComisionPorServicio);
-
+        }
             double sueldoFinal = sueldosMensuales.getSueldoTotal()
                     + sueldosMensuales.getComisionPorServicio()
                     + sueldosMensuales.getComisionesPorVentas();
+
             sueldosMensuales.setSueldoFinal(sueldoFinal);
-        }
+
 
         return sueldosMensualesRepository.save(sueldosMensuales);
     }
