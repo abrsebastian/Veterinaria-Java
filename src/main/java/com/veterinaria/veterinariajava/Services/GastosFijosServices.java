@@ -27,20 +27,35 @@ public class GastosFijosServices {
         return gastosFijosRepository.findById(id);
     }
 
-    public GastosFijosResponseDTO registrarGastoFijo(GastosFijosRequestDTO dto){
-
+    private GastosFijos mapToEntity(GastosFijosRequestDTO dto){
         GastosFijos gastosFijos = new GastosFijos();
+
         gastosFijos.setTipoDeGasto(dto.getTipoDeGasto());
         gastosFijos.setMontoGasto(dto.getMonto());
 
-        gastosFijosRepository.save(gastosFijos);
+        LocalDateTime ahora = LocalDateTime.now();
 
-        return new GastosFijosResponseDTO(
-                gastosFijos.getGastoFijoId(),
-                gastosFijos.getTipoDeGasto(),
-                gastosFijos.getMontoGasto(),
-                gastosFijos.getFecha()
-        );
+        gastosFijos.setFecha(ahora);
+        gastosFijos.setYear(ahora.getYear());
+        gastosFijos.setMonth(ahora.getMonthValue());
+
+        return gastosFijos;
+    }
+
+    private GastosFijosResponseDTO mapToDTO(GastosFijos gastosFijos){
+        GastosFijosResponseDTO dto = new GastosFijosResponseDTO();
+        dto.setGastoFijoId(gastosFijos.getGastoFijoId());
+        dto.setMontoGastoFijo(gastosFijos.getMontoGasto());
+        dto.setTipoDeGasto(gastosFijos.getTipoDeGasto());
+        return dto;
+    }
+
+    public GastosFijosResponseDTO registrarGastoFijo(GastosFijosRequestDTO dto){
+
+        GastosFijos gastosFijos = mapToEntity(dto);
+        GastosFijos gastoGuardado = gastosFijosRepository.save(gastosFijos);
+
+        return mapToDTO(gastoGuardado);
     }
 
     public void registrarGastoFijoPorSueldo(double totalSueldos, int month, int year){

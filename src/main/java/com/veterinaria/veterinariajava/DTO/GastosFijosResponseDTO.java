@@ -11,7 +11,7 @@ public class GastosFijosResponseDTO {
     private Double montoGastoFijo;
     private Date fecha;
 
-    public GastosFijosResponseDTO(Integer gastoFijoId, TipoDeGasto tipoDeGasto, Double montoGasto, LocalDateTime fecha) {
+    public GastosFijosResponseDTO() {
     }
 
     public Integer getGastoFijoId() {

@@ -26,6 +26,16 @@ public class EmpleadosServices {
     @Autowired
     private SueldosMensualesServices sueldosMensualesServices;
 
+    public List<EmpleadosResponseDTO>obtenerTodos(){
+        return empleadosRepository.findAll().stream()
+                .map(this::mapToDTO).toList();
+    }
+
+    public Optional<EmpleadosResponseDTO>obtenerPorId(Integer id){
+        return empleadosRepository.findById(id)
+                .map(this::mapToDTO);
+    }
+
     private Empleados mapToEntity(EmpleadosRequestDTO dto){
         Empleados empleados = new Empleados();
         empleados.setNombreEmpleado(dto.getNombreEmpleado());
@@ -51,16 +61,6 @@ public class EmpleadosServices {
         return dto;
 
         //Agregar una nueva linea para la columna total ventas
-    }
-
-    public List<EmpleadosResponseDTO>obtenerTodos(){
-        return empleadosRepository.findAll().stream()
-                .map(this::mapToDTO).toList();
-    }
-
-    public Optional<EmpleadosResponseDTO>obtenerPorId(Integer id){
-        return empleadosRepository.findById(id)
-                .map(this::mapToDTO);
     }
 
     public EmpleadosResponseDTO guardarEmpleados(EmpleadosRequestDTO dto){
